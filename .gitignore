@@ -1,3 +1,7 @@
+# Vim editer
+*~
+*.swp
+
 # Object files
 *.o
 
