@@ -19,3 +19,9 @@
 *.exe
 *.out
 *.app
+
+# Cmake build
+/build
+
+# Visual studio
+*.suo
