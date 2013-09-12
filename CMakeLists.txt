@@ -1,3 +1,3 @@
-project(ChatYu)
-set(SRC_LIST chatyu.c)
-add_executable(ChatYu ${SRC_LIST})
+project(YuChat)
+set(SRC_LIST yuchat.c)
+add_executable(YuChat ${SRC_LIST})
