@@ -21,7 +21,7 @@ int son_skt;
 char buffer[1000];
 
 //socket listen
-int yu_listen(){
+int ilisten(){
 	memset(&servaddr, 0, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -32,7 +32,7 @@ int yu_listen(){
 }
 
 //socket connect
-void* yu_connect(void *arg){
+void* iconnect(void *arg){
 	send(son_skt, "hello!", 7, 0);
 	printf("hello, connected!\n");
 	/*for(;1;){
@@ -48,14 +48,14 @@ int main(int argc,char **argv){
 	int err;
 	
 	//start listen
-	yu_listen();
+	ilisten();
 
 	//loop listen and accept
 	for(;1;){
 		//The function `accept` can block the process, so, i need't sleep
 		if(son_skt=accept(skt,NULL,NULL)){
 			//if accepted, create thread!
-			err = pthread_create(&ntid, NULL, yu_connect, NULL);
+			err = pthread_create(&ntid, NULL, iconnect, NULL);
 		}
 	}
 

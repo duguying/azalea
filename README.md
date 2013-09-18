@@ -1,4 +1,4 @@
-chatyu
+ichat
 ======
 
 a chatting server
