@@ -20,6 +20,14 @@ int son_skt;
 //buffer
 char buffer[1000];
 
+//clear buffer
+void clear_buff(){
+	int i=0;
+	for(i=0;i<1000;i++){
+		buffer[i]=0;
+	}
+}
+
 //socket listen
 int ilisten(){
 	memset(&servaddr, 0, sizeof(servaddr));
@@ -33,14 +41,18 @@ int ilisten(){
 
 //socket connect
 void* iconnect(void *arg){
-	send(son_skt, "hello!", 7, 0);
-	printf("hello, connected!\n");
-	/*for(;1;){
-		recv(son_skt, buffer, 1000, 0);
-		printf("%s",buffer);
-		sleep(1);
-	}*/
-
+	//The function recv could block thread
+	for(;1;){
+		//connect ended or error, exit
+		if(recv(son_skt, buffer, 1000, 0)<=0){
+			break;
+		};
+		printf("%s\n",buffer);
+		clear_buff();
+	}
+	
+	//printf("hello, connected!\n");
+	
 	return ((void *) 0);
 }
 

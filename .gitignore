@@ -28,3 +28,6 @@
 
 # Test
 /test
+
+# sqlite
+/pool/sqlite
