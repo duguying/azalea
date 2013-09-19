@@ -51,8 +51,7 @@ void* iconnect(void *arg){
 		clear_buff();
 	}
 	
-	//printf("hello, connected!\n");
-	
+	//here the thread is exit
 	return ((void *) 0);
 }
 

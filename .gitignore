@@ -25,6 +25,9 @@
 
 # Visual studio
 *.suo
+*.obj
+/windows/build
+/windows/makefile
 
 # Test
 /test
