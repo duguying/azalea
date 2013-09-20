@@ -2,7 +2,7 @@
 #include <windows.h>
 #include <stdio.h>
 
-DWORD WINAPI testfn(LPVOID lpParam){
+DWORD WINAPI testfn(void*p){
 	for(;1;){
 		;
 	}
