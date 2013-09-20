@@ -12,7 +12,7 @@ LPDWORD tid;
 int main(){
 	
 
-	thread_create(tid,testfn);
+	thread_create(tid,testfn,NULL);
 	printf("hihihi");
 	return 0;
 }
