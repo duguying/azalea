@@ -10,6 +10,7 @@ pthread_t ntid;
 
 //socket server address
 struct sockaddr_in servaddr;
+struct sockaddr_in clientaddr;
 
 //socket id
 int skt;
@@ -47,24 +48,29 @@ void* iconnect(void *arg){
 		if(recv(son_skt, buffer, 1000, 0)<=0){
 			break;
 		};
-		printf("%s\n",buffer);
+		printf("%s.%u: %s\n",inet_ntoa(clientaddr.sin_addr),clientaddr.sin_port,buffer);
 		clear_buff();
 	}
 	
+	printf("%s.%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),clientaddr.sin_port);
 	//here the thread is exit
 	return ((void *) 0);
 }
 
 int main(int argc,char **argv){
 	int err;
-	
+	socklen_t len;
+
 	//start listen
 	ilisten();
-
+	
+	//sock length
+	len = sizeof(clientaddr);
 	//loop listen and accept
 	for(;1;){
 		//The function `accept` can block the process, so, i need't sleep
-		if(son_skt=accept(skt,NULL,NULL)){
+		if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
+			printf("%s.%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), clientaddr.sin_port);
 			//if accepted, create thread!
 			err = pthread_create(&ntid, NULL, iconnect, NULL);
 		}
