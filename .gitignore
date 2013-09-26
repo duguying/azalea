@@ -35,3 +35,9 @@
 
 # sqlite
 /pool/sqlite
+
+# tcper
+/tcper/nbproject
+/tcper/dist
+/tcper/build
+/tcper/.dep.inc
