@@ -49,11 +49,11 @@ void* iconnect(void *arg){
 		if(recv(son_skt, buffer, 1000, 0)<=0){
 			break;
 		};
-		printf("%s.%u: %s\n",inet_ntoa(clientaddr.sin_addr),clientaddr.sin_port,buffer);
+		printf("%s.%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
 		clear_buff();
 	}
 	
-	printf("%s.%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),clientaddr.sin_port);
+	printf("%s.%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
 	//here the thread is exit
 	return ((void *) 0);
 }
@@ -71,7 +71,7 @@ int main(int argc,char **argv){
 	for(;1;){
 		//The function `accept` can block the process, so, i need't sleep
 		if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
-			printf("%s.%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), clientaddr.sin_port);
+			printf("%s.%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
 			//if accepted, create thread!
 			err = pthread_create(&ntid, NULL, iconnect, NULL);
 		}
