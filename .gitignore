@@ -33,11 +33,11 @@
 /test
 /makefile
 
-# sqlite
-/pool/sqlite
-
 # tcper
 /tcper/nbproject
 /tcper/dist
 /tcper/build
 /tcper/.dep.inc
+
+# sqlite
+/dbs/sqlite

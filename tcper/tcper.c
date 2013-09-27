@@ -34,6 +34,7 @@ int main(int argc, char** argv) {
 
 	if(argc<=1){
 		argv[1]="127.0.0.1";
+		argv[2]="6666";
 	}else if(argc==2){
 		argv[2]="6666";
 	}

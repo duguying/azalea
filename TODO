@@ -1,0 +1,12 @@
+# Communication
+tcp model
+websocket model
+
+# Database Driver
+sqlite driver
+
+# Log
+text log
+
+# Tcp Client Tester
+shutdown when server closed the socket
