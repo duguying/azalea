@@ -1,3 +1,3 @@
 iChat:ichat.c
-	gcc ichat.c -o iChat
+	gcc ichat.c -lpthread -o iChat
 
