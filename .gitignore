@@ -33,10 +33,10 @@
 /test
 
 # tcper
-/tcper/nbproject
-/tcper/dist
-/tcper/build
-/tcper/.dep.inc
+/tcper/bin
 
 # sqlite
 /dbs/sqlite
+
+# log
+/log/bin
