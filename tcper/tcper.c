@@ -47,8 +47,8 @@ int main(int argc, char** argv) {
     }else{
 		for(;1;){
 			memset(buf, 0, sizeof(char)*1000);
-			scanf("%s", buf);
-			if(0==strcmp(buf, ".exit")){
+			fgets(buf, 1000, stdin);
+			if(0==strcmp(buf, ".exit\n")){
 				return 0;
 			}
 			send(skt, buf, 1000*sizeof(char), 0);
