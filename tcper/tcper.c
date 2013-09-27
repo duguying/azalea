@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <pthread.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -15,14 +16,6 @@
 
 struct sockaddr_in saddr;
 char buf[1000];
-
-//clear buffer
-void clear_buff(){
-	int i=0;
-	for(i=0;i<1000;i++){
-		buf[i]=0;
-	}
-}
 
 /*
  * client tcp tester
@@ -53,7 +46,7 @@ int main(int argc, char** argv) {
         return 0;
     }else{
 		for(;1;){
-			clear_buff();
+			memset(buf, 0, sizeof(char)*1000);
 			scanf("%s", buf);
 			if(0==strcmp(buf, ".exit")){
 				return 0;

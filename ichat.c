@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <pthread.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -22,14 +23,6 @@ int son_skt;
 //buffer
 char buffer[1000];
 
-//clear buffer
-void clear_buff(){
-	int i=0;
-	for(i=0;i<1000;i++){
-		buffer[i]=0;
-	}
-}
-
 //socket listen
 int ilisten(){
 	memset(&servaddr, 0, sizeof(servaddr));
@@ -50,7 +43,7 @@ void* iconnect(void *arg){
 			break;
 		};
 		printf("%s.%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
-		clear_buff();
+		memset(buffer, 0, sizeof(char)*1000);
 	}
 	
 	printf("%s.%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
