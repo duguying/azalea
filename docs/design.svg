@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="960px" height="560px" viewBox="0 0 960 560" enable-background="new 0 0 960 560" xml:space="preserve">
+<rect x="259.5" y="107.5" fill="#3FA9F5" stroke="#000000" stroke-miterlimit="10" width="437" height="72"/>
+<text transform="matrix(1 0 0 1 275 131)" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="12">Connect, Receive, Send, Plug-ins</text>
+<rect x="56.5" y="261.5" fill="#FBB03B" stroke="#000000" stroke-miterlimit="10" width="113" height="173"/>
+<text transform="matrix(1 0 0 1 91 349)" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="36">DB</text>
+<rect x="215.5" y="262.5" fill="#BDCCD4" stroke="#000000" stroke-miterlimit="10" width="104" height="173"/>
+<text transform="matrix(1 0 0 1 241 346)" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="36">Log</text>
+<rect x="361.5" y="262.5" fill="#00FFFF" stroke="#000000" stroke-miterlimit="10" width="100" height="173"/>
+<text transform="matrix(1 0 0 1 362.3188 330)"><tspan x="0" y="0" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="21">Connection</tspan><tspan x="30.072" y="25.2" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="21">Pool</tspan></text>
+<line stroke="#000000" stroke-miterlimit="10" x1="299" y1="179.5" x2="113" y2="261.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="120.417" y1="252.588" x2="113" y2="261.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="125.904" y1="258.823" x2="113" y2="261.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="282.265" y1="182.76" x2="299" y2="179.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="288.25" y1="187.997" x2="299" y2="179.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="354.588" y1="179.5" x2="266.06" y2="262.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="269.301" y1="250.591" x2="266.06" y2="262.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="280.274" y1="256.545" x2="266.06" y2="262.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="407.5" y1="180" x2="407.5" y2="263"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="404.217" y1="254.83" x2="407.5" y2="263"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="410.202" y1="254.83" x2="407.5" y2="263"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="407.5" y1="180" x2="404.217" y2="185.751"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="407.5" y1="180" x2="410.202" y2="185.751"/>
+<g>
+	<g>
+		<path d="M523.588,344.588c2.839,0.002,5.621,0.075,8.243,1.294c1.742,0.811,3.267-1.775,1.514-2.59
+			c-3.14-1.46-6.338-1.701-9.757-1.704C521.653,341.586,521.653,344.586,523.588,344.588L523.588,344.588z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M555.83,341.383c3.168,1.587,6.136,3.276,8.695,5.765c1.387,1.349,3.51-0.771,2.121-2.121
+			c-2.74-2.665-5.905-4.533-9.303-6.233C555.619,337.93,554.1,340.517,555.83,341.383L555.83,341.383z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M586.585,343.088c2.795,0.064,4.592,2.214,6.439,4.06c1.37,1.368,3.491-0.753,2.121-2.121
+			c-2.484-2.482-4.851-4.853-8.561-4.938C584.649,340.043,584.653,343.043,586.585,343.088L586.585,343.088z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M616.584,343.088c1.59,0.001,3.683-0.083,4.938,1.061c1.427,1.3,3.554-0.815,2.121-2.121
+			c-1.921-1.751-4.578-1.938-7.06-1.939C614.649,340.087,614.649,343.087,616.584,343.088L616.584,343.088z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M642.082,341.588c4.146,0.062,6.886,1.88,9.205,5.256c1.087,1.584,3.688,0.086,2.59-1.514
+			c-2.929-4.266-6.546-6.664-11.795-6.742C640.146,338.559,640.149,341.559,642.082,341.588L642.082,341.588z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M670.786,340.845c1.582,3.162,3.305,6.311,6.537,8.037c1.705,0.911,3.221-1.678,1.514-2.59
+			c-2.763-1.477-4.113-4.27-5.461-6.961C672.51,337.601,669.923,339.12,670.786,340.845L670.786,340.845z"/>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 695.2734 359.5869)" font-family="'MicrosoftYaHei-Bold'" font-size="48">etc</text>
+<text transform="matrix(1 0 0 1 423.3784 43.1025)" font-family="'MicrosoftYaHei-Bold'" font-size="48">User</text>
+<line stroke="#000000" stroke-miterlimit="10" x1="453.082" y1="57.999" x2="453.459" y2="87.488"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="486.5" y1="58" x2="486.5" y2="87"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="447.032" y1="87" x2="453.459" y2="87.488"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="447.032" y1="87" x2="468.583" y2="95.428"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="468.583" y1="95.428" x2="492.023" y2="87"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="492" y1="87.5" x2="486" y2="87.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="447" y1="57.5" x2="453" y2="57.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="447" y1="57.5" x2="468.583" y2="50.437"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="468.583" y1="50.437" x2="492" y2="57.5"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="492" y1="57.5" x2="486.5" y2="58"/>
+</svg>
