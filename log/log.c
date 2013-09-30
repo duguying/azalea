@@ -8,7 +8,7 @@
  */
 int initial(void){
 	printf("Load Log Model success!\n");
-	log_create("test.log");
+	//log_create("test.log");
 	return 0;
 }
 
@@ -32,7 +32,7 @@ int log_create(const char* file){
  * @param lh log handle
  * @return the byte size have written
  */
-int log_write(const char* string, int lh){
+int logw(const char* string, int lh){
 	return write(lh, string, strlen(string));
 }
 

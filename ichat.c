@@ -73,16 +73,20 @@ void* loadmodel(void* arg){
 	return ((void *) 0);
 }
 
+//main function
 int main(int argc,char **argv){
 	int err;
 	socklen_t len;
 	
+	int fh1=log_create("test.log");
+	logw("test, this is a log!\n",fh1);
+
 	//load model in new thread
-	pthread_create(&mtid, NULL, loadmodel, NULL);
+	//pthread_create(&mtid, NULL, loadmodel, NULL);
 
 	//start listen
 	ilisten();
-	
+
 	//sock length
 	len = sizeof(clientaddr);
 	//loop listen and accept
@@ -94,6 +98,8 @@ int main(int argc,char **argv){
 			err = pthread_create(&ntid, NULL, iconnect, NULL);
 		}
 	}
+
+	
 
 	return 0;
 }
