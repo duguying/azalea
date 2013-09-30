@@ -3,9 +3,8 @@
 #include <fcntl.h>
 #include <string.h>
 
-int hello(int a){
-	//printf("hi, hello world!\n");
-	return 123;
+int initial(void){
+	printf("Load Log Model success!\n");
 }
 
 /**
@@ -28,7 +27,7 @@ int log_create(const char* file){
  * @param lh log handle
  * @return the byte size have written
  */
-int log(const char* string, int lh){
+int log_write(const char* string, int lh){
 	return write(lh, string, strlen(string));
 }
 

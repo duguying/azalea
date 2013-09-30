@@ -56,18 +56,18 @@ int main(int argc,char **argv){
 	int err;
 	socklen_t len;
 	void *lib_handle;
-	//int (*hello)(void);
-	int (*hello)(int);
+	int (*initial)(void);
 	char* error;
 
 	//load models
+	//TODO load in the thread
 	lib_handle=dlopen("cyglog.dll", RTLD_LAZY);
-	//if(!lib_handle){
-		//fprintf(stderr,"%s\n",dlerror());
-	//	return 1;
-	//}
-	hello=dlsym(lib_handle, "hello");
-	printf("%d\n",hello(1));
+	if(!lib_handle){
+		fprintf(stderr,"%s\n",dlerror());
+		return 1;
+	}
+	initial=dlsym(lib_handle, "initial");
+	initial();
 
 	//start listen
 	ilisten();
