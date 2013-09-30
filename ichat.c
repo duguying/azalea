@@ -9,7 +9,8 @@
 #include <dlfcn.h>
 
 //thread id
-pthread_t ntid;
+pthread_t ntid;//connect thread id
+pthread_t mtid;//model thread id
 
 //socket server address
 struct sockaddr_in servaddr;
@@ -36,6 +37,7 @@ int ilisten(){
 }
 
 //socket connect
+//*thread function
 void* iconnect(void *arg){
 	//The function recv could block thread
 	for(;1;){
@@ -52,22 +54,31 @@ void* iconnect(void *arg){
 	return ((void *) 0);
 }
 
-int main(int argc,char **argv){
-	int err;
-	socklen_t len;
+//load model
+//*thread
+void* loadmodel(void* arg){
+	//load models
 	void *lib_handle;
 	int (*initial)(void);
 	char* error;
-
-	//load models
-	//TODO load in the thread
-	lib_handle=dlopen("cyglog.dll", RTLD_LAZY);
+	const char* library="cyglog.dll";
+	lib_handle=dlopen(library, RTLD_LAZY);
 	if(!lib_handle){
-		fprintf(stderr,"%s\n",dlerror());
-		return 1;
+		fprintf(stderr,"%s load failed: %s\n", library, dlerror());
+		//exit(1);
+	}else{
+		initial=dlsym(lib_handle, "initial");
+		initial();
 	}
-	initial=dlsym(lib_handle, "initial");
-	initial();
+	return ((void *) 0);
+}
+
+int main(int argc,char **argv){
+	int err;
+	socklen_t len;
+	
+	//load model in new thread
+	pthread_create(&mtid, NULL, loadmodel, NULL);
 
 	//start listen
 	ilisten();

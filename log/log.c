@@ -3,8 +3,13 @@
 #include <fcntl.h>
 #include <string.h>
 
+/**
+ * initialize the model
+ */
 int initial(void){
 	printf("Load Log Model success!\n");
+	log_create("test.log");
+	return 0;
 }
 
 /**
