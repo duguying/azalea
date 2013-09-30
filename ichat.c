@@ -5,7 +5,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <arpa/inet.h> 
+#include <arpa/inet.h>
+#include <dlfcn.h>
 
 //thread id
 pthread_t ntid;
@@ -42,11 +43,11 @@ void* iconnect(void *arg){
 		if(recv(son_skt, buffer, 1000, 0)<=0){
 			break;
 		};
-		printf("%s.%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
+		printf("%s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
 		memset(buffer, 0, sizeof(char)*1000);
 	}
 	
-	printf("%s.%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
+	printf("%s,%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
 	//here the thread is exit
 	return ((void *) 0);
 }
@@ -54,6 +55,19 @@ void* iconnect(void *arg){
 int main(int argc,char **argv){
 	int err;
 	socklen_t len;
+	void *lib_handle;
+	//int (*hello)(void);
+	int (*hello)(int);
+	char* error;
+
+	//load models
+	lib_handle=dlopen("cyglog.dll", RTLD_LAZY);
+	//if(!lib_handle){
+		//fprintf(stderr,"%s\n",dlerror());
+	//	return 1;
+	//}
+	hello=dlsym(lib_handle, "hello");
+	printf("%d\n",hello(1));
 
 	//start listen
 	ilisten();
@@ -64,7 +78,7 @@ int main(int argc,char **argv){
 	for(;1;){
 		//The function `accept` can block the process, so, i need't sleep
 		if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
-			printf("%s.%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
+			printf("%s,%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
 			//if accepted, create thread!
 			err = pthread_create(&ntid, NULL, iconnect, NULL);
 		}

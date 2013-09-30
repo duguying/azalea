@@ -41,3 +41,6 @@
 # log
 /log/bin
 *.log
+
+# Note
+/note.txt

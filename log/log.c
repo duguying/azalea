@@ -3,6 +3,10 @@
 #include <fcntl.h>
 #include <string.h>
 
+int hello(int a){
+	//printf("hi, hello world!\n");
+	return 123;
+}
 
 /**
  * create a log
