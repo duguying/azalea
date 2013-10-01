@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
     
 	len=sizeof(struct sockaddr);
     
-	if(connect(skt, &saddr, len)<0){
+	if(connect(skt, (struct sockaddr*)&saddr, len)<0){
         printf("Connected Failed!\n");
         return 0;
     }else{
