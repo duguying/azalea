@@ -2,6 +2,7 @@ ichat
 ----------
 
 [![Build Status](https://drone.io/github.com/duguying/ichat/status.png)](https://drone.io/github.com/duguying/ichat/latest)
+[![travis](https://api.travis-ci.org/duguying/ichat.png)](https://travis-ci.org/duguying/ichat)
 
 a chatting server
 
