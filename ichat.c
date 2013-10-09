@@ -8,6 +8,9 @@
 #include <arpa/inet.h>
 #include <dlfcn.h>
 
+#define BUF_LEN 1000
+#define PORT 6666
+
 //thread id
 pthread_t ntid;//connect thread id
 pthread_t mtid;//model thread id
@@ -23,14 +26,17 @@ int skt;
 int son_skt;
 
 //buffer
-char buffer[1000];
+char buffer[BUF_LEN];
+
+//pipe
+int pp[2];
 
 //socket listen
 int ilisten(){
 	memset(&servaddr, 0, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	servaddr.sin_port = htons(6666);
+	servaddr.sin_port = htons(PORT);
 	skt=socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	bind(skt, (struct sockaddr*)&servaddr, sizeof(servaddr));
 	return listen(skt, 10);
@@ -46,7 +52,9 @@ void* iconnect(void *arg){
 			break;
 		};
 		printf("%s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
-		memset(buffer, 0, sizeof(char)*1000);
+		//send buffer into pipe TODO
+		write(pp[1], buffer, sizeof(char)*BUF_LEN);
+		memset(buffer, 0, sizeof(char)*BUF_LEN);
 	}
 	
 	printf("%s,%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
@@ -83,6 +91,9 @@ int main(int argc,char **argv){
 	int fh1=log_create("test.log");
 	logw("test, this is a log!\n",fh1);
 
+	//create pipe TODO
+	pipe(pp);
+
 	//load model in new thread
 	//pthread_create(&mtid, NULL, loadmodel, NULL);
 
@@ -93,6 +104,7 @@ int main(int argc,char **argv){
 	pid=fork();
 	if(0==pid){//in son process
 		sleep(3);//wait 3 sec for father's listening task begin
+		//TODO
 		getchar();
 	}else{
 		//sock length
