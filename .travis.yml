@@ -1,5 +1,4 @@
 language:c
-script:
-    - cd build
-    - cmake ..
-    - make
+script:cd build
+script:cmake ..
+script:make
