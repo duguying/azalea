@@ -77,6 +77,8 @@ void* loadmodel(void* arg){
 int main(int argc,char **argv){
 	int err;
 	socklen_t len;
+	//dealing process id
+	int pid;
 	
 	int fh1=log_create("test.log");
 	logw("test, this is a log!\n",fh1);
@@ -87,16 +89,24 @@ int main(int argc,char **argv){
 	//start listen
 	ilisten();
 
-	//sock length
-	len = sizeof(clientaddr);
-	//loop listen and accept
-	for(;1;){
-		//The function `accept` can block the process, so, i need't sleep
-		if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
-			printf("%s,%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
-			//if accepted, create thread!
-			err = pthread_create(&ntid, NULL, iconnect, NULL);
+	//create process for message dealing task
+	pid=fork();
+	if(0==pid){//in son process
+		sleep(3);//wait 3 sec for father's listening task begin
+		getchar();
+	}else{
+		//sock length
+		len = sizeof(clientaddr);
+		//loop listen and accept
+		for(;1;){
+			//The function `accept` can block the process, so, i need't sleep
+			if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
+				printf("%s,%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
+				//if accepted, create thread!
+				err = pthread_create(&ntid, NULL, iconnect, NULL);
+			}
 		}
+	
 	}
 
 	
