@@ -31,6 +31,7 @@
 
 # Test
 /test
+*makefile
 
 # tcper
 /tcper/bin
