@@ -1,4 +1,4 @@
-ichat
+# ichat #
 ----------
 
 [![Build Status](https://drone.io/github.com/duguying/ichat/status.png)](https://drone.io/github.com/duguying/ichat/latest)
@@ -7,6 +7,15 @@ ichat
 
 a chatting server
 
-**design**
+# design #
 
 ![design](https://rawgithub.com/duguying/ichat/master/docs/design.svg)
+
+# build #
+
+```shell
+mkdir build
+cd build
+cmake ..
+make
+```

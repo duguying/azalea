@@ -8,8 +8,9 @@
 #include <arpa/inet.h>
 #include <dlfcn.h>
 
-#define BUF_LEN 1000
-#define PORT 6666
+#define BUF_LEN 1000 //buffer length
+#define PORT 6666 //port
+#define ECF 0 //Empty Char Fill
 
 //thread id
 pthread_t ntid;//connect thread id
@@ -33,7 +34,7 @@ int pp[2];
 
 //socket listen
 int ilisten(){
-	memset(&servaddr, 0, sizeof(servaddr));
+	memset(&servaddr, ECF, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	servaddr.sin_port = htons(PORT);
@@ -51,10 +52,11 @@ void* iconnect(void *arg){
 		if(recv(son_skt, buffer, 1000, 0)<=0){
 			break;
 		};
-		printf("%s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
+		//printf("%s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
 		//send buffer into pipe TODO
 		write(pp[1], buffer, sizeof(char)*BUF_LEN);
-		memset(buffer, 0, sizeof(char)*BUF_LEN);
+		memset(buffer, ECF, sizeof(char)*BUF_LEN);
+		//close(pp[1]);
 	}
 	
 	printf("%s,%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
@@ -103,9 +105,21 @@ int main(int argc,char **argv){
 	//create process for message dealing task
 	pid=fork();
 	if(0==pid){//in son process
-		sleep(3);//wait 3 sec for father's listening task begin
+		//sleep(3);//wait 3 sec for father's listening task begin
 		//TODO
-		getchar();
+		char bf[BUF_LEN];
+		int i;
+		//for(i=0;i<3;i++){
+			//sleep(10);
+			memset(bf, ECF, sizeof(char)*BUF_LEN);
+			read(pp[0],bf,BUF_LEN);
+			printf("%s",bf);
+						memset(bf, ECF, sizeof(char)*BUF_LEN);
+			read(pp[0],bf,BUF_LEN);
+			printf("%s",bf);
+		//}
+		
+		//getchar();
 	}else{
 		//sock length
 		len = sizeof(clientaddr);
