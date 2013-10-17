@@ -1,7 +1,11 @@
 project(iChat)
 
 #############################################
-# varibility
+# output directory
+set(EXECUTABLE_OUTPUT_PATH bin)
+set(LIBRARY_OUTPUT_PATH lib)
+#############################################
+# source directories varibility
 set(SRC_LIST ichat.c)
 set(LOG_LIST log/log.c)
 set(LOG_TEST log/test.c)
@@ -14,7 +18,8 @@ set(MYSQLDRV_TEST dbs/mysql/mysql_test.c)
 # include directories
 include_directories("/usr/include/mysql")
 # library directory
-include_directories("build")
+include_directories("build/lib")
+include_directories("build/arc")
 # link directories
 link_directories("/usr/lib/mysql")
 
@@ -43,6 +48,10 @@ target_link_libraries(tcper pthread)
 target_link_libraries(my_ver mysqlclient)
 target_link_libraries(mysql_drv mysqlclient)
 target_link_libraries(mysqldrv_test mysql_drv)
+
+#############################################
+# set targets directories
+set_target_properties(iChat PROPERTIES RUNTIME_OUTPUT_DIRECTORY ".")
 
 #############################################
 # cmake configuration
