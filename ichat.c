@@ -10,7 +10,7 @@
 
 #define BUF_LEN 1000 //buffer length
 #define PORT 6666 //port
-#define ECF 13 //Empty Char Fill
+#define ECF 0 //Empty Char Fill
 
 //thread id
 pthread_t ntid;//connect thread id
@@ -48,11 +48,15 @@ int ilisten(){
 void* iconnect(void *arg){
 	//The function recv could block thread
 	for(;1;){
-		int rc;
+		int rc,strleng;
 		//connect ended or error, exit
 		if(recv(son_skt, buffer, 1000, 0)<=0){
 			break;
 		};
+		strleng=strlen(buffer);
+		if(BUF_LEN > strleng){
+			buffer[strleng+1]=13;//13 is pipe interruption
+		}
 		printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
 		//send buffer into pipe TODO
 		rc = write(pp[1], buffer, sizeof(char)*BUF_LEN);
@@ -64,7 +68,7 @@ void* iconnect(void *arg){
 	    }
 		
 		memset(buffer, ECF, sizeof(char)*BUF_LEN);
-		close(pp[1]);
+		//close(pp[1]);
 	}
 	
 	printf("%s,%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
@@ -113,7 +117,7 @@ int main(int argc,char **argv){
 	//create process for message dealing task
 	pid=fork();
 	if(0==pid){//in son process
-		//sleep(3);//wait 3 sec for father's listening task begin
+		close(pp[1]);//in son, close the pipe write
 		//TODO
 		printf("son start\n");
 		char bf[BUF_LEN];
@@ -125,6 +129,7 @@ int main(int argc,char **argv){
 		
 		//getchar();
 	}else{
+		close(pp[0]);//in father, close the pipe read port
 		//sock length
 		len = sizeof(clientaddr);
 		//loop listen and accept
