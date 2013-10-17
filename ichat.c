@@ -10,7 +10,7 @@
 
 #define BUF_LEN 1000 //buffer length
 #define PORT 6666 //port
-#define ECF 0 //Empty Char Fill
+#define ECF 13 //Empty Char Fill
 
 //thread id
 pthread_t ntid;//connect thread id
@@ -48,15 +48,23 @@ int ilisten(){
 void* iconnect(void *arg){
 	//The function recv could block thread
 	for(;1;){
+		int rc;
 		//connect ended or error, exit
 		if(recv(son_skt, buffer, 1000, 0)<=0){
 			break;
 		};
-		//printf("%s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
+		printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
 		//send buffer into pipe TODO
-		write(pp[1], buffer, sizeof(char)*BUF_LEN);
+		rc = write(pp[1], buffer, sizeof(char)*BUF_LEN);
+		
+		if( rc == -1 ){
+	      perror ("Parent: write");
+	      close( pp[ 1 ] );
+	      exit( 1 );
+	    }
+		
 		memset(buffer, ECF, sizeof(char)*BUF_LEN);
-		//close(pp[1]);
+		close(pp[1]);
 	}
 	
 	printf("%s,%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
@@ -71,7 +79,7 @@ void* loadmodel(void* arg){
 	void *lib_handle;
 	int (*initial)(void);
 	char* error;
-	const char* library="cyglog.dll";
+	const char* library="cygmysql_drv.dll";
 	lib_handle=dlopen(library, RTLD_LAZY);
 	if(!lib_handle){
 		fprintf(stderr,"%s load failed: %s\n", library, dlerror());
@@ -107,17 +115,13 @@ int main(int argc,char **argv){
 	if(0==pid){//in son process
 		//sleep(3);//wait 3 sec for father's listening task begin
 		//TODO
+		printf("son start\n");
 		char bf[BUF_LEN];
-		int i;
-		//for(i=0;i<3;i++){
-			//sleep(10);
+		int rc;
+		while((rc = read(pp[0], bf, BUF_LEN)) > 0){
+			printf("son pipe recv: %s\n",bf);
 			memset(bf, ECF, sizeof(char)*BUF_LEN);
-			read(pp[0],bf,BUF_LEN);
-			printf("%s",bf);
-						memset(bf, ECF, sizeof(char)*BUF_LEN);
-			read(pp[0],bf,BUF_LEN);
-			printf("%s",bf);
-		//}
+		}
 		
 		//getchar();
 	}else{

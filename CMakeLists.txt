@@ -25,8 +25,8 @@ add_executable(iChat ${SRC_LIST})
 add_executable(tcper ${TCPER_LIST})
 # mysql version test
 add_executable(my_ver ${MYSQL_VER})
-# solid library
-add_library(log SHARED ${LOG_LIST})
+# solid library, static library
+add_library(log STATIC ${LOG_LIST})
 # log test
 add_executable(logtest ${LOG_TEST})
 # mysql extension test
@@ -38,7 +38,7 @@ add_library(mysql_drv SHARED ${MYDRV_LIST})
 
 #############################################
 # target link libraries
-target_link_libraries(iChat pthread dl log)
+target_link_libraries(iChat pthread dl log)	# here, static has no difference with shared
 target_link_libraries(tcper pthread)
 target_link_libraries(my_ver mysqlclient)
 target_link_libraries(mysql_drv mysqlclient)
