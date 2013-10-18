@@ -13,6 +13,8 @@ set(TCPER_LIST tcper/tcper.c)
 set(MYSQL_VER dbs/mysql/version.c)
 set(MYDRV_LIST dbs/mysql/mysql_driver.c)
 set(MYSQLDRV_TEST dbs/mysql/mysql_test.c)
+set(CONF_LIST config/config.c)
+set(POOL_LIST pool/pool.c)
 
 #############################################
 # include directories
@@ -26,20 +28,17 @@ link_directories("/usr/lib/mysql")
 #############################################
 # main executation
 add_executable(iChat ${SRC_LIST})
-# tcp tester
-add_executable(tcper ${TCPER_LIST})
-# mysql version test
-add_executable(my_ver ${MYSQL_VER})
+# test tools
+add_executable(tcper ${TCPER_LIST}) # tcp tester
+add_executable(my_ver ${MYSQL_VER}) # mysql version test
+add_executable(mysqldrv_test ${MYSQLDRV_TEST}) # mysql extension test
+add_executable(logtest ${LOG_TEST}) # log test
 # solid library, static library
 add_library(log STATIC ${LOG_LIST})
-# log test
-add_executable(logtest ${LOG_TEST})
-# mysql extension test
-add_executable(mysqldrv_test ${MYSQLDRV_TEST})
-
+add_library(config STATIC ${CONF_LIST})
+add_library(pool STATIC ${POOL_LIST})
 # dynamic libraries
-# mysql driver extension
-add_library(mysql_drv SHARED ${MYDRV_LIST})
+add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
 
 #############################################
 # target link libraries
