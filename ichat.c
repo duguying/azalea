@@ -15,8 +15,9 @@
 #include "ichat.h"
 
 //thread id
-pthread_t ntid;//connect thread id
-pthread_t mtid;//model thread id
+pthread_t ntid;//connect listening thread id
+pthread_t mtid;//model load thread id
+pthread_t ptid;//pipe listening thread id
 
 //socket server address
 struct sockaddr_in servaddr;
@@ -36,10 +37,10 @@ int pi[2];
 //pipe out
 int po[2];
 
-/// @brief ilisten socket listen
+/// @brief sock_listen socket listen
 ///
 /// @return 
-int ilisten(){
+int sock_listen(){
 	memset(&servaddr, ECF, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -49,12 +50,37 @@ int ilisten(){
 	return listen(skt, 10);
 }
 
-/// @brief iconnect socket connect, *thread function
+//TODO@TODO
+/// @brief pipe_listen listen the pipe, when recv msg, send it
+/// *thread; run in new thread
+/// @return void*0
+void* pipe_listen(void* arg){
+	int rc;
+	while((rc = read(po[0], buffer, BUF_LEN)) > 0){
+		//printf("son pipe recv: %s\n",bf);
+		send(son_skt, buffer, BUF_LEN*sizeof(char), 0);
+		memset(buffer, ECF, sizeof(char)*BUF_LEN);
+	}
+	return ((void *) 0);
+}
+
+/// @brief pipe_buffer_set set the buffer interruption char
+///
+/// @param buffer buffer pointer
+/// @param buffer_length buffer length
+void pipe_buffer_set(char* buffer, int buffer_length){
+	int strleng=strlen(buffer);
+	if(buffer_length > strleng){
+		buffer[strleng+1]=13;//13 is pipe interruption
+	}
+}
+
+/// @brief sock_connect socket connect, *thread function
 /// 
 /// @param arg
 ///
 /// @return void*0 
-void* iconnect(void *arg){
+void* sock_connect(void *arg){
 	//The function recv could block thread
 	for(;1;){//TODO in here, we shuold build a send model
 		int rc,strleng;
@@ -62,10 +88,10 @@ void* iconnect(void *arg){
 		if(recv(son_skt, buffer, 1000, 0)<=0){
 			break;
 		};
-		strleng=strlen(buffer);
-		if(BUF_LEN > strleng){
-			buffer[strleng+1]=13;//13 is pipe interruption
-		}
+		/**
+		 * Here! I have a big problem, I can not send one sock thread's socket ID to the receiver! TODO 
+		 **/
+		pipe_buffer_set(buffer, BUF_LEN);//set pipe buffer interruption char
 		printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
 		//send buffer into pipe
 		rc = write(pi[1], buffer, sizeof(char)*BUF_LEN);
@@ -77,7 +103,6 @@ void* iconnect(void *arg){
 	    }
 		
 		memset(buffer, ECF, sizeof(char)*BUF_LEN);
-		//close(pi[1]);
 	}
 	
 	printf("%s,%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
@@ -87,7 +112,7 @@ void* iconnect(void *arg){
 
 /// @brief loadmodel load model, *thread
 /// 
-/// @param arg model name TODO
+/// @param arg model name
 ///
 /// @return void*0 
 void* loadmodel(void* arg){
@@ -130,23 +155,25 @@ int main(int argc,char **argv){
 	//pthread_create(&mtid, NULL, loadmodel, NULL);
 
 	//start listen
-	ilisten();
+	sock_listen();
 
 	//create process for message dealing task
 	pid=fork();
 	if(0==pid){//in son process
 		close(pi[1]);//close send, use recv
-		close(po[0]);//close recv, use send TODO
+		close(po[0]);//close recv, use send
 		printf("son start\n");
 		char bf[BUF_LEN];
 		int rc;
-		while((rc = read(pi[0], bf, BUF_LEN)) > 0){
+		while((rc = read(pi[0], bf, BUF_LEN)) > 0){//TODO TODO
 			printf("son pipe recv: %s\n",bf);
+			pipe_buffer_set(bf, BUF_LEN);
+			rc = write(po[1], bf, sizeof(char)*BUF_LEN);//write the recvd msg into po
 			memset(bf, ECF, sizeof(char)*BUF_LEN);
 		}
 	}else{
 		close(pi[0]);//close recv, use send
-		close(po[1]);//close send, use recv TODO
+		close(po[1]);//close send, use recv
 		//sock length
 		len = sizeof(clientaddr);
 		//loop listen and accept
@@ -155,7 +182,8 @@ int main(int argc,char **argv){
 			if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
 				printf("%s,%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
 				//if accepted, create thread!
-				err = pthread_create(&ntid, NULL, iconnect, NULL);
+				err = pthread_create(&ntid, NULL, sock_connect, NULL);
+				err = pthread_create(&ptid, NULL, pipe_listen, NULL);
 			}
 		}
 	}
