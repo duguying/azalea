@@ -1,10 +1,8 @@
-/* 
- * File:   tcper.c
- * Author: rex
- * Client Tcp Tester
- * Created on 2013/9/26/, 8:26pm
- */
-
+/// @file tcper.c
+/// @brief 
+/// @author Rex Lee duguying2008@gmail.com
+/// @version 0.01
+/// @date 2013-9-26
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,10 +15,12 @@
 struct sockaddr_in saddr;
 char buf[1000];
 
-/*
- * client tcp tester
- * tcper arg1[ip] arg2[port]
- */
+/// @brief main 
+/// tcper arg1[ip] arg2[port]
+/// @param argc
+/// @param argv 
+///
+/// @return success 0
 int main(int argc, char** argv) {
 	int skt;
 	socklen_t len;

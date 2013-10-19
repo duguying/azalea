@@ -1,3 +1,8 @@
+/// @file test.c
+/// @brief log model test
+/// @author Rex Lee duguying2008@gmail.com
+/// @version 0.01
+/// @date 2013-10-19
 #include <stdio.h>
 #include "log.c"
 

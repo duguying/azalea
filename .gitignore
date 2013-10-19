@@ -2,46 +2,22 @@
 *~
 *.swp
 
-# Object files
-*.o
-
-# Libraries
-*.lib
-*.a
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-
 # Cmake build
 /build
-
-# Visual studio
-*.suo
-*.obj
-/windows/build
-/windows/makefile
-
-# Test
-/test
-*makefile
-
-# tcper
-/tcper/bin
 
 # sqlite
 /dbs/sqlite
 
 # log
-/log/bin
 *.log
 
 # Note
 /note.txt
+
+# Binarary
+*.exe
+*.so
+*.dll
+
+# Makefile
+makefile

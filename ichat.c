@@ -1,3 +1,8 @@
+/// @file ichat.c
+/// @brief Core
+/// @author Rex Lee duguying2008@gmail.com
+/// @version 0.01
+/// @date 2013-10-19
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,10 +12,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <dlfcn.h>
-
-#define BUF_LEN 1000 //buffer length
-#define PORT 6666 //port
-#define ECF 0 //Empty Char Fill
+#include "ichat.h"
 
 //thread id
 pthread_t ntid;//connect thread id
@@ -34,7 +36,9 @@ int pi[2];
 //pipe out
 int po[2];
 
-//socket listen
+/// @brief ilisten socket listen
+///
+/// @return 
 int ilisten(){
 	memset(&servaddr, ECF, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
@@ -45,8 +49,11 @@ int ilisten(){
 	return listen(skt, 10);
 }
 
-//socket connect
-//*thread function
+/// @brief iconnect socket connect, *thread function
+/// 
+/// @param arg
+///
+/// @return void*0 
 void* iconnect(void *arg){
 	//The function recv could block thread
 	for(;1;){//TODO in here, we shuold build a send model
@@ -65,8 +72,8 @@ void* iconnect(void *arg){
 		
 		if( rc == -1 ){
 	      perror ("Parent: write");
-	      close( pi[ 1 ] );
-	      exit( 1 );
+	      close(pi[1]);
+	      exit(1);
 	    }
 		
 		memset(buffer, ECF, sizeof(char)*BUF_LEN);
@@ -78,8 +85,11 @@ void* iconnect(void *arg){
 	return ((void *) 0);
 }
 
-//load model
-//*thread
+/// @brief loadmodel load model, *thread
+/// 
+/// @param arg model name TODO
+///
+/// @return void*0 
 void* loadmodel(void* arg){
 	//load models
 	void *lib_handle;
@@ -97,7 +107,12 @@ void* loadmodel(void* arg){
 	return ((void *) 0);
 }
 
-//main function
+/// @brief main main function
+/// 
+/// @param argc
+/// @param argv
+///
+/// @return 
 int main(int argc,char **argv){
 	int err;
 	socklen_t len;
@@ -109,6 +124,7 @@ int main(int argc,char **argv){
 
 	//create pipe
 	pipe(pi);
+	pipe(po);
 
 	//load model in new thread
 	//pthread_create(&mtid, NULL, loadmodel, NULL);
@@ -119,7 +135,8 @@ int main(int argc,char **argv){
 	//create process for message dealing task
 	pid=fork();
 	if(0==pid){//in son process
-		close(pi[1]);//close this and create another, use that to send message back TODO
+		close(pi[1]);//close send, use recv
+		close(po[0]);//close recv, use send TODO
 		printf("son start\n");
 		char bf[BUF_LEN];
 		int rc;
@@ -128,7 +145,8 @@ int main(int argc,char **argv){
 			memset(bf, ECF, sizeof(char)*BUF_LEN);
 		}
 	}else{
-		close(pi[0]);//TODO Line 120
+		close(pi[0]);//close recv, use send
+		close(po[1]);//close send, use recv TODO
 		//sock length
 		len = sizeof(clientaddr);
 		//loop listen and accept
@@ -140,7 +158,6 @@ int main(int argc,char **argv){
 				err = pthread_create(&ntid, NULL, iconnect, NULL);
 			}
 		}
-	
 	}
 
 	return 0;

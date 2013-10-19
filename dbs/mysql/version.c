@@ -1,3 +1,8 @@
+/// @file version.c
+/// @brief mysql version show
+/// @author Rex Lee duguying2008@gmail.com
+/// @version 
+/// @date 2013-10-19
 #include <my_global.h>
 #include <mysql.h>
 

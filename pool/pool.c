@@ -1,12 +1,16 @@
-/**
- * This is Connection Pool Model
- * its a solid library
- * it will be build as a static library
- * @author Rex Lee
- */
+/// @file pool.c
+/// @brief Connection Pool
+/// @author Rex Lee duguying2008@gmail.com
+/// @version 
+/// @date 2013-10-19
 #include <stdio.h>
 #include <stdlib.h>
 
-int pool_init(void){
+/// @brief pool_init 
+///
+/// @param arg
+///
+/// @return 
+int pool_init(int arg){
 	return 0;
 }
