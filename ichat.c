@@ -29,8 +29,10 @@ int son_skt;
 //buffer
 char buffer[BUF_LEN];
 
-//pipe
-int pp[2];
+//pipe in
+int pi[2];
+//pipe out
+int po[2];
 
 //socket listen
 int ilisten(){
@@ -47,7 +49,7 @@ int ilisten(){
 //*thread function
 void* iconnect(void *arg){
 	//The function recv could block thread
-	for(;1;){
+	for(;1;){//TODO in here, we shuold build a send model
 		int rc,strleng;
 		//connect ended or error, exit
 		if(recv(son_skt, buffer, 1000, 0)<=0){
@@ -58,17 +60,17 @@ void* iconnect(void *arg){
 			buffer[strleng+1]=13;//13 is pipe interruption
 		}
 		printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port),buffer);
-		//send buffer into pipe TODO
-		rc = write(pp[1], buffer, sizeof(char)*BUF_LEN);
+		//send buffer into pipe
+		rc = write(pi[1], buffer, sizeof(char)*BUF_LEN);
 		
 		if( rc == -1 ){
 	      perror ("Parent: write");
-	      close( pp[ 1 ] );
+	      close( pi[ 1 ] );
 	      exit( 1 );
 	    }
 		
 		memset(buffer, ECF, sizeof(char)*BUF_LEN);
-		//close(pp[1]);
+		//close(pi[1]);
 	}
 	
 	printf("%s,%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
@@ -105,8 +107,8 @@ int main(int argc,char **argv){
 	int fh1=log_create("test.log");
 	logw("test, this is a log!\n",fh1);
 
-	//create pipe TODO
-	pipe(pp);
+	//create pipe
+	pipe(pi);
 
 	//load model in new thread
 	//pthread_create(&mtid, NULL, loadmodel, NULL);
@@ -117,19 +119,16 @@ int main(int argc,char **argv){
 	//create process for message dealing task
 	pid=fork();
 	if(0==pid){//in son process
-		close(pp[1]);//in son, close the pipe write
-		//TODO
+		close(pi[1]);//close this and create another, use that to send message back TODO
 		printf("son start\n");
 		char bf[BUF_LEN];
 		int rc;
-		while((rc = read(pp[0], bf, BUF_LEN)) > 0){
+		while((rc = read(pi[0], bf, BUF_LEN)) > 0){
 			printf("son pipe recv: %s\n",bf);
 			memset(bf, ECF, sizeof(char)*BUF_LEN);
 		}
-		
-		//getchar();
 	}else{
-		close(pp[0]);//in father, close the pipe read port
+		close(pi[0]);//TODO Line 120
 		//sock length
 		len = sizeof(clientaddr);
 		//loop listen and accept
@@ -143,8 +142,6 @@ int main(int argc,char **argv){
 		}
 	
 	}
-
-	
 
 	return 0;
 }

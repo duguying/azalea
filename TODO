@@ -3,6 +3,7 @@ tcp model
 websocket model
 
 # Database Driver
+mysql driver
 sqlite driver
 
 # Log
@@ -10,3 +11,7 @@ text log
 
 # Tcp Client Tester
 shutdown when server closed the socket
+
+# Parser
+message transport protocol
+message parser

@@ -15,6 +15,7 @@ set(MYDRV_LIST dbs/mysql/mysql_driver.c)
 set(MYSQLDRV_TEST dbs/mysql/mysql_test.c)
 set(CONF_LIST config/config.c)
 set(POOL_LIST pool/pool.c)
+set(PARSER_LIST parser/parser.c)
 
 #############################################
 # include directories
@@ -37,6 +38,7 @@ add_executable(logtest ${LOG_TEST}) # log test
 add_library(log STATIC ${LOG_LIST})
 add_library(config STATIC ${CONF_LIST})
 add_library(pool STATIC ${POOL_LIST})
+add_library(parser STATIC ${PARSER_LIST})
 # dynamic libraries
 add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
 
