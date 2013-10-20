@@ -4,4 +4,57 @@
 <svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="960px" height="560px" viewBox="0 0 960 560" enable-background="new 0 0 960 560" xml:space="preserve">
 <circle fill="#00FFFF" stroke="#FFFF00" stroke-miterlimit="10" cx="466.69" cy="279.5" r="273.214"/>
+<circle fill="#EBFF24" stroke="#FFFF00" stroke-miterlimit="10" cx="594.477" cy="122.5" r="18"/>
+<circle fill="#EBFF24" stroke="#FFFF00" stroke-miterlimit="10" cx="666.477" cy="183.5" r="18"/>
+<circle fill="#EBFF24" stroke="#FFFF00" stroke-miterlimit="10" cx="590.477" cy="241.5" r="18"/>
+<circle fill="#EBFF24" stroke="#FFFF00" stroke-miterlimit="10" cx="684.477" cy="302.5" r="18"/>
+<circle fill="#EBFF24" stroke="#FFFF00" stroke-miterlimit="10" cx="543.477" cy="352.5" r="18"/>
+<path fill="#F95BFF" stroke="#FFFF00" stroke-miterlimit="10" d="M295.5,421.5c0,6.627-5.373,12-12,12h-1c-6.627,0-12-5.373-12-12
+	v-269c0-6.627,5.373-12,12-12h1c6.627,0,12,5.373,12,12V421.5z"/>
+<path fill="#F95BFF" stroke="#FFFF00" stroke-miterlimit="10" d="M345.5,422c0,6.352-5.149,11.5-11.5,11.5l0,0
+	c-6.351,0-11.5-5.148-11.5-11.5V152c0-6.351,5.149-11.5,11.5-11.5l0,0c6.351,0,11.5,5.149,11.5,11.5V422z"/>
+<line fill="#F2FF28" stroke="#DDFA00" stroke-miterlimit="10" x1="270.5" y1="155.147" x2="295.5" y2="155.147"/>
+<line fill="#EBFF1F" stroke="#ECFF32" stroke-miterlimit="10" x1="270.5" y1="178.909" x2="295.5" y2="178.909"/>
+<line fill="#ECFF28" stroke="#F0FF0D" stroke-miterlimit="10" x1="270.5" y1="204.408" x2="295.5" y2="204.408"/>
+<line fill="#DEFF1F" stroke="#E9FF0D" stroke-miterlimit="10" x1="270.5" y1="229.329" x2="295.5" y2="229.329"/>
+<line fill="#E2FF0D" stroke="#E4FF1B" stroke-miterlimit="10" x1="270.5" y1="255.988" x2="295.5" y2="255.988"/>
+<line fill="#F2FF28" stroke="#E8FF00" stroke-miterlimit="10" x1="270.5" y1="282.067" x2="295.5" y2="282.067"/>
+<line fill="#EFFF00" stroke="#E3FF12" stroke-miterlimit="10" x1="270.5" y1="312.203" x2="295.5" y2="312.203"/>
+<line fill="#DCFF12" stroke="#F1FF1B" stroke-miterlimit="10" x1="270.5" y1="342.919" x2="295.5" y2="342.919"/>
+<line fill="#DAFF00" stroke="#F0FF0D" stroke-miterlimit="10" x1="270.5" y1="375.373" x2="295.5" y2="375.373"/>
+<line fill="#F0FF16" stroke="#E4FA00" stroke-miterlimit="10" x1="270.5" y1="406.089" x2="295.5" y2="406.089"/>
+<line fill="#EAFF12" stroke="#FFF100" stroke-miterlimit="10" x1="321.5" y1="155.147" x2="346.5" y2="155.147"/>
+<line fill="#F2FA00" stroke="#F0FF12" stroke-miterlimit="10" x1="321.5" y1="178.909" x2="346.5" y2="178.909"/>
+<line fill="#F0FF09" stroke="#F1FF1B" stroke-miterlimit="10" x1="321.5" y1="204.408" x2="346.5" y2="204.408"/>
+<line fill="#EAFF1B" stroke="#DAFF04" stroke-miterlimit="10" x1="321.5" y1="229.329" x2="346.5" y2="229.329"/>
+<line fill="#F1FF1B" stroke="#DCFF0D" stroke-miterlimit="10" x1="321.5" y1="255.988" x2="346.5" y2="255.988"/>
+<line fill="#EBFF1F" stroke="#F0FF12" stroke-miterlimit="10" x1="321.5" y1="282.067" x2="346.5" y2="282.067"/>
+<line fill="#E1FF04" stroke="#F1FF1F" stroke-miterlimit="10" x1="321.5" y1="312.203" x2="346.5" y2="312.203"/>
+<line fill="#EAFF12" stroke="#F6FF09" stroke-miterlimit="10" x1="321.5" y1="342.919" x2="346.5" y2="342.919"/>
+<line fill="#F0FF0D" stroke="#EFFF04" stroke-miterlimit="10" x1="321.5" y1="375.373" x2="346.5" y2="375.373"/>
+<line fill="#F3FF3B" stroke="#E9FF09" stroke-miterlimit="10" x1="321.5" y1="406.089" x2="346.5" y2="406.089"/>
+<rect x="255.5" y="128.5" fill="none" stroke="#120F00" stroke-miterlimit="10" width="106" height="316"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="345.5" y1="165.5" x2="576.477" y2="128.5"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="345.5" y1="192.5" x2="572.477" y2="236.5"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="607.33" y1="247.827" x2="670.058" y2="291.724"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="670.058" y1="313.276" x2="561.477" y2="347.5"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="608.477" y1="133.809" x2="655.707" y2="169.076"/>
+<rect x="796.5" y="55.5" fill="none" stroke="#120F00" stroke-miterlimit="10" width="35" height="463"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="796.5" y1="88.5" x2="831.5" y2="88.5"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="796.5" y1="122.5" x2="831.5" y2="122.5"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="796.5" y1="155.147" x2="831.5" y2="155.147"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="796.5" y1="183.5" x2="831.5" y2="183.5"/>
+<line fill="none" stroke="#120F00" stroke-miterlimit="10" x1="796.5" y1="214.5" x2="831.5" y2="214.5"/>
+<line fill="none" stroke="#09FF04" stroke-miterlimit="10" x1="796.5" y1="70.5" x2="608.477" y2="111.191"/>
+<line fill="none" stroke="#09FF04" stroke-miterlimit="10" x1="796.5" y1="104.5" x2="681.441" y2="173.498"/>
+<line fill="none" stroke="#09FF04" stroke-miterlimit="10" x1="796.5" y1="140.5" x2="608.477" y2="241.5"/>
+<line fill="none" stroke="#09FF04" stroke-miterlimit="10" x1="796.5" y1="169.076" x2="556.204" y2="339.771"/>
+<line fill="none" stroke="#09FF04" stroke-miterlimit="10" x1="796.5" y1="201.5" x2="698.896" y2="291.724"/>
+<text transform="matrix(1 0 0 1 853.0723 111.5991)" font-family="'MicrosoftYaHei'" font-size="12">hashtable</text>
+<text transform="matrix(1 0 0 1 579.2617 124.5)" font-family="'MicrosoftYaHei'" font-size="12">user1</text>
+<text transform="matrix(1 0 0 1 650.4766 188.5)" font-family="'MicrosoftYaHei'" font-size="12">user2</text>
+<text transform="matrix(1 0 0 1 574.4766 244.8271)" font-family="'MicrosoftYaHei'" font-size="12">user3</text>
+<text transform="matrix(1 0 0 1 668.4766 307.168)" font-family="'MicrosoftYaHei'" font-size="12">user4</text>
+<text transform="matrix(1 0 0 1 528.3516 358.1719)" font-family="'MicrosoftYaHei'" font-size="12">user5</text>
+<text transform="matrix(1 0 0 1 19.1133 66.6016)"><tspan x="0" y="0" font-family="'MicrosoftYaHei'" font-size="12">user1 chatting with user2</tspan><tspan x="0" y="14.4" font-family="'MicrosoftYaHei'" font-size="12">user3, user4, user5 chatting in a group</tspan></text>
 </svg>

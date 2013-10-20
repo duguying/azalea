@@ -10,6 +10,9 @@ a chatting server
 
 ![design](https://rawgithub.com/duguying/ichat/master/docs/design.svg)
 
+# core #
+![core](https://rawgithub.com/duguying/ichat/master/docs/core.svg)
+
 # build #
 
 ```shell
