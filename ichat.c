@@ -13,6 +13,7 @@
 #include <arpa/inet.h>
 #include <dlfcn.h>
 #include "ichat.h"
+#include "pool/pool.h"
 
 //thread id
 pthread_t ntid;//connect listening thread id
@@ -50,12 +51,17 @@ int sock_listen(){
 	return listen(skt, 10);
 }
 
-//TODO@TODO
+//TODO@TODO@TODO
 /// @brief pipe_listen listen the pipe, when recv msg, send it
 /// *thread; run in new thread
 /// @return void*0
 void* pipe_listen(void* arg){
+
+	//cause of this is a single thread, TODO
+	//the message should contain socket id (skt_id) information or message which can get the skt_id
+	
 	int rc;
+	//pool_get_skt TODO
 	while((rc = read(po[0], buffer, BUF_LEN)) > 0){
 		//printf("son pipe recv: %s\n",bf);
 		send(son_skt, buffer, BUF_LEN*sizeof(char), 0);
@@ -82,7 +88,7 @@ void pipe_buffer_set(char* buffer, int buffer_length){
 /// @return void*0 
 void* sock_connect(void *arg){
 	//The function recv could block thread
-	for(;1;){//TODO in here, we shuold build a send model
+	for(;1;){// in here, we shuold build a send model
 		int rc,strleng;
 		//connect ended or error, exit
 		if(recv(son_skt, buffer, 1000, 0)<=0){
@@ -165,7 +171,7 @@ int main(int argc,char **argv){
 		printf("son start\n");
 		char bf[BUF_LEN];
 		int rc;
-		while((rc = read(pi[0], bf, BUF_LEN)) > 0){//TODO TODO
+		while((rc = read(pi[0], bf, BUF_LEN)) > 0){//TODO
 			printf("son pipe recv: %s\n",bf);
 			pipe_buffer_set(bf, BUF_LEN);
 			rc = write(po[1], bf, sizeof(char)*BUF_LEN);//write the recvd msg into po
@@ -174,6 +180,8 @@ int main(int argc,char **argv){
 	}else{
 		close(pi[0]);//close recv, use send
 		close(po[1]);//close send, use recv
+		//create new thread to manage pipe listen
+		err = pthread_create(&ptid, NULL, pipe_listen, NULL);
 		//sock length
 		len = sizeof(clientaddr);
 		//loop listen and accept
@@ -181,9 +189,10 @@ int main(int argc,char **argv){
 			//The function `accept` can block the process, so, i need't sleep
 			if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
 				printf("%s,%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
+				//send connection message into the connection pool
+				pool_conn("127.0.0.1,1234", son_skt); //arg 1 is just a test now
 				//if accepted, create thread!
 				err = pthread_create(&ntid, NULL, sock_connect, NULL);
-				err = pthread_create(&ptid, NULL, pipe_listen, NULL);
 			}
 		}
 	}
