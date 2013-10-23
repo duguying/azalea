@@ -71,7 +71,7 @@ int socket_listen(){
 void* sock_listen(void *arg){
 	Msg packed_msg;
 	memset(&packed_msg, ECF, sizeof(Msg));
-	char pipe_buffer[PPB_LEN];//!TODO get 1017 char, number is unknown
+	char pipe_buffer[PPB_LEN];
 	//The function recv could block thread
 	for(;1;){// in here, we shuold build a send model
 		int rc,strleng;
@@ -80,7 +80,7 @@ void* sock_listen(void *arg){
 			break;
 		};
 
-		packed_msg.to_id=1;
+		packed_msg.to_id=15;
 		packed_msg.from=son_skt;
 		//message(&packed_msg, sock_buffer, 1, son_skt);//TODO set 1 as a user id
 		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
@@ -88,7 +88,7 @@ void* sock_listen(void *arg){
 		printf("packed msg: %s, length: %d \n", (char*)(&packed_msg), (sizeof(packed_msg)/sizeof(char)));//packed msg shown as char
 
 		//pipe_buffer_set(pipe_buffer, PPB_LEN);//set pipe buffer interruption char 
-		pipe_buffer[PPB_LEN]=13;//set interruption
+		//pipe_buffer[PPB_LEN]=13;//set interruption
 		printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), packed_msg.message);
 		//send buffer into pipe
 		
@@ -126,12 +126,9 @@ void* pipe_listen(void* arg){
 
 	while((rc = read(po[0], fa_pipe_buffer, PPB_LEN)) > 0){//!!!TODO Blocked
 		//printf("son pipe recv: %s\n",bf);
-		//TODO send(son_skt, sock_buffer, BUF_LEN*sizeof(char), 0);
-		printf("father pipe recv: %s", fa_pipe_buffer);
-		//pipe_buffer_set(fa_pipe_buffer, BUF_LEN*sizeof(char));
+		send(/*((Msg*)fa_pipe_buffer)->to_id*/15, ((Msg*)fa_pipe_buffer)->message, BUF_LEN, 0);
 		memset(fa_pipe_buffer, ECF, sizeof(Msg)+1);
 	}
-	printf("&%d&", rc);
 	return ((void *) 0);
 }
 
@@ -193,11 +190,12 @@ int main(int argc,char **argv){
 		char pipe_buffer[PPB_LEN];
 		int rc;
 		while((rc = read(pi[0], pipe_buffer, PPB_LEN)) > 0){//TODO
-			printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->to_id);//in general, the id packed! !TODO TODO
+			printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->to_id);
 
-			pipe_buffer[PPB_LEN]=13;
+			//pipe_buffer[PPB_LEN]=13;
 			//memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
-			rc = write(po[1], &pipe_buffer, PPB_LEN);	//write the recvd msg into po for sendding to sock sender
+			printf("^%d^", sizeof(pipe_buffer));
+			rc = write(po[1], pipe_buffer, PPB_LEN);	//write the recvd msg into po for sendding to sock sender
 			memset(pipe_buffer, ECF, PPB_LEN);
 		}
 	}else{// in fahter
@@ -211,7 +209,7 @@ int main(int argc,char **argv){
 		for(;1;){
 			//The function `accept` can block the process, so, i need't sleep
 			if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
-				printf("%s,%u: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
+				printf("%s,%u;skt %d: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
 				//send connection message into the connection pool
 				//pool_conn("127.0.0.1,1234", son_skt); //arg 1 is just a test now
 				//if accepted, create thread!
