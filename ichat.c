@@ -35,6 +35,8 @@ int pi[2];
 //pipe out
 int po[2];
 
+//////////////////////////////////////////////////////////////////////
+
 //组装信息
 Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt){
 	Msg m;
@@ -45,6 +47,8 @@ Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt){
 
 	return packed_msg;
 }
+
+//////////////////////////socket//////////////////////////////////////
 
 /// @brief socket_listen socket listen to connect
 ///
@@ -59,37 +63,6 @@ int socket_listen(){
 	return listen(skt, 10);
 }
 
-/// @brief pipe_listen listen the pipe, when recv msg, send it
-/// *thread; run in new thread
-/// @return void*0
-void* pipe_listen(void* arg){
-
-	//cause of this is a single thread, TODO
-	//the message should contain socket id (skt_id) information or message which can get the skt_id
-	
-	int rc;
-	char sock_buffer[BUF_LEN];//get 10000 char, but just one time
-	memset(sock_buffer, ECF, sizeof(char)*BUF_LEN);
-	//pool_get_skt TODO
-	while((rc = read(po[0], sock_buffer, BUF_LEN)) > 0){
-		//printf("son pipe recv: %s\n",bf);
-		send(son_skt, sock_buffer, BUF_LEN*sizeof(char), 0);
-		memset(sock_buffer, ECF, sizeof(char)*BUF_LEN);
-	}
-	return ((void *) 0);
-}
-
-/// @brief pipe_buffer_set set the buffer interruption char
-///
-/// @param buffer buffer pointer
-/// @param buffer_length buffer length
-void pipe_buffer_set(char* buffer, int buffer_length){
-	int strleng=strlen(buffer);
-	if(buffer_length > strleng){
-		buffer[strleng+1]=13;//13 is pipe interruption
-	}
-}
-
 /// @brief sock_listen socket connect and listen to read sock message, *thread function
 /// 
 /// @param arg
@@ -97,8 +70,8 @@ void pipe_buffer_set(char* buffer, int buffer_length){
 /// @return void*0 
 void* sock_listen(void *arg){
 	Msg packed_msg;
-	memset(&packed_msg, 'a', sizeof(Msg));
-	char pipe_buffer[sizeof(Msg)+1];//!TODO get 1017 char, number is unknown
+	memset(&packed_msg, ECF, sizeof(Msg));
+	char pipe_buffer[PPB_LEN];//!TODO get 1017 char, number is unknown
 	//The function recv could block thread
 	for(;1;){// in here, we shuold build a send model
 		int rc,strleng;
@@ -112,15 +85,15 @@ void* sock_listen(void *arg){
 		//message(&packed_msg, sock_buffer, 1, son_skt);//TODO set 1 as a user id
 		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
 
-		printf("packed msg: %s", (&packed_msg));//TODO@TODO@TODO@TODO message shown there, the message had not packed
+		printf("packed msg: %s, length: %d \n", (char*)(&packed_msg), (sizeof(packed_msg)/sizeof(char)));//packed msg shown as char
 
-		//pipe_buffer_set(pipe_buffer, sizeof(Msg)+1);//set pipe buffer interruption char 
-		pipe_buffer[sizeof(Msg)]=13;
+		//pipe_buffer_set(pipe_buffer, PPB_LEN);//set pipe buffer interruption char 
+		pipe_buffer[PPB_LEN]=13;//set interruption
 		printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), packed_msg.message);
 		//send buffer into pipe
 		
 		//printf("pipe send: %s", (char*)pipe_buffer);
-		rc = write(pi[1], pipe_buffer, sizeof(Msg)+1);//!TODO DO NOT send the msg pointer, send the msg, here need to be change
+		rc = write(pi[1], pipe_buffer, PPB_LEN);//!TODO DO NOT send the msg pointer, send the msg, here need to be change
 		
 
 		if( rc == -1 ){
@@ -136,6 +109,33 @@ void* sock_listen(void *arg){
 	//here the thread is exit
 	return ((void *) 0);
 }
+
+/////////////////////////pipe/////////////////////////////////////////
+
+/// @brief pipe_listen listen the pipe, when recv msg, send it
+/// *thread; run in new thread
+/// @return void*0
+void* pipe_listen(void* arg){
+
+	//cause of this is a single thread
+	//the message should contain socket id (skt_id) information or message which can get the skt_id
+	//printf("father pipe");	
+	int rc;
+	char fa_pipe_buffer[BUF_LEN];//get 1000 char, but just one time
+	memset(fa_pipe_buffer, ECF, sizeof(char)*BUF_LEN);
+
+	while((rc = read(po[0], fa_pipe_buffer, PPB_LEN)) > 0){//!!!TODO Blocked
+		//printf("son pipe recv: %s\n",bf);
+		//TODO send(son_skt, sock_buffer, BUF_LEN*sizeof(char), 0);
+		printf("father pipe recv: %s", fa_pipe_buffer);
+		//pipe_buffer_set(fa_pipe_buffer, BUF_LEN*sizeof(char));
+		memset(fa_pipe_buffer, ECF, sizeof(Msg)+1);
+	}
+	printf("&%d&", rc);
+	return ((void *) 0);
+}
+
+////////////////////////////model/////////////////////////////////////
 
 /// @brief loadmodel load model, *thread
 /// 
@@ -190,13 +190,15 @@ int main(int argc,char **argv){
 		close(pi[1]);//close send, use recv
 		close(po[0]);//close recv, use send
 		printf("son start\n");
-		char pipe_buffer[sizeof(Msg)+1];
+		char pipe_buffer[PPB_LEN];
 		int rc;
-		while((rc = read(pi[0], pipe_buffer, sizeof(Msg)+1)) > 0){//TODO
+		while((rc = read(pi[0], pipe_buffer, PPB_LEN)) > 0){//TODO
 			printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->to_id);//in general, the id packed! !TODO TODO
-			pipe_buffer_set(pipe_buffer, BUF_LEN);
-			rc = write(po[1], pipe_buffer, sizeof(Msg));//write the recvd msg into po
-			memset(pipe_buffer, ECF, sizeof(Msg));
+
+			pipe_buffer[PPB_LEN]=13;
+			//memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
+			rc = write(po[1], &pipe_buffer, PPB_LEN);	//write the recvd msg into po for sendding to sock sender
+			memset(pipe_buffer, ECF, PPB_LEN);
 		}
 	}else{// in fahter
 		close(pi[0]);//close recv, use send
