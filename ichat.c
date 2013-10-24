@@ -69,16 +69,27 @@ int socket_listen(){
 ///
 /// @return void*0 
 void* sock_listen(void *arg){
+	int pooled=0;//if saved in pool is 1, else 0
 	Msg packed_msg;
-	memset(&packed_msg, ECF, sizeof(Msg));
+	
 	char pipe_buffer[PPB_LEN];
+	memset(&packed_msg, ECF, sizeof(Msg));	
+
 	//The function recv could block thread
 	for(;1;){// in here, we shuold build a send model
 		int rc,strleng;
+		char tmpchar[20];//temprary chars
 		//connect ended or error, exit
 		if(recv(son_skt, packed_msg.message, BUF_LEN, 0)<=0){//recved and put it into packed msg
 			break;
 		};
+		
+		strncpy(tmpchar,packed_msg.message,1);	//if is "$lijun"	TODO&TODO&TODO Parse connection command
+		if((!pooled)&&(!strcmp("$", tmpchar))){	//0 and $ start, now save in pool
+			memset(&tmpchar, 0, sizeof(char)*20);
+			strncpy(tmpchar, packed_msg.message, 20);
+			pool_save((tmpchar+1), son_skt);	//save "lijun"
+		}
 
 		packed_msg.to_id=15;
 		packed_msg.from=son_skt;
@@ -170,6 +181,9 @@ int main(int argc,char **argv){
 	
 	int fh1=log_create("test.log");
 	logw("test, this is a log!\n",fh1);
+	
+	//pool initial
+	pool_init(NULL);
 
 	//create pipe
 	pipe(pi);
@@ -194,7 +208,7 @@ int main(int argc,char **argv){
 
 			//pipe_buffer[PPB_LEN]=13;
 			//memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
-			printf("^%d^", sizeof(pipe_buffer));
+			//printf("^%d^", sizeof(pipe_buffer));
 			rc = write(po[1], pipe_buffer, PPB_LEN);	//write the recvd msg into po for sendding to sock sender
 			memset(pipe_buffer, ECF, PPB_LEN);
 		}
