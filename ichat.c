@@ -29,7 +29,7 @@ struct sockaddr_in clientaddr;
 int skt;
 
 //thread connect son socket temparay id
-int son_skt;
+//int son_skt; //this CAN NOT be global
 
 //pipe in
 int pi[2];
@@ -75,16 +75,26 @@ void* sock_listen(void *arg)
 {
 	int pooled=0;//if saved in pool is 1, else 0
 	Msg packed_msg;
-	
+
+	int tskt;//the socket id of this thread
+
+	int rc,strleng;
+	char tmpchar[20];//temprary chars
+	char username[20];//username
+
 	char pipe_buffer[PPB_LEN];
-	memset(&packed_msg, ECF, sizeof(Msg));	
+	memset(&packed_msg, ECF, sizeof(Msg));
+
+	tskt=*(int*)arg;
+	printf("tskt is %d\n", tskt);
+
+	packed_msg.to_id=0;	//default is 0	
 
 	//The function recv could block thread
 	for(;1;){// in here, we shuold build a send model
-		int rc,strleng;
-		char tmpchar[20];//temprary chars
+		
 		//connect ended or error, exit
-		if(recv(son_skt, packed_msg.message, BUF_LEN, 0)<=0){//recved and put it into packed msg
+		if(recv(tskt, packed_msg.message, BUF_LEN, 0)<=0){//recved and put it into packed msg
 			break;
 		};
 		
@@ -92,24 +102,22 @@ void* sock_listen(void *arg)
 		if((!pooled)&&(!strcmp("$", tmpchar))){	//0 and $ start, now save in pool
 			memset(&tmpchar, 0, sizeof(char)*20);
 			strncpy(tmpchar, packed_msg.message, 20);
-			pool_save((tmpchar+1), son_skt);	//save "username"
+			pool_save((tmpchar+1), tskt);	//save "username"
+			strncpy(username,(tmpchar+1),19);
 			pooled=1;
+			memset(&tmpchar, 0, sizeof(char)*20);
 		}
 
 		if(pooled&&(!strcmp("*", tmpchar))){
 			int stskt;
-			HashNode* Cnode;
-			memset(&tmpchar, 0, sizeof(char)*20);
-			strncpy(tmpchar, packed_msg.message, 20);
-			//search the (tmpchar+1);
-			//Cnode=ht_lookup((const char*)(tmpchar+1));
-			//stskt=Cnode->nValue;
-			printf("the one you send's skt %s\n", stskt);
+			stskt=ht_lookup(packed_msg.message+1)->nValue;
+			printf("\033[0;33myou will send to skt %d\033[0;0m\n", stskt);
+			packed_msg.to_id=stskt;	//default is 0
 		}
-
-		packed_msg.to_id=0;	//default is 0
-		packed_msg.from=son_skt;
-		//message(&packed_msg, sock_buffer, 1, son_skt);//TODO set 1 as a user id
+		
+		
+		packed_msg.from=tskt;
+		
 		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
 
 		printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), packed_msg.message);
@@ -118,7 +126,6 @@ void* sock_listen(void *arg)
 		//printf("pipe send: %s", (char*)pipe_buffer);
 		rc = write(pi[1], pipe_buffer, PPB_LEN);//!TODO DO NOT send the msg pointer, send the msg, here need to be change
 		
-
 		if( rc == -1 ){
 	      perror ("Parent: write");
 	      close(pi[1]);
@@ -128,7 +135,9 @@ void* sock_listen(void *arg)
 		memset(packed_msg.message, ECF, sizeof(char)*BUF_LEN);
 	}
 	
-	printf("\033[1;34m%s,%u;skt %d: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), son_skt);
+	ht_remove((const char*)&username);//free the user from pool
+	
+	printf("\033[1;34m%s,%u;skt %d: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), tskt);
 	//here the thread is exit
 	return ((void *) 0);
 }
@@ -140,17 +149,22 @@ void* sock_listen(void *arg)
 /// @return void*0
 void* pipe_listen(void* arg)
 {
-
 	//cause of this is a single thread
 	//the message should contain socket id (skt_id) information or message which can get the skt_id
 	//printf("father pipe");	
 	int rc;
+	//int pooled=0;
 	char fa_pipe_buffer[BUF_LEN];//get 1000 char, but just one time
+	char tmpchar[20];//temprary chars
+
 	memset(fa_pipe_buffer, ECF, sizeof(char)*BUF_LEN);
 
-	while((rc = read(po[0], fa_pipe_buffer, PPB_LEN)) > 0){//!!!TODO Blocked
+	while((rc = read(po[0], fa_pipe_buffer, PPB_LEN)) > 0){//!!!Here Cannot Print Message
 		//printf("son pipe recv: %s\n",bf);
-		send(/*((Msg*)fa_pipe_buffer)->to_id*/15, ((Msg*)fa_pipe_buffer)->message, BUF_LEN, 0);
+		printf("to id %d\n", ((Msg*)fa_pipe_buffer)->to_id);
+		if(((Msg*)fa_pipe_buffer)->to_id){
+			send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, BUF_LEN, 0);
+		}
 		memset(fa_pipe_buffer, ECF, sizeof(Msg)+1);
 	}
 	return ((void *) 0);
@@ -193,6 +207,8 @@ int main(int argc,char **argv)
 	socklen_t len;
 	//dealing process id
 	int pid;
+	//son socket id
+	int son_skt;
 	
 	int fh1=log_create("test.log");
 	logw("test, this is a log!\n",fh1);
@@ -219,7 +235,7 @@ int main(int argc,char **argv)
 		char pipe_buffer[PPB_LEN];
 		int rc;
 		while((rc = read(pi[0], pipe_buffer, PPB_LEN)) > 0){//TODO
-			printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->to_id);
+			printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->from);
 
 			//pipe_buffer[PPB_LEN]=13;
 			//memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
@@ -239,10 +255,8 @@ int main(int argc,char **argv)
 			//The function `accept` can block the process, so, i need't sleep
 			if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
 				printf("\033[1;32m%s,%u;skt %d: Connected!\033[1;0m\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
-				//send connection message into the connection pool
-				//pool_conn("127.0.0.1,1234", son_skt); //arg 1 is just a test now
 				//if accepted, create thread!
-				err = pthread_create(&ntid, NULL, sock_listen, NULL);
+				err = pthread_create(&ntid, NULL, sock_listen, &son_skt);//send the son socket
 			}
 		}
 	}
