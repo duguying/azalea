@@ -6,7 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int parser_init(void)
+int parse_init(void)
 {
 	return 0;
 }
+
+/*char* parse_sendto(char* msg)
+{
+	;
+}*/

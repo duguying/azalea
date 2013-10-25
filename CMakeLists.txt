@@ -32,7 +32,7 @@ link_directories("/usr/lib/mysql")
 # main executation
 add_executable(iChat ${SRC_LIST})
 # test tools
-add_executable(tcper ${TCPER_LIST}) # tcp tester
+#add_executable(tcper ${TCPER_LIST}) # tcp tester
 #add_executable(my_ver ${MYSQL_VER}) # mysql version test
 #add_executable(mysqldrv_test ${MYSQLDRV_TEST}) # mysql extension test
 #add_executable(logtest ${LOG_TEST}) # log test
@@ -43,15 +43,15 @@ add_library(config STATIC ${CONF_LIST})
 add_library(pool STATIC ${POOL_LIST})
 add_library(parser STATIC ${PARSER_LIST})
 add_library(hashtable STATIC ${HASHTABLE_LIST})
-# dynamic libraries
-add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
+#dynamic libraries
+#add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
 
 #############################################
 # target link libraries
-target_link_libraries(iChat pthread dl log pool)	# here, static has no difference with shared
-target_link_libraries(tcper pthread)
+target_link_libraries(iChat pthread dl log pool hashtable)	# here, static has no difference with shared
+#target_link_libraries(tcper pthread)
 #target_link_libraries(my_ver mysqlclient)
-target_link_libraries(mysql_drv mysqlclient)
+#target_link_libraries(mysql_drv mysqlclient)
 #target_link_libraries(mysqldrv_test mysql_drv)
 #target_link_libraries(sqlitetest sqlite3)
 target_link_libraries(pool hashtable)

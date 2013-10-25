@@ -18,8 +18,20 @@ struct HashNode_Struct
 /// @brief ht_init hash table initialize 
 void ht_init();
 
-/// @brief ht_insert hash table insert
-void ht_insert();
+/// @brief ht_insert insert key-value into hash table
+///
+/// @param skey
+/// @param nvalue
+void ht_insert(const char* skey, int nvalue);
 
-/// @brief ht_remove hash table remove
-void ht_remove();
+/// @brief ht_remove remove key-value frome the hash table
+///
+/// @param skey
+void ht_remove(const char* skey);
+
+/// @brief ht_lookup lookup a key in the hash table
+///
+/// @param skey
+///
+/// @return 
+HashNode* ht_lookup(const char* skey);

@@ -14,6 +14,7 @@
 #include <dlfcn.h>
 #include "ichat.h"
 #include "pool/pool.h"
+#include "pool/hashtable.h"
 
 //thread id
 pthread_t ntid;//connect listening thread id
@@ -95,15 +96,22 @@ void* sock_listen(void *arg)
 			pooled=1;
 		}
 
+		if(pooled&&(!strcmp("*", tmpchar))){
+			int stskt;
+			HashNode* Cnode;
+			memset(&tmpchar, 0, sizeof(char)*20);
+			strncpy(tmpchar, packed_msg.message, 20);
+			//search the (tmpchar+1);
+			//Cnode=ht_lookup((const char*)(tmpchar+1));
+			//stskt=Cnode->nValue;
+			printf("the one you send's skt %s\n", stskt);
+		}
+
 		packed_msg.to_id=0;	//default is 0
 		packed_msg.from=son_skt;
 		//message(&packed_msg, sock_buffer, 1, son_skt);//TODO set 1 as a user id
 		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
 
-		printf("packed msg: %s, length: %u \n", (char*)(&packed_msg), (sizeof(packed_msg)/sizeof(char)));//packed msg shown as char
-
-		//pipe_buffer_set(pipe_buffer, PPB_LEN);//set pipe buffer interruption char 
-		//pipe_buffer[PPB_LEN]=13;//set interruption
 		printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), packed_msg.message);
 		//send buffer into pipe
 		
@@ -120,7 +128,7 @@ void* sock_listen(void *arg)
 		memset(packed_msg.message, ECF, sizeof(char)*BUF_LEN);
 	}
 	
-	printf("\033[1;31m%s,%u: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
+	printf("\033[1;34m%s,%u;skt %d: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), son_skt);
 	//here the thread is exit
 	return ((void *) 0);
 }
