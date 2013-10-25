@@ -38,7 +38,8 @@ int po[2];
 //////////////////////////////////////////////////////////////////////
 
 //组装信息
-Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt){
+Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt)
+{
 	Msg m;
 	memset(packed_msg, 0, sizeof(Msg)+1);
 	packed_msg->to_id = to_id;
@@ -53,7 +54,8 @@ Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt){
 /// @brief socket_listen socket listen to connect
 ///
 /// @return 
-int socket_listen(){
+int socket_listen()
+{
 	memset(&servaddr, ECF, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -68,7 +70,8 @@ int socket_listen(){
 /// @param arg
 ///
 /// @return void*0 
-void* sock_listen(void *arg){
+void* sock_listen(void *arg)
+{
 	int pooled=0;//if saved in pool is 1, else 0
 	Msg packed_msg;
 	
@@ -96,7 +99,7 @@ void* sock_listen(void *arg){
 		//message(&packed_msg, sock_buffer, 1, son_skt);//TODO set 1 as a user id
 		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
 
-		printf("packed msg: %s, length: %d \n", (char*)(&packed_msg), (sizeof(packed_msg)/sizeof(char)));//packed msg shown as char
+		printf("packed msg: %s, length: %u \n", (char*)(&packed_msg), (sizeof(packed_msg)/sizeof(char)));//packed msg shown as char
 
 		//pipe_buffer_set(pipe_buffer, PPB_LEN);//set pipe buffer interruption char 
 		//pipe_buffer[PPB_LEN]=13;//set interruption
@@ -126,7 +129,8 @@ void* sock_listen(void *arg){
 /// @brief pipe_listen listen the pipe, when recv msg, send it
 /// *thread; run in new thread
 /// @return void*0
-void* pipe_listen(void* arg){
+void* pipe_listen(void* arg)
+{
 
 	//cause of this is a single thread
 	//the message should contain socket id (skt_id) information or message which can get the skt_id
@@ -150,7 +154,8 @@ void* pipe_listen(void* arg){
 /// @param arg model name
 ///
 /// @return void*0 
-void* loadmodel(void* arg){
+void* loadmodel(void* arg)
+{
 	//load models
 	void *lib_handle;
 	int (*initial)(void);
@@ -173,7 +178,8 @@ void* loadmodel(void* arg){
 /// @param argv
 ///
 /// @return 
-int main(int argc,char **argv){
+int main(int argc,char **argv)
+{
 	int err;
 	socklen_t len;
 	//dealing process id

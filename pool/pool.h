@@ -6,7 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct UserNode{
+typedef struct UserNode
+{
 	int skt;
 	char* username;
 	int id;

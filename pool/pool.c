@@ -17,11 +17,13 @@ UserNode pool[POOL_MAX];
 /// @param arg
 ///
 /// @return 
-int pool_init(int arg){
+int pool_init(int arg)
+{
 	ht_init();
 	return 0;
 }
 
-int pool_save(const char* username, int skt){
+int pool_save(const char* username, int skt)
+{
 	ht_insert(username, skt);
 }

@@ -6,7 +6,8 @@
 #include <stdio.h>
 #include "log.c"
 
-int main(void){
+int main(void)
+{
 	int i,lh;
 	lh=log_create("test.log");
 

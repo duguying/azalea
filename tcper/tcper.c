@@ -21,7 +21,8 @@ char buf[1000];
 /// @param argv 
 ///
 /// @return success 0
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	int skt;
 	socklen_t len;
 

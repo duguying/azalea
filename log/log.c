@@ -11,7 +11,8 @@
 /// @brief initial initialize the model
 /// 
 /// @return 
-int initial(void){
+int initial(void)
+{
 	printf("Load Log Model success!\n");
 	//log_create("test.log");
 	return 0;
@@ -22,7 +23,8 @@ int initial(void){
 /// @param file filename
 ///
 /// @return log handle
-int log_create(const char* file){
+int log_create(const char* file)
+{
 	int lh;
 	lh=open(file, O_RDWR|O_CREAT|O_APPEND);
 	if(-1==lh){
@@ -38,7 +40,8 @@ int log_create(const char* file){
 /// @param lh log handle
 ///
 /// @return the byte size have written
-int logw(const char* string, int lh){
+int logw(const char* string, int lh)
+{
 	return write(lh, string, strlen(string));
 }
 
@@ -47,6 +50,7 @@ int logw(const char* string, int lh){
 /// @param lh log handle
 ///
 /// @return if success, return 0
-int log_close(int lh){
+int log_close(int lh)
+{
 	return close(lh);
 }

@@ -13,7 +13,8 @@
 /// @param link the link string link to database
 ///
 /// @return 
-int mydrv_initial(char* link){
+int mydrv_initial(char* link)
+{
 	//declare a connection
 	MYSQL *conn;
 	//create a connection
