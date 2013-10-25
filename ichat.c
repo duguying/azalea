@@ -87,14 +87,15 @@ void* sock_listen(void *arg)
 			break;
 		};
 		
-		strncpy(tmpchar,packed_msg.message,1);	//if is "$lijun"	TODO&TODO&TODO Parse connection command
+		strncpy(tmpchar,packed_msg.message,1);	//if is "$username"	TODO&TODO&TODO Parse connection command
 		if((!pooled)&&(!strcmp("$", tmpchar))){	//0 and $ start, now save in pool
 			memset(&tmpchar, 0, sizeof(char)*20);
 			strncpy(tmpchar, packed_msg.message, 20);
-			pool_save((tmpchar+1), son_skt);	//save "lijun"
+			pool_save((tmpchar+1), son_skt);	//save "username"
+			pooled=1;
 		}
 
-		packed_msg.to_id=15;
+		packed_msg.to_id=0;	//default is 0
 		packed_msg.from=son_skt;
 		//message(&packed_msg, sock_buffer, 1, son_skt);//TODO set 1 as a user id
 		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
@@ -119,7 +120,7 @@ void* sock_listen(void *arg)
 		memset(packed_msg.message, ECF, sizeof(char)*BUF_LEN);
 	}
 	
-	printf("%s,%u: Disconnected!\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
+	printf("\033[1;31m%s,%u: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));
 	//here the thread is exit
 	return ((void *) 0);
 }
@@ -214,7 +215,7 @@ int main(int argc,char **argv)
 
 			//pipe_buffer[PPB_LEN]=13;
 			//memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
-			//printf("^%d^", sizeof(pipe_buffer));
+
 			rc = write(po[1], pipe_buffer, PPB_LEN);	//write the recvd msg into po for sendding to sock sender
 			memset(pipe_buffer, ECF, PPB_LEN);
 		}
@@ -229,7 +230,7 @@ int main(int argc,char **argv)
 		for(;1;){
 			//The function `accept` can block the process, so, i need't sleep
 			if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
-				printf("%s,%u;skt %d: Connected!\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
+				printf("\033[1;32m%s,%u;skt %d: Connected!\033[1;0m\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
 				//send connection message into the connection pool
 				//pool_conn("127.0.0.1,1234", son_skt); //arg 1 is just a test now
 				//if accepted, create thread!

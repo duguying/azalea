@@ -26,4 +26,5 @@ int pool_init(int arg)
 int pool_save(const char* username, int skt)
 {
 	ht_insert(username, skt);
+	printf("\033[0;33m%s has saved in pool, sock id is %d\033[0m\n", username, skt);
 }
