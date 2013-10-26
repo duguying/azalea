@@ -5,13 +5,16 @@
 /// @date 2013-10-19
 #include <stdio.h>
 #include <stdlib.h>
+#include "../ichat.h"
+
+char full_message[BUF_LEN];
+char short_message[ID_LEN];
 
 int parse_init(void)
 {
 	return 0;
 }
 
-/*char* parse_sendto(char* msg)
+char* parse_get_username(char* msg)
 {
-	;
-}*/
+}

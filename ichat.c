@@ -79,8 +79,8 @@ void* sock_listen(void *arg)
 	int tskt;//the socket id of this thread
 
 	int rc,strleng;
-	char tmpchar[20];//temprary chars
-	char username[20];//username
+	char tmpchar[ID_LEN];//temprary chars
+	char username[ID_LEN];//username
 
 	char pipe_buffer[PPB_LEN];
 	memset(&packed_msg, ECF, sizeof(Msg));
@@ -100,12 +100,12 @@ void* sock_listen(void *arg)
 		
 		strncpy(tmpchar,packed_msg.message,1);	//if is "$username"	TODO&TODO&TODO Parse connection command
 		if((!pooled)&&(!strcmp("$", tmpchar))){	//0 and $ start, now save in pool
-			memset(&tmpchar, 0, sizeof(char)*20);
-			strncpy(tmpchar, packed_msg.message, 20);
+			memset(&tmpchar, 0, sizeof(char)*ID_LEN);
+			strncpy(tmpchar, packed_msg.message, ID_LEN);
 			pool_save((tmpchar+1), tskt);	//save "username"
-			strncpy(username,(tmpchar+1),19);
+			strncpy(username,(tmpchar+1),ID_LEN);
 			pooled=1;
-			memset(&tmpchar, 0, sizeof(char)*20);
+			memset(&tmpchar, 0, sizeof(char)*ID_LEN);
 		}
 
 		if(pooled&&(!strcmp("*", tmpchar))){
@@ -155,7 +155,7 @@ void* pipe_listen(void* arg)
 	int rc;
 	//int pooled=0;
 	char fa_pipe_buffer[BUF_LEN];//get 1000 char, but just one time
-	char tmpchar[20];//temprary chars
+	char tmpchar[ID_LEN];//temprary chars
 
 	memset(fa_pipe_buffer, ECF, sizeof(char)*BUF_LEN);
 

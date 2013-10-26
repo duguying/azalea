@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #define BUF_LEN 1000 //buffer length
+#define ID_LEN 20 //username and etc name
 #define PPB_LEN (sizeof(Msg)/sizeof(char)+1) //pipe buffer
 #define PORT 6666 //port
 #define ECF 0 //Empty Char Fill
