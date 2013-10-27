@@ -15,6 +15,16 @@
 struct sockaddr_in saddr;
 char buf[1000];
 
+char * replaceAll(char * src,char oldChar,char newChar){
+	char * head=src;
+	while(*src!='\0'){
+		if(*src==oldChar)
+			*src=newChar;
+		src++;
+	}
+	return head;
+}
+
 /// @brief main 
 /// tcper arg1[ip] arg2[port]
 /// @param argc
@@ -49,7 +59,8 @@ int main(int argc, char** argv)
 		for(;1;){
 			memset(buf, 0, sizeof(char)*1000);
 			fgets(buf, 1000, stdin);
-			if(0==strcmp(buf, ".exit\n")){
+			replaceAll(buf,'\n','\0');
+			if(0==strcmp(buf, ".exit")){
 				return 0;
 			}
 			send(skt, buf, 1000*sizeof(char), 0);
