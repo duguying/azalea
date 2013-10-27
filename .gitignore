@@ -8,8 +8,9 @@
 # sqlite
 /dbs/sqlite
 
-# log
+# tmp files
 *.log
+*.conf
 
 # Note
 /note.txt

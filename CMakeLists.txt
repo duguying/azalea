@@ -18,6 +18,7 @@ set(POOL_LIST pool/pool.c)
 set(PARSER_LIST parser/parser.c)
 set(HASHTABLE_LIST pool/hashtable.c)
 set(SQLITE_TEST dbs/sqlite3/sqlite_test.c)
+set(CONFIG_TEST config/testconf.c)
 
 #############################################
 # include directories
@@ -37,6 +38,7 @@ add_executable(iChat ${SRC_LIST})
 #add_executable(mysqldrv_test ${MYSQLDRV_TEST}) # mysql extension test
 #add_executable(logtest ${LOG_TEST}) # log test
 #add_executable(sqlitetest ${SQLITE_TEST}) # sqlite3 test
+add_executable(conftest ${CONFIG_TEST}) # config test
 # solid library, static library
 add_library(log STATIC ${LOG_LIST})
 add_library(config STATIC ${CONF_LIST})
@@ -55,6 +57,7 @@ target_link_libraries(iChat pthread dl log pool hashtable)	# here, static has no
 #target_link_libraries(mysqldrv_test mysql_drv)
 #target_link_libraries(sqlitetest sqlite3)
 target_link_libraries(pool hashtable)
+target_link_libraries(conftest config)
 
 #############################################
 # set targets directories

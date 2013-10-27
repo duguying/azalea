@@ -5,6 +5,7 @@
 /// @date 2013-10-19
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 /// @brief config_init config initial
 ///
@@ -15,15 +16,9 @@ int config_init(const char* config_file);
 
 /// @brief config_get get the config value by key
 ///
+/// @param conf config
 /// @param key key
 ///
 /// @return value
-char* config_get(const char* key);
+char* config_get(int conf, const char* key);
 
-/// @brief config_set set config
-///
-/// @param key key
-/// @param value value
-///
-/// @return 
-int config_set(const char* key, const char* value);

@@ -5,9 +5,16 @@
 /// @date 2013-10-19
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 //config initial
 int config_init(const char* config_file)
 {
-	return 0;
+	return open(config_file, O_RDONLY);
+}
+
+char* config_get(int conf, const char* key)
+{
+	char* rst=0;
+	return rst;
 }
