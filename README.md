@@ -48,7 +48,7 @@ hello, this is a message send to lijun from rex
 
 and then, the 2nd terminal will received the message `hello, this is a message send to lijun from rex`.
 
-okay,the `tcper` have not finished. but youcantry it by this [TCP/UDP Tester](http://pan.baidu.com/s/1cgtSA), if you are in Windows.
+okay,the `tcper` have not finished. but you can try it by this [TCP/UDP Tester](http://pan.baidu.com/s/1cgtSA), if you are in Windows.
 
 :smile:
 

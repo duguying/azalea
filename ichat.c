@@ -38,11 +38,11 @@ int po[2];
 
 //////////////////////////////////////////////////////////////////////
 
-//组装信息
+//package message
 Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt)
 {
 	Msg m;
-	memset(packed_msg, 0, sizeof(Msg)+1);
+	memset(packed_msg, 0, sizeof(Msg));
 	packed_msg->to_id = to_id;
 	packed_msg->from = from_skt;
 	strcpy(packed_msg->message,message);
@@ -98,17 +98,17 @@ void* sock_listen(void *arg)
 			break;
 		};
 		
-		strncpy(tmpchar,packed_msg.message,1);	//if is "$username"	TODO&TODO&TODO Parse connection command
-		if((!pooled)&&(!strcmp("$", tmpchar))){	//0 and $ start, now save in pool
+		strncpy(tmpchar,packed_msg.message,1);
+		if((!pooled)&&(!strcmp("$", tmpchar))){
 			memset(&tmpchar, 0, sizeof(char)*ID_LEN);
 			strncpy(tmpchar, packed_msg.message, ID_LEN);
-			pool_save((tmpchar+1), tskt);	//save "username"
+			pool_save((tmpchar+1), tskt);
 			strncpy(username,(tmpchar+1),ID_LEN);
 			pooled=1;
 			memset(&tmpchar, 0, sizeof(char)*ID_LEN);
 		}
 
-		if(pooled&&(!strcmp("*", tmpchar))){
+		if(pooled&&(!strcmp("*", tmpchar))){//TODO Here is a bug will create segment fault, when can not find the result from the hashtable, the bug appear
 			int stskt;
 			stskt=ht_lookup(packed_msg.message+1)->nValue;
 			printf("\033[0;33myou will send to skt %d\033[0;0m\n", stskt);
@@ -124,7 +124,7 @@ void* sock_listen(void *arg)
 		//send buffer into pipe
 		
 		//printf("pipe send: %s", (char*)pipe_buffer);
-		rc = write(pi[1], pipe_buffer, PPB_LEN);//!TODO DO NOT send the msg pointer, send the msg, here need to be change
+		rc = write(pi[1], pipe_buffer, PPB_LEN);
 		
 		if( rc == -1 ){
 	      perror ("Parent: write");
@@ -165,7 +165,7 @@ void* pipe_listen(void* arg)
 		if(((Msg*)fa_pipe_buffer)->to_id){
 			send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, BUF_LEN, 0);
 		}
-		memset(fa_pipe_buffer, ECF, sizeof(Msg)+1);
+		memset(fa_pipe_buffer, ECF, sizeof(Msg));
 	}
 	return ((void *) 0);
 }
@@ -234,7 +234,7 @@ int main(int argc,char **argv)
 		printf("son start\n");
 		char pipe_buffer[PPB_LEN];
 		int rc;
-		while((rc = read(pi[0], pipe_buffer, PPB_LEN)) > 0){//TODO
+		while((rc = read(pi[0], pipe_buffer, PPB_LEN)) > 0){
 			printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->from);
 
 			//pipe_buffer[PPB_LEN]=13;
