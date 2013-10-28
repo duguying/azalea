@@ -5,4 +5,5 @@
 /// @date 2013-10-19
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
