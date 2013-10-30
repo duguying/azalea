@@ -7,3 +7,5 @@
 #include <stdlib.h>
 #include <string.h>
 
+char* parse_get_username(char* msg);
+int is_username(char* msg);
