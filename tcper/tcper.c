@@ -11,6 +11,10 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
+
+#define IP 16
+#define PORT 6
 
 struct sockaddr_in saddr;
 char buf[1000];
@@ -35,20 +39,36 @@ int main(int argc, char** argv)
 {
 	int skt;
 	socklen_t len;
+	char ch;
+	char ip[IP];
+	char port[PORT];
 
-	if(argc<=1){
-		argv[1]="127.0.0.1";
-		argv[2]="6666";
-	}else if(argc==2){
-		argv[2]="6666";
-	}
-    
+	strncpy(ip,"127.0.0.1",IP);
+	strncpy(port,"6666",PORT);
+
+    while ((ch = getopt(argc,argv,"i:p:"))!=-1){  
+		switch(ch){
+		case 'i':
+			memset(ip,0,sizeof(char)*IP);
+			strncpy(ip,optarg,IP);
+			printf("option ip:'%s'\n",ip);
+			break;
+		case 'p':
+			memset(port,0,sizeof(char)*PORT);
+			strncpy(port,optarg,PORT);
+			printf("option port :%s\n", port);
+			break;  
+		default:  
+			;
+		}  
+	}  
+
     memset(&saddr, 0, sizeof(struct sockaddr));
     skt=socket(AF_INET, SOCK_STREAM, 0);
 	
 	saddr.sin_family=AF_INET;
-    saddr.sin_addr.s_addr=inet_addr(argv[1]);
-    saddr.sin_port=htons(atoi(argv[2]));
+    saddr.sin_addr.s_addr=inet_addr(ip);
+    saddr.sin_port=htons(atoi(port));
     
 	len=sizeof(struct sockaddr);
     
