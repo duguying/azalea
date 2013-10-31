@@ -31,7 +31,7 @@ link_directories("/usr/lib/mysql")
 
 #############################################
 # main executation
-add_executable(iChat ${SRC_LIST})
+add_executable(ichat ${SRC_LIST})
 # test tools
 add_executable(tcper ${TCPER_LIST}) # tcp tester
 #add_executable(my_ver ${MYSQL_VER}) # mysql version test
@@ -50,7 +50,7 @@ add_library(hashtable STATIC ${HASHTABLE_LIST})
 
 #############################################
 # target link libraries
-target_link_libraries(iChat pthread dl log pool hashtable)	# here, static has no difference with shared
+target_link_libraries(ichat pthread dl log pool hashtable)	# here, static has no difference with shared
 target_link_libraries(tcper pthread)
 #target_link_libraries(my_ver mysqlclient)
 #target_link_libraries(mysql_drv mysqlclient)
@@ -61,8 +61,8 @@ target_link_libraries(conftest config)
 
 #############################################
 # set targets directories
-set_target_properties(iChat PROPERTIES RUNTIME_OUTPUT_DIRECTORY ".")
+set_target_properties(ichat PROPERTIES RUNTIME_OUTPUT_DIRECTORY ".")
 
 #############################################
 # cmake configuration
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.6)

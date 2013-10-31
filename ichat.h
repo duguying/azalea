@@ -11,6 +11,8 @@
 #define PPB_LEN sizeof(Msg)/sizeof(char) //pipe buffer
 #define PORT 6666 //port
 #define ECF 0 //Empty Char Fill
+// #define QUIET 1
+// #define iprintf(args) ((QUIET)?0:(printf(args)))
 
 typedef struct Msg{
 	int to;

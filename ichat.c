@@ -12,6 +12,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <dlfcn.h>
+#include <getopt.h>
 #include "ichat.h"
 #include "pool/pool.h"
 #include "pool/hashtable.h"
@@ -195,6 +196,15 @@ void* loadmodel(void* arg)
 	return ((void *) 0);
 }
 
+int do_name, do_gf_name;
+char *l_opt_arg;
+struct option longopts[] = {
+     { "start",no_argument,NULL,'S'},
+     { "stop",no_argument,NULL,'P'},
+     { "restart",no_argument,NULL,'R'},
+     {      0,     0,     0,     0},
+};
+
 /// @brief main main function
 /// 
 /// @param argc
@@ -213,6 +223,30 @@ int main(int argc,char **argv)
 	int fh1=log_create("test.log");
 	logw("test, this is a log!\n",fh1);
 	
+
+	int c;
+    
+	while((c = getopt_long(argc, argv, ":", longopts, NULL)) != -1){
+		switch (c){
+			case 'S':
+				if(0==fork()){//son
+					system("./ichat");
+				}else{
+					abort();
+				};
+				break;
+			case 'P':
+				printf("Her name is BX.\n");
+				break;
+			case 'R':
+				l_opt_arg = optarg;
+				printf("Our love is %s!\n", l_opt_arg);
+				break;
+		}
+	}  
+	// iprintf("hello%d",123);
+
+
 	//pool initial
 	pool_init(NULL);
 
