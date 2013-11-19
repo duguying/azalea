@@ -9,8 +9,10 @@
 
 int main(void)
 {
-	int conf;
-	conf=config_init("./ichat.conf");
-
+	conf* c=NULL;
+	conf configuration;
+	c=config_init("./config.ini",&configuration);
+	printf("%d\n", c->size);
+	config_destroy(c);
 	return 0;
 }
