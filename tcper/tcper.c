@@ -1,8 +1,9 @@
-/// @file tcper.c
-/// @brief 
-/// @author Rex Lee duguying2008@gmail.com
-/// @version 0.01
-/// @date 2013-9-26
+/**
+ * @file tcper.c
+ * @author Rex Lee duguying2008@gmail.com
+ * @version 0.01
+ * @date 2013-9-26
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,12 +30,13 @@ char * replaceAll(char * src,char oldChar,char newChar){
 	return head;
 }
 
-/// @brief main 
-/// tcper arg1[ip] arg2[port]
-/// @param argc
-/// @param argv 
-///
-/// @return success 0
+
+/**
+ * main function
+ * @param  argc [description]
+ * @param  argv [description]
+ * @return      success 0
+ */
 int main(int argc, char** argv)
 {
 	int skt;

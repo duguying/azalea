@@ -1,8 +1,10 @@
-/// @file hashtable.c
-/// @brief hashtable
-/// @author Rex Lee duguying2008@gmail.com
-/// @version 0.01
-/// @date 2013-10-20
+/**
+ * @file hashtable.c
+ * @brief hashtable
+ * @author Rex Lee duguying2008@gmail.com
+ * @version 0.01
+ * @date 2013-10-20
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,18 +13,21 @@
 HashNode* hashTable[HASH_TABLE_MAX_SIZE]; //hash table data strcutrue
 int ht_size;  //the number of key-value pairs in the hash table!
 
-/// @brief ht_init initialize hash table
+
+/**
+ * initialize hash table
+ */
 void ht_init()
 {
     ht_size = 0;
     memset(hashTable, 0, sizeof(HashNode*) * HASH_TABLE_MAX_SIZE);
 }
 
-/// @brief ht_hash_str string hash function
-///
-/// @param skey
-///
-/// @return 
+/**
+ * string hash function
+ * @param  skey [description]
+ * @return      [description]
+ */
 unsigned int ht_hash_str(const char* skey)
 {
     const signed char *p = (const signed char*)skey;
@@ -35,10 +40,11 @@ unsigned int ht_hash_str(const char* skey)
     return h;
 }
 
-/// @brief ht_insert insert key-value into hash table
-///
-/// @param skey
-/// @param nvalue
+/**
+ * insert key-value into hash table
+ * @param skey   key
+ * @param nvalue value
+ */
 void ht_insert(const char* skey, int nvalue)
 {
     if(ht_size >= HASH_TABLE_MAX_SIZE)
@@ -68,9 +74,10 @@ void ht_insert(const char* skey, int nvalue)
     ht_size++;
 }
 
-/// @brief ht_remove remove key-value frome the hash table
-///
-/// @param skey
+/**
+ * remove key-value frome the hash table
+ * @param skey key
+ */
 void ht_remove(const char* skey)
 {
     unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
@@ -101,11 +108,11 @@ void ht_remove(const char* skey)
     }
 }
 
-/// @brief ht_lookup lookup a key in the hash table
-///
-/// @param skey
-///
-/// @return 
+/**
+ * lookup a key in the hash table
+ * @param  skey key
+ * @return      value
+ */
 HashNode* ht_lookup(const char* skey)
 {
     unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
@@ -122,28 +129,9 @@ HashNode* ht_lookup(const char* skey)
     return NULL;
 }
 
-//print the content in the hash table
-/*
-void ht_print()
-{
-    printf("===========content of hash table=================\n");
-    int i;
-    for(i = 0; i < HASH_TABLE_MAX_SIZE; ++i)
-        if(hashTable[i])
-        {
-            HashNode* pHead = hashTable[i];
-            printf("%d=>", i);
-            while(pHead)
-            {
-                printf("%s:%d  ", pHead->sKey, pHead->nValue);
-                pHead = pHead->pNext;
-            }
-            printf("\n");
-        }
-}
-*/
-
-/// @brief ht_release free the memory of the hash table
+/**
+ * free the memory of the hash table
+ */
 void ht_release()
 {
     int i;

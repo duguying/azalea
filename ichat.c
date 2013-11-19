@@ -1,8 +1,10 @@
-/// @file ichat.c
-/// @brief Core
-/// @author Rex Lee duguying2008@gmail.com
-/// @version 0.01
-/// @date 2013-10-19
+/**
+ * @file ichat.c
+ * @brief Core
+ * @author Rex Lee duguying2008@gmail.com
+ * @version 0.01
+ * @date 2013-10-19
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,8 +42,7 @@ int po[2];
 //////////////////////////////////////////////////////////////////////
 
 //package message
-Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt)
-{
+Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt){
 	Msg m;
 	memset(packed_msg, 0, sizeof(Msg));
 	packed_msg->to_id = to_id;
@@ -53,11 +54,11 @@ Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt)
 
 //////////////////////////socket//////////////////////////////////////
 
-/// @brief socket_listen socket listen to connect
-///
-/// @return 
-int socket_listen()
-{
+/**
+ * socket_listen socket listen to connect
+ * @return socket id
+ */
+int socket_listen(){
 	memset(&servaddr, ECF, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -67,13 +68,11 @@ int socket_listen()
 	return listen(skt, 10);
 }
 
-/// @brief sock_listen socket connect and listen to read sock message, *thread function
-/// 
-/// @param arg
-///
-/// @return void*0 
-void* sock_listen(void *arg)
-{
+/**
+ * socket connect and listen to read sock message, *thread function
+ * @param arg argument
+ */
+void* sock_listen(void *arg){
 	int pooled=0;//if saved in pool is 1, else 0
 	Msg packed_msg;
 
@@ -145,11 +144,11 @@ void* sock_listen(void *arg)
 
 /////////////////////////pipe/////////////////////////////////////////
 
-/// @brief pipe_listen listen the pipe, when recv msg, send it
-/// *thread; run in new thread
-/// @return void*0
-void* pipe_listen(void* arg)
-{
+/**
+ * listen the pipe, when recv msg, send it
+ * @param arg argument
+ */
+void* pipe_listen(void* arg){
 	//cause of this is a single thread
 	//the message should contain socket id (skt_id) information or message which can get the skt_id
 	//printf("father pipe");	
@@ -173,13 +172,11 @@ void* pipe_listen(void* arg)
 
 ////////////////////////////model/////////////////////////////////////
 
-/// @brief loadmodel load model, *thread
-/// 
-/// @param arg model name
-///
-/// @return void*0 
-void* loadmodel(void* arg)
-{
+/**
+ * load model, *thread
+ * @param arg model name
+ */
+void* loadmodel(void* arg){
 	//load models
 	void *lib_handle;
 	int (*initial)(void);
@@ -205,14 +202,14 @@ struct option longopts[] = {
      {      0,     0,     0,     0},
 };
 
-/// @brief main main function
-/// 
-/// @param argc
-/// @param argv
-///
-/// @return 
-int main(int argc,char **argv)
-{
+
+/**
+ * main function
+ * @param  argc [description]
+ * @param  argv [description]
+ * @return      [description]
+ */
+int main(int argc,char **argv){
 	int err;
 	socklen_t len;
 	//dealing process id

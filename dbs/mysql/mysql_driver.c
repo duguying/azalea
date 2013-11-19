@@ -1,18 +1,22 @@
-/// @file mysql_driver.c
-/// @brief mysql database driver extension
-/// @author Rex Lee duguying2008@gmail.com
-/// @version 0.01
-/// @date 2013-10-19
+/**
+ * @file mysql_driver.c
+ * @brief mysql database driver extension
+ * @author Rex Lee duguying2008@gmail.com
+ * @version 0.01
+ * @date 2013-10-19
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <my_global.h>
 #include <mysql.h>
 
-/// @brief mydrv_initial initialize mysql driver
-///
-/// @param link the link string link to database
-///
-/// @return 
+/**
+ * @brief initialize mysql driver
+ * @details [long description]
+ * 
+ * @param link the link string link to database
+ * @return [description]
+ */
 int mydrv_initial(char* link)
 {
 	//declare a connection
