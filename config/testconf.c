@@ -13,6 +13,7 @@ int main(void)
 	conf configuration;
 	c=config_init("./config.ini",&configuration);
 	printf("%d\n", c->size);
+	c=remove_comment(c);
 	config_destroy(c);
 	return 0;
 }
