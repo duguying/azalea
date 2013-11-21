@@ -19,8 +19,7 @@
  * @param config_file [description]
  * @return config file handle
  */
-conf* config_init(const char* config_file,conf* config)
-{
+conf* config_init(const char* config_file,conf* config){
 	memset(config,0,sizeof(conf));
 	struct stat buf;
 	memset(&buf,0,sizeof(struct stat));
@@ -47,7 +46,7 @@ char* config_get(int config_handle, const char* key)
  * @param config the struct pointer of config
  * @return the struct pointer of config
  */
-conf* remove_comment(conf* config){
+conf* config_remove_comment(conf* config){
 	int i=0,j=0,tag=0,length=0;
 	char* final=NULL;
 	char* tmp=(char*)malloc(sizeof(char)*config->size);
@@ -73,13 +72,24 @@ conf* remove_comment(conf* config){
 	final=(char*)malloc(length*sizeof(char));
 	strncpy(final,tmp,length);
 	free(tmp);
+	tmp=NULL;
 	free(config->content);
 	config->content=final;
+	config->size=length;
 	return config;
 }
 
+void config_strip(conf* config){
+	config->content;
+}
+
+/**
+ * @brief destroy the config
+ * @details destroy the config struct and free the memory
+ * 
+ * @param config config struct
+ */
 void config_destroy(conf* config){
-	// free(config->content);
-	// config->content=NULL;
-	printf("%s\n, length %d\n", config->content, strlen(config->content));
+	free(config->content);
+	config->content=NULL;
 }

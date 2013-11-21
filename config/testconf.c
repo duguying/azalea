@@ -5,6 +5,7 @@
 /// @date 2013-10-19
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "config.h"
 
 int main(void)
@@ -13,7 +14,8 @@ int main(void)
 	conf configuration;
 	c=config_init("./config.ini",&configuration);
 	printf("%d\n", c->size);
-	c=remove_comment(c);
+	c=config_remove_comment(c);
+	printf("%s\n, length %d\n", c->content, strlen(c->content));
 	config_destroy(c);
 	return 0;
 }
