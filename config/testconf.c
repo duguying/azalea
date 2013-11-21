@@ -14,7 +14,7 @@ int main(void)
 	conf configuration;
 	c=config_init("./config.ini",&configuration);
 	printf("%d\n", c->size);
-	c=config_remove_comment(c);
+	config_remove_comment(c);
 	printf("%s\n, length %d\n", c->content, strlen(c->content));
 	config_destroy(c);
 	return 0;

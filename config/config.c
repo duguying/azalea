@@ -44,9 +44,9 @@ char* config_get(int config_handle, const char* key)
  * @details remove the comment of config file, the comment is begin with char #
  * 
  * @param config the struct pointer of config
- * @return the struct pointer of config
+ * @return the struct pointer of config, but carefully if you want to assignment
  */
-conf* config_remove_comment(conf* config){
+void* config_remove_comment(conf* config){
 	int i=0,j=0,tag=0,length=0;
 	char* final=NULL;
 	char* tmp=(char*)malloc(sizeof(char)*config->size);
@@ -79,7 +79,7 @@ conf* config_remove_comment(conf* config){
 	return config;
 }
 
-void config_strip(conf* config){
+void* config_strip(conf* config){
 	config->content;
 }
 
