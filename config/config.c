@@ -20,16 +20,15 @@
  * @return config file handle
  */
 conf* config_init(const char* config_file,conf* config){
-	memset(config,0,sizeof(conf));
 	struct stat buf;
+	
+	memset(config,0,sizeof(conf));
 	memset(&buf,0,sizeof(struct stat));
 	stat(config_file,&buf);
 	config->size=buf.st_size;
 	config->config_handle=open(config_file, O_RDONLY);
-
 	config->content=(char*)malloc(buf.st_size*sizeof(char));
 	read(config->config_handle,config->content,buf.st_size);
-	// strncpy(config->content,"hello world!",13);
 	return config;
 }
 
@@ -79,8 +78,50 @@ void* config_remove_comment(conf* config){
 	return config;
 }
 
+/**
+ * @brief remove the empty chars
+ * @details [long description]
+ * 
+ * @param config config the struct pointer of config
+ * @return [description]
+ */
 void* config_strip(conf* config){
-	config->content;
+	int i=0,j=0;
+	char* final=NULL;
+	char* tmp=(char*)malloc(sizeof(char)*config->size);
+
+	memset(tmp,0,sizeof(char)*config->size);
+	for (i = 0; i < config->size; ++i)
+	{
+		if (i==0)
+		{
+			tmp[j]=*(config->content+i);
+			j++;
+		}
+
+		if ('\n'==*(config->content+i)||' '==*(config->content+i))
+		{
+			if (*(config->content+i)!=tmp[j-1])
+			{
+				tmp[j]=*(config->content+i);
+				j++;
+			}
+		}else{
+			if ('\r'!=*(config->content+i))
+			{
+				tmp[j]=*(config->content+i);
+				j++;
+			}
+		}
+	}
+	config->size=strlen(tmp);
+	final=(char*)malloc(sizeof(char)*config->size);
+	strncpy(final,tmp,config->size);
+	free(tmp);
+	tmp=NULL;
+	free(config->content);
+	config->content=final;
+	return config;
 }
 
 /**
