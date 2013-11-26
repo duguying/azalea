@@ -20,9 +20,10 @@ set(MYSQLDRV_TEST dbs/mysql/mysql_test.c)
 set(CONF_LIST config/config.c)
 set(POOL_LIST pool/pool.c)
 set(PARSER_LIST parser/parser.c)
-set(HASHTABLE_LIST pool/hashtable.c)
+set(HASHTABLE_LIST ds/hashtable.c)
 set(SQLITE_TEST dbs/sqlite3/sqlite_test.c)
 set(CONFIG_TEST config/testconf.c)
+set(HASH_LIST ds/testht.c)
 
 #############################################
 # include directories
@@ -34,34 +35,36 @@ include_directories("build/arc")
 link_directories("/usr/lib/mysql")
 
 #############################################
-# main executation
+# # main executation
 # add_executable(ichat ${SRC_LIST})
-# test tools
+# # test tools
 # add_executable(tcper ${TCPER_LIST}) # tcp tester
-#add_executable(my_ver ${MYSQL_VER}) # mysql version test
-#add_executable(mysqldrv_test ${MYSQLDRV_TEST}) # mysql extension test
-#add_executable(logtest ${LOG_TEST}) # log test
-#add_executable(sqlitetest ${SQLITE_TEST}) # sqlite3 test
+# add_executable(my_ver ${MYSQL_VER}) # mysql version test
+# add_executable(mysqldrv_test ${MYSQLDRV_TEST}) # mysql extension test
+# add_executable(logtest ${LOG_TEST}) # log test
+# add_executable(sqlitetest ${SQLITE_TEST}) # sqlite3 test
 add_executable(conftest ${CONFIG_TEST}) # config test
-# solid library, static library
+add_executable(testht ${HASH_LIST})
+# # solid library, static library
 # add_library(log STATIC ${LOG_LIST})
 add_library(config STATIC ${CONF_LIST})
 # add_library(pool STATIC ${POOL_LIST})
 # add_library(parser STATIC ${PARSER_LIST})
-# add_library(hashtable STATIC ${HASHTABLE_LIST})
-#dynamic libraries
-#add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
+add_library(hashtable STATIC ${HASHTABLE_LIST})
+# # dynamic libraries
+# add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
 
 #############################################
 # target link libraries
 # target_link_libraries(ichat pthread dl log pool hashtable)	# here, static has no difference with shared
 # target_link_libraries(tcper pthread)
-#target_link_libraries(my_ver mysqlclient)
-#target_link_libraries(mysql_drv mysqlclient)
-#target_link_libraries(mysqldrv_test mysql_drv)
-#target_link_libraries(sqlitetest sqlite3)
+# target_link_libraries(my_ver mysqlclient)
+# target_link_libraries(mysql_drv mysqlclient)
+# target_link_libraries(mysqldrv_test mysql_drv)
+# target_link_libraries(sqlitetest sqlite3)
 # target_link_libraries(pool hashtable)
 target_link_libraries(conftest config)
+target_link_libraries(testht hashtable)
 
 #############################################
 # set targets directories

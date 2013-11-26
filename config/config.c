@@ -14,7 +14,7 @@
 
 /**
  * @brief config initial
- * @details [long description]
+ * @details this function not alloc memory for conf* config
  * 
  * @param config_file [description]
  * @return config file handle
@@ -122,6 +122,17 @@ void* config_strip(conf* config){
 	free(config->content);
 	config->content=final;
 	return config;
+}
+
+/**
+ * @brief equation expression parse
+ * @details [long description]
+ * 
+ * @param config [description]
+ * @return [description]
+ */
+void* config_equation(conf* config){
+	;
 }
 
 /**
