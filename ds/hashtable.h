@@ -25,4 +25,4 @@ struct HashTable
 	HashNode* table[HASH_TABLE_MAX_SIZE];
 };
 
-
+HashNode* ht_lookup(HashTable* hash_table, const char* skey);
