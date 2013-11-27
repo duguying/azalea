@@ -160,7 +160,6 @@ HashNode* ht_lookup(HashTable* hash_table, const char* skey)
         while(pHead)
         {
             if(strcmp(skey, pHead->sKey) == 0){
-                // printf("%s\n", hash_table->table[pos]->sKey); 
                 return hash_table->table[pos];
             }else{
                 pHead = pHead->pNext;
@@ -172,27 +171,35 @@ HashNode* ht_lookup(HashTable* hash_table, const char* skey)
 }
 
 /**
- * free the memory of the hash table
+ * @brief release the hashtable
+ * @details [long description]
+ * 
+ * @param hash_table the hashtable
  */
-// void ht_release(HashNode* hashTable)
-// {
-//     int i;
-//     for(i = 0; i < HASH_TABLE_MAX_SIZE; ++i)
-//     {
-//         if(hashTable[i])
-//         {
-//             HashNode* pHead = hashTable[i];
-//             while(pHead)
-//             {
-//                 HashNode* pTemp = pHead;
-//                 pHead = pHead->pNext;
-//                 if(pTemp)
-//                 {
-//                     free(pTemp->sKey);
-//                     free(pTemp);
-//                 }
-//             }
-//         }
-//     }
-// }
+void ht_release(HashTable* hash_table)
+{
+    int i;
+    HashNode* pTemp;
+    HashNode* pHead;
+
+    for(i = 0; i < HASH_TABLE_MAX_SIZE; ++i)
+    {
+        if(hash_table->table[i])
+        {
+            pHead = hash_table->table[i];
+            while(pHead)
+            {
+                pTemp = pHead;
+                pHead = pHead->pNext;
+                if(pTemp)
+                {
+                    free(pTemp->sKey);
+                    free(pTemp);
+                }
+            }
+        }
+    }
+
+    memset(hash_table, 0, sizeof(HashTable));
+}
 
