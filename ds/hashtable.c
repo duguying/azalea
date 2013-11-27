@@ -16,9 +16,9 @@
  * 
  * @param HashTable the pointer of hashtable
  */
-void ht_init(struct HashTable* hash_table)
+void ht_init(HashTable* hash_table)
 {
-    memset(hash_table, 0, sizeof(struct HashTable));
+    memset(hash_table, 0, sizeof(HashTable));
     hash_table->ht_size= 0;  //the number of key-value pairs in the hash table!
 }
 
@@ -31,6 +31,7 @@ unsigned int ht_hash_str(const char* skey)
 {
     const signed char *p = (const signed char*)skey;
     unsigned int h = *p;
+
     if(h)
     {
         for(p += 1; *p != '\0'; ++p)
@@ -48,15 +49,19 @@ unsigned int ht_hash_str(const char* skey)
  * @param skey key
  * @param nvalue value
  */
-void ht_insert(struct HashTable* hash_table, const char* skey, int nvalue)
+void ht_insert(HashTable* hash_table, const char* skey, int nvalue)
 {
+	unsigned int pos;
+	HashNode* pHead;
+	HashNode* pNewNode;
+
     if(hash_table->ht_size >= HASH_TABLE_MAX_SIZE)
     {
         printf("out of hash table memory!\n");
         return;
     }
-    unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
-    struct HashNode* pHead =  hash_table->table[pos];
+    pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
+    pHead =  hash_table->table[pos];
     while(pHead)
     {
         if(strcmp(pHead->sKey, skey) == 0)
@@ -66,8 +71,8 @@ void ht_insert(struct HashTable* hash_table, const char* skey, int nvalue)
         }
         pHead = pHead->pNext;
     }
-    struct HashNode* pNewNode = (struct HashNode*)malloc(sizeof(struct HashNode));
-    memset(pNewNode, 0, sizeof(struct HashNode));
+    pNewNode = (HashNode*)malloc(sizeof(HashNode));
+    memset(pNewNode, 0, sizeof(HashNode));
     pNewNode->sKey = (char*)malloc(sizeof(char) * (strlen(skey) + 1));
     strcpy(pNewNode->sKey, skey);
     pNewNode->nValue = nvalue;
@@ -78,14 +83,15 @@ void ht_insert(struct HashTable* hash_table, const char* skey, int nvalue)
 }
 
 
-void hash_table_print(struct HashTable* hash_table)
+void hash_table_print(HashTable* hash_table)
 {
+	int i;
+
     printf("===========content of hash table=================\n");
-    int i;
     for (i = 0; i < HASH_TABLE_MAX_SIZE; ++i)
         if (hash_table->table[i])
         {
-            struct HashNode *pHead = hash_table->table[i];
+            HashNode *pHead = hash_table->table[i];
             printf("%d=>", i);
             while (pHead)
             {
@@ -104,14 +110,15 @@ void hash_table_print(struct HashTable* hash_table)
  * @param HashTable the hashtable
  * @param skey the key of hashtable you'll remove
  */
-void ht_remove(struct HashTable* hash_table, const char* skey)
+void ht_remove(HashTable* hash_table, const char* skey)
 {
     unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
+
     if(hash_table->table[pos])
     {
-        struct HashNode* pHead = hash_table->table[pos];
-        struct HashNode* pLast = NULL;
-        struct HashNode* pRemove = NULL;
+        HashNode* pHead = hash_table->table[pos];
+        HashNode* pLast = NULL;
+        HashNode* pRemove = NULL;
         while(pHead)
         {
             if(strcmp(skey, pHead->sKey) == 0)
@@ -135,25 +142,34 @@ void ht_remove(struct HashTable* hash_table, const char* skey)
 }
 
 /**
- * lookup a key in the hash table
- * @param  skey key
- * @return      value
+ * @brief [brief description]
+ * @details [long description]
+ * 
+ * @param HashTable [description]
+ * @param skey [description]
+ * @return [description]
  */
-// HashNode* ht_lookup(HashNode* hashTable, const char* skey)
-// {
-//     unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
-//     if(hashTable[pos])
-//     {
-//         HashNode* pHead = hashTable[pos];
-//         while(pHead)
-//         {
-//             if(strcmp(skey, pHead->sKey) == 0)
-//                 return pHead;
-//             pHead = pHead->pNext;
-//         }
-//     }
-//     return NULL;
-// }
+HashNode* ht_lookup(HashTable* hash_table, const char* skey)
+{
+    HashNode* pHead;
+    unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
+    
+    if(hash_table->table[pos])
+    {
+        pHead = hash_table->table[pos];
+        while(pHead)
+        {
+            if(strcmp(skey, pHead->sKey) == 0){
+                // printf("%s\n", hash_table->table[pos]->sKey); 
+                return hash_table->table[pos];
+            }else{
+                pHead = pHead->pNext;
+            }
+            
+        }
+    }
+    return NULL;
+}
 
 /**
  * free the memory of the hash table

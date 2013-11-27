@@ -8,18 +8,21 @@
 
 #define HASH_TABLE_MAX_SIZE 10000
 
+typedef struct HashNode HashNode;
+
 struct HashNode
 {
     char* sKey;
     int nValue;
-    struct HashNode* pNext;
-};
+    HashNode* pNext;
+} ;
 
+typedef struct HashTable HashTable;
 
 struct HashTable
 {
 	int ht_size;
-	struct HashNode* table[HASH_TABLE_MAX_SIZE];
+	HashNode* table[HASH_TABLE_MAX_SIZE];
 };
 
 
