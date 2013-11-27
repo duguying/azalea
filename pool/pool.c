@@ -7,26 +7,50 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+// #include "../ds/hashtable.h"
 #include "pool.h"
-#include "hashtable.h"
 
 
-/// connection pool
-UserNode pool[POOL_MAX];
+HashTable* pool=NULL;
 
 /**
  * initial pool
  * @param  arg [description]
  * @return     [description]
  */
-int pool_init(int arg)
-{
-	ht_init();
-	return 0;
+HashTable* pool_init(void){
+	
+	pool=(HashTable*)malloc(sizeof(HashTable));
+	ht_init(pool);
+	return pool;
 }
 
-int pool_save(const char* username, int skt)
-{
-	ht_insert(username, skt);
+/**
+ * @brief save the user into pool
+ * @details [long description]
+ * 
+ * @param username [description]
+ * @param skt [description]
+ * @return [description]
+ */
+int pool_save(const char* username, int skt){
+	ht_insert(pool, username, skt);
 	printf("\033[0;33m%s has saved in pool, sock id is %d\033[0m\n", username, skt);
+}
+
+/**
+ * @brief get user information from pool
+ * @details [long description]
+ * 
+ * @param username [description]
+ * @return [description]
+ */
+int pool_get(const char* username){
+	HashNode* tmp=ht_lookup(pool, username);
+	if (tmp)
+	{
+		return tmp->nValue;
+	}
+	printf("%s\n", "Attention! User dose not exits!");
+	return -1;
 }

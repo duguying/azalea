@@ -6,6 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifndef _HASHTABLE_H_
+#define _HASHTABLE_H_
+
+
 #define HASH_TABLE_MAX_SIZE 10000
 
 typedef struct HashNode HashNode;
@@ -69,3 +73,5 @@ HashNode* ht_lookup(HashTable* hash_table, const char* skey);
  * @param hash_table the hashtable
  */
 void ht_release(HashTable* hash_table);
+
+#endif

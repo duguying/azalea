@@ -17,7 +17,7 @@
 #include <getopt.h>
 #include "ichat.h"
 #include "pool/pool.h"
-#include "pool/hashtable.h"
+#include "ds/hashtable.h"
 
 //thread id
 pthread_t ntid;//connect listening thread id
@@ -110,7 +110,7 @@ void* sock_listen(void *arg){
 
 		if(pooled&&(!strcmp("*", tmpchar))){//TODO Here is a bug will create segment fault, when can not find the result from the hashtable, the bug appear
 			int stskt;
-			stskt=ht_lookup(packed_msg.message+1)->nValue;
+			stskt=pool_get(packed_msg.message+1);//here the packed_msg.message+1 is username
 			printf("\033[0;33myou will send to skt %d\033[0;0m\n", stskt);
 			packed_msg.to_id=stskt;	//default is 0
 		}
@@ -135,7 +135,7 @@ void* sock_listen(void *arg){
 		memset(packed_msg.message, ECF, sizeof(char)*BUF_LEN);
 	}
 	
-	ht_remove((const char*)&username);//free the user from pool
+	ht_remove((const char*)&username);//will package ht_remove
 	
 	printf("\033[1;34m%s,%u;skt %d: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), tskt);
 	//here the thread is exit
@@ -245,7 +245,7 @@ int main(int argc,char **argv){
 
 
 	//pool initial
-	pool_init(NULL);
+	Pool* pool=pool_init();
 
 	//create pipe
 	pipe(pi);
