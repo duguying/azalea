@@ -98,38 +98,41 @@ void hash_table_print(struct HashTable* hash_table)
 
 
 /**
- * remove key-value frome the hash table
- * @param skey key
+ * @brief remove the hash node from hashtable
+ * @details [long description]
+ * 
+ * @param HashTable the hashtable
+ * @param skey the key of hashtable you'll remove
  */
-// void ht_remove(HashNode* hashTable, const char* skey)
-// {
-//     unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
-//     if(hashTable[pos])
-//     {
-//         HashNode* pHead = hashTable[pos];
-//         HashNode* pLast = NULL;
-//         HashNode* pRemove = NULL;
-//         while(pHead)
-//         {
-//             if(strcmp(skey, pHead->sKey) == 0)
-//             {
-//                 pRemove = pHead;
-//                 break;
-//             }
-//             pLast = pHead;
-//             pHead = pHead->pNext;
-//         }
-//         if(pRemove)
-//         {
-//             if(pLast)
-//                 pLast->pNext = pRemove->pNext;
-//             else
-//                 hashTable[pos] = NULL;
-//             free(pRemove->sKey);
-//             free(pRemove);
-//         }
-//     }
-// }
+void ht_remove(struct HashTable* hash_table, const char* skey)
+{
+    unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
+    if(hash_table->table[pos])
+    {
+        struct HashNode* pHead = hash_table->table[pos];
+        struct HashNode* pLast = NULL;
+        struct HashNode* pRemove = NULL;
+        while(pHead)
+        {
+            if(strcmp(skey, pHead->sKey) == 0)
+            {
+                pRemove = pHead;
+                break;
+            }
+            pLast = pHead;
+            pHead = pHead->pNext;
+        }
+        if(pRemove)
+        {
+            if(pLast)
+                pLast->pNext = pRemove->pNext;
+            else
+                hash_table->table[pos] = NULL;
+            free(pRemove->sKey);
+            free(pRemove);
+        }
+    }
+}
 
 /**
  * lookup a key in the hash table

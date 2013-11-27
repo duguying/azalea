@@ -1,16 +1,16 @@
-# OpenChat #
+# Azalea #
 
-[![travis](https://api.travis-ci.org/duguying/OpenChat.png)](https://travis-ci.org/duguying/ichat)
+[![travis](https://api.travis-ci.org/duguying/Azalea.png)](https://travis-ci.org/duguying/Azalea)
 [![cmake](http://www.cmake.org/cmake/img/CMake-logo-triangle-download.jpg)](http://www.cmake.org/)
 
 a chatting server
 
 # design #
 
-![design](https://rawgithub.com/duguying/ichat/master/docs/design.svg)
+![design](https://rawgithub.com/duguying/Azalea/master/docs/design.svg)
 
 # core #
-![core](https://rawgithub.com/duguying/ichat/master/docs/core.svg)
+![core](https://rawgithub.com/duguying/Azalea/master/docs/core.svg)
 
 # build #
 
