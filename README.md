@@ -1,7 +1,6 @@
-# ichat #
+# OpenChat #
 
-[![Build Status](https://drone.io/github.com/duguying/ichat/status.png)](https://drone.io/github.com/duguying/ichat/latest)
-[![travis](https://api.travis-ci.org/duguying/ichat.png)](https://travis-ci.org/duguying/ichat)
+[![travis](https://api.travis-ci.org/duguying/OpenChat.png)](https://travis-ci.org/duguying/ichat)
 [![cmake](http://www.cmake.org/cmake/img/CMake-logo-triangle-download.jpg)](http://www.cmake.org/)
 
 a chatting server
@@ -24,7 +23,7 @@ make
 
 # let's have a try #
 
-start ichat server in 1st terminal
+start OpenChat server in 1st terminal
 >
 ```shell
 ./ichat
