@@ -9,17 +9,16 @@
  */
 
 #include <stdio.h>
-#include "log.c"
+#include <stdlib.h>
 
-int main(void)
-{
-	int i,lh;
-	lh=log_create("test.log");
+#ifndef _STACK_H_
+#define _STACK_H_
 
-	for(i=0;i<10000;i++){
-		logw("hello world, this is a log!\n", lh);
-	}
-	//log_close();
-	
-	//for(;1;){sleep();}
-}
+/**
+ * @brief initial the stack
+ * @details [long description]
+ * 
+ */
+void stack_init();
+
+#endif

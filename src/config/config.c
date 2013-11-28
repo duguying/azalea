@@ -128,6 +128,17 @@ void* config_strip(conf* config){
 }
 
 /**
+ * @brief get config value line by line
+ * @details [long description]
+ * 
+ * @param config [description]
+ * @return [description]
+ */
+void* config_lines(conf* config){
+	;
+}
+
+/**
  * @brief equation expression parse
  * @details [long description]
  * 
