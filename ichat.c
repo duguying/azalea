@@ -135,7 +135,7 @@ void* sock_listen(void *arg){
 		memset(packed_msg.message, ECF, sizeof(char)*BUF_LEN);
 	}
 	
-	ht_remove((const char*)&username);//will package ht_remove
+	pool_discon((const char*)&username);
 	
 	printf("\033[1;34m%s,%u;skt %d: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), tskt);
 	//here the thread is exit

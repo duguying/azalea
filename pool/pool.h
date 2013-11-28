@@ -46,3 +46,12 @@ int pool_save(const char* username, int skt);
  * @return [description]
  */
 int pool_get(const char* username);
+
+/**
+ * @brief disconnect from pool
+ * @details [long description]
+ * 
+ * @param username [description]
+ * @return 0 when success, 1 when failed
+ */
+int pool_discon(const char* username);

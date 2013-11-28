@@ -43,7 +43,7 @@ int pool_save(const char* username, int skt){
  * @details [long description]
  * 
  * @param username [description]
- * @return [description]
+ * @return get failed -1,others sktid
  */
 int pool_get(const char* username){
 	HashNode* tmp=ht_lookup(pool, username);
@@ -53,4 +53,22 @@ int pool_get(const char* username){
 	}
 	printf("%s\n", "Attention! User dose not exits!");
 	return -1;
+}
+
+/**
+ * @brief disconnect from pool
+ * @details [long description]
+ * 
+ * @param username [description]
+ * @return 0 when success, 1 when failed
+ */
+int pool_discon(const char* username){
+	HashNode* tmp=ht_lookup(pool, username);
+	if (tmp)
+	{
+		ht_remove(pool, username);
+		return 0;
+	}
+	
+	return 1;
 }
