@@ -14,6 +14,12 @@
 #ifndef _STACK_H_
 #define _STACK_H_
 
+typedef struct stack stack;
+struct stack
+{
+	/* data */
+};
+
 /**
  * @brief initial the stack
  * @details [long description]

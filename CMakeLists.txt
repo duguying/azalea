@@ -18,8 +18,6 @@ set(MYDRV_LIST src/dbs/mysql/mysql_driver.c)
 set(CONF_LIST src/config/config.c)
 set(POOL_LIST src/pool/pool.c)
 set(PARSER_LIST src/parser/parser.c)
-set(HASHTABLE_LIST src/ds/hashtable.c)
-set(STACK_LIST src/ds/stack.c)
 # Tests
 set(CONFIG_TEST Tests/test_conf.c)
 set(LOG_TEST Tests/test_log.c)
@@ -28,6 +26,12 @@ set(MYSQLDRV_TEST Tests/test_mysqldrv.c)
 set(SQLITE_TEST Tests/test_sqlite.c)
 set(HASH_LIST Tests/test_hashtable.c)
 set(TEST_STACK_LIST Tests/test_stack.c)
+# Data Struct
+set(
+	DS_LIST 
+	src/ds/hashtable.c 
+	src/ds/stack.c
+)
 #############################################
 # include directories
 include_directories("/usr/include/mysql")
@@ -58,8 +62,8 @@ if(TEST)
 	target_link_libraries(test_mysqldrv mysql_drv)
 	target_link_libraries(test_sqlite sqlite3)
 	target_link_libraries(test_conf config)
-	target_link_libraries(test_hashtable hashtable)
-	target_link_libraries(test_stack stack)
+	target_link_libraries(test_hashtable ds)
+	target_link_libraries(test_stack ds)
 endif()
 
 # solid library, static library
@@ -67,8 +71,7 @@ add_library(log STATIC ${LOG_LIST})
 add_library(config STATIC ${CONF_LIST})
 add_library(pool STATIC ${POOL_LIST})
 add_library(parser STATIC ${PARSER_LIST})
-add_library(hashtable STATIC ${HASHTABLE_LIST})
-add_library(stack STATIC ${STACK_LIST})
+add_library(ds STATIC ${DS_LIST})
 # dynamic libraries
 add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
 

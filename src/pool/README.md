@@ -1,3 +1,3 @@
 # pool #
 
-![pool](https://rawgithub.com/duguying/ichat/master/docs/pool.svg)
+![pool](https://rawgithub.com/duguying/Azalea/master/docs/pool.svg)
