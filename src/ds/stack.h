@@ -14,10 +14,20 @@
 #ifndef _STACK_H_
 #define _STACK_H_
 
-typedef struct stack stack;
-struct stack
+typedef struct StackNode StsckNode;
+typedef struct Stack Stack;
+
+struct StackNode
 {
-	/* data */
+  int value;
+  Stack* next;
+  Stack* prev;
+};
+
+struct Stack
+{
+	int size;
+  Stack* top;
 };
 
 /**
