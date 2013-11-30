@@ -77,10 +77,10 @@ add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
 
 #############################################
 # target link libraries
-target_link_libraries(ichat pthread dl log pool hashtable)	# here, static has no difference with shared
+target_link_libraries(ichat pthread dl log pool ds)	# here, static has no difference with shared
 target_link_libraries(tcper pthread)
 target_link_libraries(mysql_drv mysqlclient)
-target_link_libraries(pool hashtable)
+target_link_libraries(pool ds)
 
 #############################################
 # set targets directories

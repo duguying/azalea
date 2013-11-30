@@ -10,7 +10,7 @@
 
 # tmp files
 *.log
-*.ini
+#*.ini
 
 # Note
 /note.txt
