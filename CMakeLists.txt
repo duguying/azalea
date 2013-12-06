@@ -32,6 +32,7 @@ set(
 	src/ds/hashtable.c 
 	src/ds/stack.c
 )
+set(SERVICE src/service.c)
 #############################################
 # include directories
 include_directories("/usr/include/mysql")
@@ -42,6 +43,7 @@ include_directories("build/arc")
 link_directories("/usr/lib/mysql")
 
 #############################################
+add_executable(ichatd ${SERVICE})
 # main executation
 add_executable(ichat ${SRC_LIST})
 
