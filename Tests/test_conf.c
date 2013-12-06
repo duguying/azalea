@@ -17,11 +17,16 @@ int main(void)
 {
 	conf* c=NULL;
 	conf configuration;
+	int line_length=0;
 	c=config_init("./config.ini",&configuration);
-	printf("%d\n", c->size);
+	// printf("%d\n", c->size);
 	config_remove_comment(c);
 	config_strip(c);
-	printf("%s\n, length %d\n", c->content, strlen(c->content));
+	// printf("%s\n, length %d\n", c->content, strlen(c->content));
+
+	line_length=config_current_line(c);
+
+	printf("line_length is: %d\n", line_length);
 	config_destroy(c);
 	return 0;
 }

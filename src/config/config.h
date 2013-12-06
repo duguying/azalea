@@ -17,6 +17,7 @@ typedef struct conf
 	int size;//size of config file, and this is chars number too
 	int config_handle;
 	char* content;//file content
+	int vernier;//the vernier of current parsing point 当前解析位置游标
 } conf;
 
 /**
@@ -38,3 +39,12 @@ char* config_get(int config_handle, const char* key);
  * @return the struct pointer of config, but carefully if you want to assignment
  */
 void* config_remove_comment(conf* config);
+
+/**
+ * @brief get current line of config, and move the vernier
+ * @details get current line of config, and move the vernier
+ * 
+ * @param config config struct
+ * @return the string of current line
+ */
+int config_current_line(conf* config);

@@ -32,11 +32,11 @@ conf* config_init(const char* config_file,conf* config){
 	config->config_handle=open(config_file, O_RDONLY);
 	config->content=(char*)malloc(buf.st_size*sizeof(char));
 	read(config->config_handle,config->content,buf.st_size);
+	config->vernier=0;
 	return config;
 }
 
-char* config_get(int config_handle, const char* key)
-{
+char* config_get(int config_handle, const char* key){
 	char* rst=0;
 	return rst;
 }
@@ -78,6 +78,7 @@ void* config_remove_comment(conf* config){
 	free(config->content);
 	config->content=final;
 	config->size=length;
+	config->vernier=0;//the parsing have not start, vernier in 0
 	return config;
 }
 
@@ -128,14 +129,22 @@ void* config_strip(conf* config){
 }
 
 /**
- * @brief get config value line by line
- * @details [long description]
+ * @brief get current line of config, and move the vernier
+ * @details get current line of config, and move the vernier
  * 
- * @param config [description]
- * @return [description]
+ * @param config config struct
+ * @return the string of current line
  */
-void* config_lines(conf* config){
-	;
+int config_current_line(conf* config){
+	int line_length=0;
+	int vernier_point=config->vernier;
+	while('\n'!=*(config->content+vernier_point)){
+		line_length++;
+		printf("c%d : %c\n", vernier_point, *(config->content+vernier_point));
+		vernier_point++;
+	};
+	config->vernier=line_length;
+	return vernier_point;
 }
 
 /**
