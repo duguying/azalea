@@ -54,4 +54,7 @@ void stack_init();
  */
 void stack_push(Stack* stk,StackNode* elem);
 
+void stack_push_int(Stack* stk,int value);
+
+
 #endif
