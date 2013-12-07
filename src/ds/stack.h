@@ -47,4 +47,11 @@ struct Stack
  */
 void stack_init();
 
+/**
+ * basic push element into stack
+ * @param stk  the stack
+ * @param elem the element:stack node
+ */
+void stack_push(Stack* stk,StackNode* elem);
+
 #endif
