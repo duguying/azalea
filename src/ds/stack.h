@@ -14,20 +14,30 @@
 #ifndef _STACK_H_
 #define _STACK_H_
 
-typedef struct StackNode StsckNode;
+typedef enum etype etype;
+typedef struct StackNode StackNode;
 typedef struct Stack Stack;
 
+//element type
+enum etype {inte,floate,stringe,doublee};
+
+//stack node
 struct StackNode
 {
-  int value;
-  Stack* next;
-  Stack* prev;
+	etype type;
+	int int_value;
+	float float_value;
+	char* string_value;
+	double double_value;
+	StackNode* next;
+	StackNode* prev;
 };
 
+//the stack
 struct Stack
 {
 	int size;
-  Stack* top;
+	StackNode* top;
 };
 
 /**
