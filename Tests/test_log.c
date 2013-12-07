@@ -9,17 +9,17 @@
  */
 
 #include <stdio.h>
-#include "../src/log/log.c"
+#include "../src/log/log.h"
 
 int main(void)
 {
-	int i,lh;
-	lh=log_create("test.log");
+	int i;
+	log_create("test.log");
 
 	for(i=0;i<10000;i++){
-		logw("hello world, this is a log!\n", lh);
+		log_printf("hello world, this is a log!\n");
 	}
-	//log_close();
+	log_close();
 	
 	return 0;
 }

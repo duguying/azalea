@@ -62,6 +62,7 @@ if(TEST)
 	add_executable(test_stack ${TEST_STACK_LIST})
 	target_link_libraries(test_mysql mysqlclient)
 	target_link_libraries(test_mysqldrv mysql_drv)
+	target_link_libraries(test_log log)
 	target_link_libraries(test_sqlite sqlite3)
 	target_link_libraries(test_conf config)
 	target_link_libraries(test_hashtable ds)
@@ -90,4 +91,4 @@ target_link_libraries(pool ds)
 
 #############################################
 # cmake configuration
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)

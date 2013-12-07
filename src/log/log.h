@@ -10,53 +10,29 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <string.h>
-
-//the global logfile handle
-static int logh;
 
 /**
  * initialize the model
  * @return  0 for success
  */
-int initial(void)
-{
-	printf("Load Log Model success!\n");
-	//log_create("test.log");
-	return 0;
-}
+int initial(void);
 
 /**
  * create a log
  * @param  file file filename
  * @return      log handle
  */
-int log_create(const char* file)
-{
-	// int lh;
-	logh=open(file, O_RDWR|O_CREAT|O_APPEND);
-	if(-1==logh){
-		printf("create log file error!\n");
-	}
-	return logh;
-}
+int log_create(const char* file);
 
 /**
  * write log
  * @param  string log message
  * @return        the byte size have written
  */
-int log_printf(const char* string)
-{
-	return write(logh, string, strlen(string));
-}
+int log_printf(const char* string);
 
 /**
  * close log
  * @return  if success, return 0
  */
-int log_close(void)
-{
-	return close(logh);
-}
+int log_close(void);

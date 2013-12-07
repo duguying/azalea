@@ -7,9 +7,9 @@
  * you can redistribute it and/or modify
  * it under the terms of the GNU General Public License
  */
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include <sys/types.h>
 
  int main(void){
@@ -20,7 +20,7 @@
  		printf("an error occurred!\n");
  	}else if (pid>0)//in father
  	{
- 		printf("%s\n", "goodbye son!");
+ 		printf("%s\n", "ichat started");
  		exit(0);//in father
  	}else if(pid==0){
  		execve("./ichat");//in son

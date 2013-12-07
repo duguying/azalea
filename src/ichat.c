@@ -21,6 +21,7 @@
 #include "ichat.h"
 #include "pool/pool.h"
 #include "ds/hashtable.h"
+#include "log/log.h"
 
 //thread id
 pthread_t ntid;//connect listening thread id
@@ -166,7 +167,7 @@ void* pipe_listen(void* arg){
 		//printf("son pipe recv: %s\n",bf);
 		printf("to id %d\n", ((Msg*)fa_pipe_buffer)->to_id);
 		if(((Msg*)fa_pipe_buffer)->to_id){
-			send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, BUF_LEN, 0);
+			send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, BUF_LEN, 0);//socket send message
 		}
 		memset(fa_pipe_buffer, ECF, sizeof(Msg));
 	}
@@ -220,8 +221,8 @@ int main(int argc,char **argv){
 	//son socket id
 	int son_skt;
 	
-	int fh1=log_create("test.log");
-	logw("test, this is a log!\n",fh1);
+	log_create("test.log");
+	log_printf("test, this is a log!\n");
 	
 
 	int c;

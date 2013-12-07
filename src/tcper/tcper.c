@@ -34,6 +34,23 @@ char * replaceAll(char * src,char oldChar,char newChar){
 	return head;
 }
 
+/**
+ * socket recv message
+ * @param arg the connected socket id
+ */
+void* listen_message(void *arg){
+	int skt;
+	char buf_rcv[1000];
+
+	skt=*(int*)arg;
+	for(;1;){
+		if(recv(skt, buf_rcv, 1000*sizeof(char), 0)<=0){//recved and put it into packed msg
+			break;
+		};
+	}
+	
+	return ((void *) 0);
+}
 
 /**
  * main function
@@ -77,23 +94,26 @@ int main(int argc, char** argv)
     saddr.sin_port=htons(atoi(port));
     
 	len=sizeof(struct sockaddr);
-    
+	
 	if(connect(skt, (struct sockaddr*)&saddr, len)<0){
-        printf("Connected Failed!\n");
-        return 0;
-    }else{
-		for(;1;){
-			memset(buf, 0, sizeof(char)*1000);
-			fgets(buf, 1000, stdin);
-			replaceAll(buf,'\n','\0');
-			if(0==strcmp(buf, ".exit")){
-				return 0;
-			}
-			send(skt, buf, 1000*sizeof(char), 0);
+		printf("Connected Failed!\n");
+		return 0;
+	}else{
+		int err;
+		pthread_t tid;
+		//create thread to recv message here!!!
+		err = pthread_create(&tid, NULL, listen_message, &skt);
+		memset(buf, 0, sizeof(char)*1000);
+		fgets(buf, 1000, stdin);
+		replaceAll(buf,'\n','\0');
+		if(0==strcmp(buf, ".exit")){
+			return 0;
 		}
-	};
+		send(skt, buf, 1000*sizeof(char), 0);
+	}
+	
 	//TODO if the server closed the connect, shutdown
 
-    return 0;
+	return 0;
 }
 
