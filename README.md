@@ -54,3 +54,7 @@ okay,the `tcper` have not finished. but you can try it by this [TCP/UDP Tester](
 
 
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/duguying/azalea/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
