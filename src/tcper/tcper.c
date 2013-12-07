@@ -46,6 +46,8 @@ void* listen_message(void *arg){
 	for(;1;){
 		if(recv(skt, buf_rcv, 1000*sizeof(char), 0)<=0){//recved and put it into packed msg
 			break;
+		}else{
+			printf("Received: %s\n", buf_rcv);
 		};
 	}
 	
@@ -104,12 +106,15 @@ int main(int argc, char** argv)
 		//create thread to recv message here!!!
 		err = pthread_create(&tid, NULL, listen_message, &skt);
 		memset(buf, 0, sizeof(char)*1000);
-		fgets(buf, 1000, stdin);
-		replaceAll(buf,'\n','\0');
-		if(0==strcmp(buf, ".exit")){
-			return 0;
+		for(;1;){
+			fgets(buf, 1000, stdin);
+			replaceAll(buf,'\n','\0');
+			if(0==strcmp(buf, ".exit")){
+				return 0;
+			}
+			send(skt, buf, 1000*sizeof(char), 0);
 		}
-		send(skt, buf, 1000*sizeof(char), 0);
+		
 	}
 	
 	//TODO if the server closed the connect, shutdown
