@@ -13,5 +13,8 @@
 #include "../src/ds/stack.h"
 
 int main(void){
+	Stack test_stack;
+	stack_init(&test_stack);
+
 	return 0;
 }

@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <string.h>
 #include "stack.h"
 
@@ -18,7 +19,31 @@
  * @details [long description]
  * 
  */
-void stack_init(Stack* stk){
+void stack_init(Stack* stk , ...){
+	stype stk_type;
+
+	va_list argptr;//the arguments pointer
+	va_start(argptr, stk);//get the first arg
+    stk_type = va_arg(argptr, stype);//next arg
+
+    if (stk_type==ints)
+    {
+    	stk_type=ints;
+    }else if (stk_type==floats)
+    {
+    	stk_type=floats;
+    }else if (stk_type==strings)
+    {
+    	stk_type=strings;
+    }else if (stk_type==doubles)
+    {
+    	stk_type=doubles;
+    }else if (stk_type>doubles||stk_type<=autos)
+    {
+    	stk_type=autos;
+    }
+
+	stk->type=stk_type;
 	stk->size=0;
 	stk->top=NULL;
 }

@@ -15,11 +15,14 @@
 #define _STACK_H_
 
 typedef enum etype etype;
+typedef enum stype stype;
 typedef struct StackNode StackNode;
 typedef struct Stack Stack;
 
 //element type
 enum etype {inte,floate,stringe,doublee};
+//stack type
+enum stype {autos,ints,floats,strings,doubles};
 
 //stack node
 struct StackNode
@@ -36,6 +39,7 @@ struct StackNode
 //the stack
 struct Stack
 {
+	stype type;
 	int size;
 	StackNode* top;
 };
@@ -45,7 +49,7 @@ struct Stack
  * @details [long description]
  * 
  */
-void stack_init();
+void stack_init(Stack* stk , ...);
 
 /**
  * basic push element into stack
