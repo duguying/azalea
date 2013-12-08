@@ -21,31 +21,31 @@
  */
 void stack_init(Stack* stk , ...){
 	stype stk_type;
-
 	va_list argptr;//the arguments pointer
+
+	stk->size=0;
+	stk->top=NULL;
+
 	va_start(argptr, stk);//get the first arg
     stk_type = va_arg(argptr, stype);//next arg
 
     if (stk_type==ints)
     {
-    	stk_type=ints;
+    	stk->type=ints;
     }else if (stk_type==floats)
     {
-    	stk_type=floats;
+    	stk->type=floats;
     }else if (stk_type==strings)
     {
-    	stk_type=strings;
+    	stk->type=strings;
     }else if (stk_type==doubles)
     {
-    	stk_type=doubles;
+    	stk->type=doubles;
     }else if (stk_type>doubles||stk_type<=autos)
     {
-    	stk_type=autos;
+    	stk->type=autos;
     }
-
-	stk->type=stk_type;
-	stk->size=0;
-	stk->top=NULL;
+	
 }
 
 /**
@@ -53,7 +53,7 @@ void stack_init(Stack* stk , ...){
  * @param stk  the stack
  * @param elem the element:stack node
  */
-void stack_push(Stack* stk,StackNode* elem){
+void extern stack_push(Stack* stk,StackNode* elem){
 	memset(elem,0,sizeof(StackNode));
 
 	if (!stk->top)
@@ -68,7 +68,17 @@ void stack_push(Stack* stk,StackNode* elem){
 	};
 }
 
-void stack_push_int(Stack* stk,int value){
+/**
+ * push the element(which is int) into stack
+ * @param stk   [the stack]
+ * @param value [the int element]
+ */
+int stack_push_int(Stack* stk,int value){
+	if (ints!=stk->type||autos!=stk->type)
+	{
+		printf("%s\n", "error:the stack type error!");
+		return -1;
+	}
 	StackNode* elem=(StackNode*)malloc(sizeof(StackNode));
 	memset(elem,0,sizeof(StackNode));
 	elem->type=inte;
@@ -76,16 +86,43 @@ void stack_push_int(Stack* stk,int value){
 	stack_push(stk,elem);
 }
 
-void stack_push_float(Stack* stk,float value){
-	;
+int stack_push_float(Stack* stk,float value){
+	if (floats!=stk->type||autos!=stk->type)
+	{
+		printf("%s\n", "error:the stack type error!");
+		return -1;
+	}
+	StackNode* elem=(StackNode*)malloc(sizeof(StackNode));
+	memset(elem,0,sizeof(StackNode));
+	elem->type=floate;
+	elem->float_value=value;
+	stack_push(stk,elem);
 }
 
-void stack_push_double(Stack* stk,double value){
-	;
+int stack_push_double(Stack* stk,double value){
+	if (doubles!=stk->type||autos!=stk->type)
+	{
+		printf("%s\n", "error:the stack type error!");
+		return -1;
+	}
+	StackNode* elem=(StackNode*)malloc(sizeof(StackNode));
+	memset(elem,0,sizeof(StackNode));
+	elem->type=doublee;
+	elem->double_value=value;
+	stack_push(stk,elem);
 }
 
-void stack_push_string(Stack* stk,const char* value){
-	;
+int stack_push_string(Stack* stk,const char* value){
+	if (strings!=stk->type||autos!=stk->type)
+	{
+		printf("%s\n", "error:the stack type error!");
+		return -1;
+	}
+	StackNode* elem=(StackNode*)malloc(sizeof(StackNode));
+	memset(elem,0,sizeof(StackNode));
+	elem->type=stringe;
+	elem->string_value=(char*)value;
+	stack_push(stk,elem);
 }
 
 void stack_pop(){
