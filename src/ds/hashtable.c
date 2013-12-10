@@ -8,9 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "ichat.h"
 #include "hashtable.h"
 
 /**

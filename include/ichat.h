@@ -8,8 +8,12 @@
  * it under the terms of the GNU General Public License
  */
 
+#ifndef _ICHAT_H_
+#define _ICHAT_H_
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define BUF_LEN 1000 //buffer length
 #define ID_LEN 20 //username and etc name
@@ -26,3 +30,5 @@ typedef struct Msg{
 	int from_id;
 	char message[BUF_LEN];
 } Msg;
+
+#endif

@@ -38,7 +38,7 @@ set(SERVICE src/service.c)
 include_directories("/usr/include/mysql")
 # library directory
 include_directories("build/lib")
-include_directories("build/arc")
+include_directories("include")
 # link directories
 link_directories("/usr/lib/mysql")
 

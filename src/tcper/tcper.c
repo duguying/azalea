@@ -8,9 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "ichat.h"
 #include <pthread.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -19,7 +17,7 @@
 #include <unistd.h>
 
 #define IP 16
-#define PORT 6
+#define PORT_LEN 6
 
 struct sockaddr_in saddr;
 char buf[1000];
@@ -66,10 +64,10 @@ int main(int argc, char** argv)
 	socklen_t len;
 	char ch;
 	char ip[IP];
-	char port[PORT];
+	char port[PORT_LEN];
 
 	strncpy(ip,"127.0.0.1",IP);
-	strncpy(port,"6666",PORT);
+	strncpy(port,"6666",PORT_LEN);
 
     while ((ch = getopt(argc,argv,"i:p:"))!=-1){  
 		switch(ch){
@@ -79,8 +77,8 @@ int main(int argc, char** argv)
 			printf("option ip:'%s'\n",ip);
 			break;
 		case 'p':
-			memset(port,0,sizeof(char)*PORT);
-			strncpy(port,optarg,PORT);
+			memset(port,0,sizeof(char)*PORT_LEN);
+			strncpy(port,optarg,PORT_LEN);
 			printf("option port :%s\n", port);
 			break;  
 		default:  

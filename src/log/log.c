@@ -8,10 +8,8 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "ichat.h"
 #include <fcntl.h>
-#include <string.h>
 
 //the global logfile handle
 static int logh;

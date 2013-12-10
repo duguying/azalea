@@ -8,8 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "ichat.h"
 #include <string.h>
 #include <pthread.h>
 #include <sys/types.h>
@@ -18,7 +17,7 @@
 #include <arpa/inet.h>
 #include <dlfcn.h>
 #include <getopt.h>
-#include "ichat.h"
+
 #include "pool/pool.h"
 #include "ds/hashtable.h"
 #include "log/log.h"
