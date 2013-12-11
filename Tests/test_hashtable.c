@@ -15,7 +15,7 @@ int main(void){
 	HashTable hash_table;
 	HashNode* lookup_result;
 	int i;
-	for (i = 0; i < 100000; ++i)
+	for (i = 0; i < 1000; ++i)
 	{
 		ht_init(&hash_table);
 		ht_insert(&hash_table,"rex", 123);

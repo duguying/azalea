@@ -90,5 +90,14 @@ target_link_libraries(pool ds)
 # set_target_properties(ichat PROPERTIES RUNTIME_OUTPUT_DIRECTORY ".")
 
 #############################################
+ENABLE_TESTING()
+#ADD_TEST(T_CONF "./bin/test_conf")
+ADD_TEST(T_HT "./bin/test_hashtable")
+ADD_TEST(T_LOG "./bin/test_log")
+ADD_TEST(T_MYSQL "./bin/test_mysql")
+ADD_TEST(T_SQLITE "./bin/test_sqlite")
+ADD_TEST(T_STACK "./bin/test_stack")
+
+#############################################
 # cmake configuration
 cmake_minimum_required(VERSION 2.8)
