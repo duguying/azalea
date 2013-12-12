@@ -6,33 +6,37 @@ set(TEST true)
 set(CMAKE_BUILD_TYPE "Debug")  
 set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")  
 set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+# root directory
+set(SRC_DIR "src/")
+set(TEST_DIR "tests/")
 # output directory
 set(EXECUTABLE_OUTPUT_PATH bin)
 set(LIBRARY_OUTPUT_PATH lib)
 #############################################
 # source directories varibility
-set(SRC_LIST src/ichat.c)
-set(LOG_LIST src/log/log.c)
-set(TCPER_LIST src/tcper/tcper.c)
-set(MYDRV_LIST src/dbs/mysql/mysql_driver.c)
-set(CONF_LIST src/config/config.c)
-set(POOL_LIST src/pool/pool.c)
-set(PARSER_LIST src/parser/parser.c)
+set(SRC_LIST ${SRC_DIR}/ichat.c)
+set(LOG_LIST ${SRC_DIR}/log/log.c)
+set(TCPER_LIST ${SRC_DIR}/tcper/tcper.c)
+set(MYDRV_LIST ${SRC_DIR}/dbs/mysql/mysql_driver.c)
+set(CONF_LIST ${SRC_DIR}/config/config.c)
+set(POOL_LIST ${SRC_DIR}/pool/pool.c)
+set(PARSER_LIST ${SRC_DIR}/parser/parser.c)
 # Tests
-set(CONFIG_TEST Tests/test_conf.c)
-set(LOG_TEST Tests/test_log.c)
-set(MYSQL_VER Tests/test_mysql.c)
-set(MYSQLDRV_TEST Tests/test_mysqldrv.c)
-set(SQLITE_TEST Tests/test_sqlite.c)
-set(HASH_LIST Tests/test_hashtable.c)
-set(TEST_STACK_LIST Tests/test_stack.c)
+set(CONFIG_TEST ${TEST_DIR}test_conf.c)
+set(LOG_TEST ${TEST_DIR}test_log.c)
+set(MYSQL_VER ${TEST_DIR}test_mysql.c)
+set(MYSQLDRV_TEST ${TEST_DIR}test_mysqldrv.c)
+set(SQLITE_TEST ${TEST_DIR}test_sqlite.c)
+set(HASH_LIST ${TEST_DIR}test_hashtable.c)
+set(TEST_STACK_LIST ${TEST_DIR}test_stack.c)
 # Data Struct
 set(
 	DS_LIST 
-	src/ds/hashtable.c 
-	src/ds/stack.c
+	${SRC_DIR}/ds/hashtable.c 
+	${SRC_DIR}/ds/stack.c
 )
-set(SERVICE src/service.c)
+# Service Model
+set(SERVICE ${SRC_DIR}/service.c)
 #############################################
 # include directories
 include_directories("/usr/include/mysql")
@@ -91,7 +95,7 @@ target_link_libraries(pool ds)
 
 #############################################
 ENABLE_TESTING()
-#ADD_TEST(T_CONF "./bin/test_conf")
+ADD_TEST(T_CONF "./bin/test_conf")
 ADD_TEST(T_HT "./bin/test_hashtable")
 ADD_TEST(T_LOG "./bin/test_log")
 ADD_TEST(T_MYSQL "./bin/test_mysql")
