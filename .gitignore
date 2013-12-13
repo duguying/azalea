@@ -22,3 +22,6 @@
 
 # Makefile
 makefile
+
+# Doxygen build
+/html-doc-build/

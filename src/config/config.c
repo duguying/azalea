@@ -28,6 +28,11 @@ conf* config_init(const char* config_file,conf* config){
 	stat(config_file,&buf);
 	config->size=buf.st_size;
 	config->config_handle=open(config_file, O_RDONLY);
+	if (config->config_handle<0)
+	{
+		printf("open config file failed: %d\n", config->config_handle);
+		return (void*)0;
+	}
 	config->content=(char*)malloc(buf.st_size*sizeof(char));
 	read(config->config_handle,config->content,buf.st_size);
 	config->vernier=0;

@@ -20,13 +20,17 @@ int main(void)
 	int line_length=0;
 	c=config_init("./config.ini",&configuration);
 	// printf("%d\n", c->size);
+	if(c==0){
+		printf("config file is not exist!\n");
+		return 0;
+	}
 	config_remove_comment(c);
 	config_strip(c);
-	// printf("%s\n, length %d\n", c->content, strlen(c->content));
+	printf("content is:\n %s\n\n", c->content);
 
 	line_length=config_current_line(c);
 
-	printf("line_length is: %d\n", line_length);
+	//printf("line_length is: %d\n", line_length);
 	config_destroy(c);
 	return 0;
 }

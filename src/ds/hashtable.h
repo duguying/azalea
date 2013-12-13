@@ -19,10 +19,18 @@
 
 typedef struct HashNode HashNode;
 
+/**
+ * @brief hashtable node
+ * @details [long description]
+ * 
+ */
 struct HashNode
 {
+	///the key of node
     char* sKey;
+    ///the value of node
     int nValue;
+    ///next node
     HashNode* pNext;
 } ;
 
@@ -30,7 +38,9 @@ typedef struct HashTable HashTable;
 
 struct HashTable
 {
+	///hashtable current size
 	int ht_size;
+	///the hashtable nodes array
 	HashNode* table[HASH_TABLE_MAX_SIZE];
 };
 
