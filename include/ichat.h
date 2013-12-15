@@ -15,19 +15,28 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define BUF_LEN 1000 //buffer length
-#define ID_LEN 20 //username and etc name
-#define PPB_LEN sizeof(Msg)/sizeof(char) //pipe buffer
-#define PORT 6666 //port
-#define ECF 0 //Empty Char Fill
-// #define QUIET 1
-// #define iprintf(args) ((QUIET)?0:(printf(args)))
+///buffer length
+#define BUF_LEN 1000 
+///username and etc name
+#define ID_LEN 20 
+///pipe buffer
+#define PPB_LEN sizeof(Msg)/sizeof(char) 
+///port
+#define PORT 6666 
+///Empty Char Fill
+#define ECF 0 
 
+///the struct of message 
 typedef struct Msg{
+	///the user socket you send to
 	int to;
+	///the user id you send to
 	int to_id;
-	int from;// from user skt
+	///from user socket
+	int from;
+	///from user id
 	int from_id;
+	///message
 	char message[BUF_LEN];
 } Msg;
 

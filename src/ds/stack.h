@@ -19,12 +19,12 @@ typedef enum stype stype;
 typedef struct StackNode StackNode;
 typedef struct Stack Stack;
 
-//element type
+///element type
 enum etype {inte,floate,stringe,doublee};
-//stack type
+///stack type
 enum stype {autos,ints,floats,strings,doubles};
 
-//stack node
+///stack node
 struct StackNode
 {
 	etype type;
@@ -36,11 +36,14 @@ struct StackNode
 	StackNode* prev;
 };
 
-//the stack
+///the stack
 struct Stack
 {
+	///stack type
 	stype type;
+	///the current stack size
 	int size;
+	///top of the stack
 	StackNode* top;
 };
 
@@ -56,8 +59,13 @@ void stack_init(Stack* stk , ...);
  * @param stk  the stack
  * @param elem the element:stack node
  */
-void stack_push(Stack* stk,StackNode* elem);
+void extern stack_push(Stack* stk,StackNode* elem);
 
+/**
+ * push the element(which is int) into stack
+ * @param stk   [the stack]
+ * @param value [the int element]
+ */
 int stack_push_int(Stack* stk,int value);
 
 

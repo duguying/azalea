@@ -12,12 +12,20 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+/**
+ * @brief config struct
+ * @details config struct, it is the contener of the configuration
+ */
 typedef struct conf
 {
-	int size;//size of config file, and this is chars number too
+	///size of config file, and this is chars number too
+	int size;
+	///configure file handle
 	int config_handle;
-	char* content;//file content
-	int vernier;//the vernier of current parsing point 当前解析位置游标
+	///file content
+	char* content;
+	///the vernier of current parsing point 当前解析位置游标
+	int vernier;
 } conf;
 
 /**

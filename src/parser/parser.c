@@ -10,7 +10,9 @@
 
 #include "ichat.h"
 
+///long message
 char full_message[BUF_LEN];
+///short message
 char short_message[ID_LEN];
 
 int parse_init(void)

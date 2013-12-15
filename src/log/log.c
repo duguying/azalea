@@ -32,7 +32,6 @@ int initial(void)
  */
 int log_create(const char* file)
 {
-	// int lh;
 	logh=open(file, O_RDWR|O_CREAT|O_APPEND);
 	if(-1==logh){
 		printf("create log file error!\n");

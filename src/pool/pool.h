@@ -12,15 +12,19 @@
 #include <stdlib.h>
 #include "../ds/hashtable.h"
 
+///user node in the connection pool
 typedef struct UserNode
 {
+	///user socket
 	int skt;
+	///username
 	char* username;
+	///user id
 	int id;
 } UserNode;
 
+///connection pool
 typedef HashTable Pool;
-
 
 
 #define POOL_MAX 10000
