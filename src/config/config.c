@@ -55,6 +55,7 @@ void* config_remove_comment(conf* config){
 	int i=0,j=0,tag=0,length=0;
 	char* final=NULL;
 	char* tmp=(char*)malloc(sizeof(char)*config->size);
+	memset(tmp,0,sizeof(char)*config->size);
 	for (i = 0; i < config->size; ++i)
 	{
 		if ('#'==*(config->content+i))
@@ -74,7 +75,8 @@ void* config_remove_comment(conf* config){
 		}
 	}
 	length=strlen(tmp);
-	final=(char*)malloc(length*sizeof(char));
+	final=(char*)malloc((length+1)*sizeof(char));
+	memset(final,0,sizeof(char)*(length+1));
 	strncpy(final,tmp,length);
 	free(tmp);
 	tmp=NULL;
@@ -121,8 +123,9 @@ void* config_strip(conf* config){
 			}
 		}
 	}
-	config->size=strlen(tmp);
+	config->size=strlen(tmp)+1;//leave a char for '\0'
 	final=(char*)malloc(sizeof(char)*config->size);
+	memset(final,0,sizeof(char)*config->size);
 	strncpy(final,tmp,config->size);
 	free(tmp);
 	tmp=NULL;
