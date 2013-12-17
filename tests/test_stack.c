@@ -14,7 +14,19 @@
 
 int main(void){
 	Stack test_stack;
-	stack_init(&test_stack);
+	stype st=autos;
+
+	stack_init(&test_stack,st);
+	stack_push_int(&test_stack,12);
+	stack_push_int(&test_stack,3);
+	stack_push_int(&test_stack,41);
+	stack_push_int(&test_stack,5);
+	stack_push_int(&test_stack,9);
+	stack_push_string(&test_stack,"hello world!");
+	stack_push_float(&test_stack,12.23);
+	stack_push_double(&test_stack,12.2345);
+
+	stack_print(&test_stack);
 
 	return 0;
 }

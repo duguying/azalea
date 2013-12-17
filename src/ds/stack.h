@@ -21,8 +21,11 @@ typedef struct Stack Stack;
 
 ///element type
 enum etype {inte,floate,stringe,doublee};
+//			0		1		2		3
+
 ///stack type
 enum stype {autos,ints,floats,strings,doubles};
+//			0		1		2		3		4
 
 ///stack node
 struct StackNode
@@ -68,5 +71,34 @@ void extern stack_push(Stack* stk,StackNode* elem);
  */
 int stack_push_int(Stack* stk,int value);
 
+/**
+ * @brief push the element(float) into stack
+ * @details [long description]
+ * 
+ * @param stk [description]
+ * @param value [description]
+ * @return [description]
+ */
+int stack_push_float(Stack* stk,float value);
+
+/**
+ * @brief push the element(double) into stack
+ * @details [long description]
+ * 
+ * @param stk [description]
+ * @param value [description]
+ * @return [description]
+ */
+int stack_push_double(Stack* stk,double value);
+
+/**
+ * @brief push the element(string:char*) into stack
+ * @details [long description]
+ * 
+ * @param stk [description]
+ * @param value [description]
+ * @return [description]
+ */
+int stack_push_string(Stack* stk,const char* value);
 
 #endif

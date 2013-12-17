@@ -43,6 +43,7 @@ include_directories("/usr/include/mysql")
 # library directory
 include_directories("build/lib")
 include_directories("include")
+include_directories("src")
 # link directories
 link_directories("/usr/lib/mysql")
 

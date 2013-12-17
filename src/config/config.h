@@ -8,9 +8,9 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "ichat.h"
 #include <fcntl.h>
+#include "ds/hashtable.h"
 
 /**
  * @brief config struct
@@ -26,6 +26,8 @@ typedef struct conf
 	char* content;
 	///the vernier of current parsing point 当前解析位置游标
 	int vernier;
+	///the config contener
+	HashTable config;
 } conf;
 
 /**
