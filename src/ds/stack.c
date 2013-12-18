@@ -29,10 +29,7 @@ void stack_init(Stack* stk , ...){
 
     if(stk_type<0||stk_type>4){
     	printf("%s\n", "stack type error!\n");
-    	// return -1;
     }
-
-    // printf("%d\n", stk_type);//0
 
     if (stk_type==ints)
     {
@@ -66,6 +63,8 @@ void extern stack_push(Stack* stk,StackNode* elem){
 	elem->next=ct;
 	///set this element as top
 	stk->top=elem;
+	///increas the size
+	stk->size++;
 }
 
 /**
@@ -74,7 +73,6 @@ void extern stack_push(Stack* stk,StackNode* elem){
  * @param value [the int element]
  */
 int stack_push_int(Stack* stk,int value){
-	// printf("%d\n", stk->type);
 	if (ints!=stk->type&&autos!=stk->type)
 	{
 		printf("%s\n", "error:the stack type error!need int.");
@@ -106,7 +104,6 @@ int stack_push_float(Stack* stk,float value){
 	memset(elem,0,sizeof(StackNode));
 	elem->type=floate;
 	elem->float_value=value;
-	// printf("%lf\n", value);
 	stack_push(stk,elem);
 }
 
@@ -152,8 +149,20 @@ int stack_push_string(Stack* stk,const char* value){
 	stack_push(stk,elem);
 }
 
-void stack_pop(){
-	;
+/**
+ * @brief pop the top element of stack
+ * @details [long description]
+ * 
+ * @param stk [description]
+ */
+void stack_pop(Stack* stk){
+	if(stk->size<=0){
+		return;
+	}
+	StackNode* next=stk->top->next;
+	free(stk->top);
+	stk->top=next;
+	stk->size--;
 }
 
 void stack_get(int i){
@@ -172,20 +181,21 @@ void stack_set(int i){
  */
 void stack_print(Stack* stack){
 	StackNode* psn=stack->top;
-	printf("%s\n", "the stack content is:");
+	printf("the stack(size:%d) content is:\n", stack->size);
 	printf("%s\n", "-----------------------------");
 	printf("%s\n", "TOP");
 	while(psn!=NULL){
 		if(psn->type==inte){
-			printf("[int]\t%d\n",psn->int_value);
+			printf("[int]   \t\t%d\n",psn->int_value);
 		}else if(psn->type==floate){
-			printf("[float]\t%f\n",psn->float_value);
+			printf("[float] \t\t%f\n",psn->float_value);
 		}else if(psn->type==stringe){
-			printf("[string]\t%s\n",psn->string_value);
+			printf("[string]\t\t%s\n",psn->string_value);
 		}else if(psn->type==doublee){
-			printf("[double]\t%lf\n",psn->double_value);
+			printf("[double]\t\t%lf\n",psn->double_value);
 		}
 		psn=psn->next;
 	}
 	printf("%s\n", "BOTTOM");
+	printf("%s\n", "-----------------------------");
 }

@@ -101,4 +101,12 @@ int stack_push_double(Stack* stk,double value);
  */
 int stack_push_string(Stack* stk,const char* value);
 
+/**
+ * @brief pop the top element of stack
+ * @details [long description]
+ * 
+ * @param stk [description]
+ */
+void stack_pop(Stack* stk);
+
 #endif

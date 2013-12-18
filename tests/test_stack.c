@@ -28,5 +28,11 @@ int main(void){
 
 	stack_print(&test_stack);
 
+	stack_pop(&test_stack);
+	stack_pop(&test_stack);
+	stack_pop(&test_stack);
+
+	stack_print(&test_stack);	
+
 	return 0;
 }
