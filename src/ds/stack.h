@@ -48,6 +48,8 @@ struct Stack
 	int size;
 	///top of the stack
 	StackNode* top;
+	///the stack index
+	StackNode** index;
 };
 
 /**
@@ -108,5 +110,15 @@ int stack_push_string(Stack* stk,const char* value);
  * @param stk [description]
  */
 void stack_pop(Stack* stk);
+
+/**
+ * @brief get the stack node by the index is reverse order(索引倒序)
+ * @details [long description]
+ * 
+ * @param stk [description]
+ * @param i [description]
+ * @return [description]
+ */
+StackNode* stack_get(Stack* stk,int i);
 
 #endif

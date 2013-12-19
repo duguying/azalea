@@ -15,6 +15,8 @@
 int main(void){
 	Stack test_stack;
 	stype st=autos;
+	int i=0;
+	StackNode* tpn;//temp node
 
 	stack_init(&test_stack,st);
 	stack_push_int(&test_stack,12);
@@ -28,11 +30,25 @@ int main(void){
 
 	stack_print(&test_stack);
 
-	stack_pop(&test_stack);
-	stack_pop(&test_stack);
-	stack_pop(&test_stack);
+	// stack_pop(&test_stack);
+	// stack_pop(&test_stack);
+	// stack_pop(&test_stack);
 
-	stack_print(&test_stack);	
+	// stack_print(&test_stack);
+
+	printf("get nodes by index:\n");
+	for(i=0;i<test_stack.size;i++){
+		tpn=test_stack.index[i];
+		if(tpn->type==inte){
+			printf("[int]   \t\t%d\n",tpn->int_value);
+		}else if(tpn->type==floate){
+			printf("[float] \t\t%f\n",tpn->float_value);
+		}else if(tpn->type==stringe){
+			printf("[string]\t\t%s\n",tpn->string_value);
+		}else if(tpn->type==doublee){
+			printf("[double]\t\t%lf\n",tpn->double_value);
+		}
+	}
 
 	return 0;
 }

@@ -23,6 +23,7 @@ void stack_init(Stack* stk , ...){
 
 	stk->size=0;
 	stk->top=NULL;
+	stk->index=(StackNode**)malloc(sizeof(void*));
 
 	va_start(argptr, stk);//get the first arg
     stk_type = va_arg(argptr, stype);//next arg
@@ -56,6 +57,8 @@ void stack_init(Stack* stk , ...){
  * @param elem the element:stack node
  */
 void extern stack_push(Stack* stk,StackNode* elem){
+	stk->index=(StackNode**)realloc(stk->index,sizeof(StackNode*)*(stk->size+1));
+	stk->index[stk->size]=elem;
 	///temp node
 	StackNode* ct;
 	ct=stk->top;
@@ -163,10 +166,23 @@ void stack_pop(Stack* stk){
 	free(stk->top);
 	stk->top=next;
 	stk->size--;
+	stk->index=(StackNode**)realloc(stk->index,sizeof(void*)*stk->size);
 }
 
-void stack_get(int i){
-	;
+/**
+ * @brief get the stack node by the index is reverse order(索引倒序)
+ * @details [long description]
+ * 
+ * @param stk [description]
+ * @param i [description]
+ * @return [description]
+ */
+StackNode* stack_get(Stack* stk,int i){
+	if(stk->size>=i){
+		return stk->index[i];
+	}else{
+		return NULL;
+	}
 }
 
 void stack_set(int i){
