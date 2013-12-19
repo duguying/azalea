@@ -57,15 +57,26 @@ void stack_init(Stack* stk , ...){
  * @param elem the element:stack node
  */
 void extern stack_push(Stack* stk,StackNode* elem){
+	///temp node
+	StackNode* ct;//,ct_next;
+
 	stk->index=(StackNode**)realloc(stk->index,sizeof(StackNode*)*(stk->size+1));
 	stk->index[stk->size]=elem;
-	///temp node
-	StackNode* ct;
+	
 	ct=stk->top;
+	
 	///set top next node
 	elem->next=ct;
+	elem->prev=NULL;
 	///set this element as top
 	stk->top=elem;
+
+	///if the top node hava next, set the prev of next as the top
+	if(stk->top->next!=NULL){
+		stk->top->next->prev=stk->top;
+	}
+
+	
 	///increas the size
 	stk->size++;
 }
@@ -185,9 +196,91 @@ StackNode* stack_get(Stack* stk,int i){
 	}
 }
 
-void stack_set(int i){
-	;
+/**
+ * @brief set the node by index
+ * @details [long description]
+ * 
+ * @param stk sokect
+ * @param i index
+ * @param node the node
+ * @return [description]
+ */
+void stack_set(Stack* stk,int i,StackNode* node){
+	StackNode* old_node;
+	if(stk->size>=i){
+		old_node=stk->index[i];
+		node->next=old_node->next;
+		old_node->prev->next=node;
+		free(old_node);
+		old_node=NULL;
+		stk->index[i]=node;
+	}
 }
+
+/**
+ * @brief create a int stack node
+ * @details [long description]
+ * 
+ * @param value [description]
+ * @return [description]
+ */
+StackNode* stack_node_int(int value){
+	StackNode* sn=(StackNode*)malloc(sizeof(StackNode));
+	sn->type=inte;
+	sn->int_value=value;
+	return sn;
+}
+
+/**
+ * @brief create a string stack node
+ * @details [long description]
+ * 
+ * @param value [description]
+ * @return [description]
+ */
+StackNode* stack_node_float(float value){
+	StackNode* sn=(StackNode*)malloc(sizeof(StackNode));
+	sn->type=floate;
+	sn->float_value=value;
+	return sn;
+}
+
+/**
+ * @brief create a double stack node
+ * @details [long description]
+ * 
+ * @param value [description]
+ * @return [description]
+ */
+StackNode* stack_node_double(double value){
+	StackNode* sn=(StackNode*)malloc(sizeof(StackNode));
+	sn->type=doublee;
+	sn->double_value=value;
+	return sn;
+}
+
+/**
+ * @brief create a string stack node
+ * @details [long description]
+ * 
+ * @param value [description]
+ * @return [description]
+ */
+StackNode* stack_node_string(const char* value){
+	StackNode* sn=(StackNode*)malloc(sizeof(StackNode));
+	sn->type=stringe;
+	sn->string_value=(char*)value;
+	return sn;
+}
+
+/**
+ * @brief destroy the stack
+ * @details [long description]
+ * 
+ */
+void stack_destroy(Stack* stk){}
+
+//////////////////////////////////////////////////////////////////
 
 /**
  * @brief print the whole stack

@@ -121,4 +121,58 @@ void stack_pop(Stack* stk);
  */
 StackNode* stack_get(Stack* stk,int i);
 
+/**
+ * @brief set the node by index
+ * @details [long description]
+ * 
+ * @param stk sokect
+ * @param i index
+ * @param node the node
+ * @return [description]
+ */
+void stack_set(Stack* stk,int i,StackNode* node);
+
+/**
+ * @brief create a int stack node
+ * @details [long description]
+ * 
+ * @param value [description]
+ * @return [description]
+ */
+StackNode* stack_node_int(int value);
+
+/**
+ * @brief create a string stack node
+ * @details [long description]
+ * 
+ * @param value [description]
+ * @return [description]
+ */
+StackNode* stack_node_float(float value);
+
+/**
+ * @brief create a double stack node
+ * @details [long description]
+ * 
+ * @param value [description]
+ * @return [description]
+ */
+StackNode* stack_node_double(double value);
+
+/**
+ * @brief create a string stack node
+ * @details [long description]
+ * 
+ * @param value [description]
+ * @return [description]
+ */
+StackNode* stack_node_string(const char* value);
+
+/**
+ * @brief destroy the stack
+ * @details [long description]
+ * 
+ */
+void stack_destroy(Stack* stk);
+
 #endif

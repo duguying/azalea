@@ -17,6 +17,7 @@ int main(void){
 	stype st=autos;
 	int i=0;
 	StackNode* tpn;//temp node
+	StackNode* tpn2;
 
 	stack_init(&test_stack,st);
 	stack_push_int(&test_stack,12);
@@ -30,11 +31,14 @@ int main(void){
 
 	stack_print(&test_stack);
 
-	// stack_pop(&test_stack);
+	stack_pop(&test_stack);
 	// stack_pop(&test_stack);
 	// stack_pop(&test_stack);
 
-	// stack_print(&test_stack);
+	tpn2=stack_node_string("this is a test");
+	stack_set(&test_stack, 2, tpn2);
+
+	stack_print(&test_stack);
 
 	printf("get nodes by index:\n");
 	for(i=0;i<test_stack.size;i++){
