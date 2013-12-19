@@ -278,7 +278,12 @@ StackNode* stack_node_string(const char* value){
  * @details [long description]
  * 
  */
-void stack_destroy(Stack* stk){}
+void stack_destroy(Stack* stk){
+	while(stk->top!=NULL){
+		stack_pop(stk);		
+	}
+	free(stk->index);
+}
 
 //////////////////////////////////////////////////////////////////
 

@@ -54,5 +54,9 @@ int main(void){
 		}
 	}
 
+	stack_destroy(&test_stack);
+	printf("%s\n", "After Destroy:");
+	stack_print(&test_stack);
+
 	return 0;
 }
