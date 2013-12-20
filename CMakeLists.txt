@@ -6,7 +6,7 @@ set(TEST true)
 set(CMAKE_BUILD_TYPE "Debug")  
 set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")  
 set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
-set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
+# set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
 # root directory
 set(SRC_DIR "src/")
 set(TEST_DIR "tests/")
@@ -90,6 +90,9 @@ target_link_libraries(ichat pthread dl log pool ds)	# here, static has no differ
 target_link_libraries(tcper pthread)
 target_link_libraries(mysql_drv mysqlclient)
 target_link_libraries(pool ds)
+target_link_libraries(ds dmalloc)
+target_link_libraries(log dmalloc)
+target_link_libraries(config dmalloc)
 
 #############################################
 # set targets directories

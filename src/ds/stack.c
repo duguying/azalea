@@ -173,9 +173,11 @@ void stack_pop(Stack* stk){
 	}
 	StackNode* next=stk->top->next;
 	free(stk->top);
+	if (NULL!=next)
+	{
+		next->prev=NULL;
+	}
 	stk->top=next;
-	
-	next->prev=NULL;
 	stk->size--;
 	stk->index=(StackNode**)realloc(stk->index,sizeof(void*)*stk->size);
 }
@@ -292,12 +294,15 @@ Stack* stack_reverse(Stack* stk){
  * 
  */
 void stack_destroy(Stack* stk){
-	while(stk->size=0){
+	int i;
+	int node_num=stk->size;
+	for (i = 0; i < node_num; ++i)
+	{
 		stack_pop(stk);
 	}
-	// free(stk->index);
-	// free(stk);
-	// stk=NULL;
+	free(stk->index);
+	free(stk);
+	stk=NULL;
 }
 
 //////////////////////////////////////////////////////////////////
