@@ -57,7 +57,7 @@ struct Stack
  * @details [long description]
  * 
  */
-void stack_init(Stack* stk , ...);
+Stack* stack_init(stype type);
 
 /**
  * basic push element into stack
@@ -168,11 +168,18 @@ StackNode* stack_node_double(double value);
  */
 StackNode* stack_node_string(const char* value);
 
+Stack* stack_reverse(Stack* stk);
+
+void stack_print(Stack* stack);
+void stack_reverse_print(Stack* stack);
+
 /**
  * @brief destroy the stack
  * @details [long description]
  * 
  */
 void stack_destroy(Stack* stk);
+
+
 
 #endif

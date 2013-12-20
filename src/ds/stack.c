@@ -17,38 +17,37 @@
  * @details [long description]
  * 
  */
-void stack_init(Stack* stk , ...){
-	stype stk_type;
-	va_list argptr;//the arguments pointer
+Stack* stack_init(stype type){
+	Stack* stk;
+	stk=(Stack*)malloc(sizeof(Stack));
+	memset(stk,0,sizeof(Stack));
 
 	stk->size=0;
 	stk->top=NULL;
 	stk->index=(StackNode**)malloc(sizeof(void*));
+	memset(stk->index,0,sizeof(void*));
 
-	va_start(argptr, stk);//get the first arg
-    stk_type = va_arg(argptr, stype);//next arg
-
-    if(stk_type<0||stk_type>4){
+    if(type<0||type>4){
     	printf("%s\n", "stack type error!\n");
     }
 
-    if (stk_type==ints)
+    if (type==ints)
     {
     	stk->type=ints;
-    }else if (stk_type==floats)
+    }else if (type==floats)
     {
     	stk->type=floats;
-    }else if (stk_type==strings)
+    }else if (type==strings)
     {
     	stk->type=strings;
-    }else if (stk_type==doubles)
+    }else if (type==doubles)
     {
     	stk->type=doubles;
     }else
     {
     	stk->type=autos;
     }
-	
+	return stk;
 }
 
 /**
@@ -58,7 +57,7 @@ void stack_init(Stack* stk , ...){
  */
 void extern stack_push(Stack* stk,StackNode* elem){
 	///temp node
-	StackNode* ct;//,ct_next;
+	StackNode* ct;
 
 	stk->index=(StackNode**)realloc(stk->index,sizeof(StackNode*)*(stk->size+1));
 	stk->index[stk->size]=elem;
@@ -76,7 +75,6 @@ void extern stack_push(Stack* stk,StackNode* elem){
 		stk->top->next->prev=stk->top;
 	}
 
-	
 	///increas the size
 	stk->size++;
 }
@@ -176,6 +174,8 @@ void stack_pop(Stack* stk){
 	StackNode* next=stk->top->next;
 	free(stk->top);
 	stk->top=next;
+	
+	next->prev=NULL;
 	stk->size--;
 	stk->index=(StackNode**)realloc(stk->index,sizeof(void*)*stk->size);
 }
@@ -210,7 +210,9 @@ void stack_set(Stack* stk,int i,StackNode* node){
 	if(stk->size>=i){
 		old_node=stk->index[i];
 		node->next=old_node->next;
+		old_node->next->prev=node;
 		old_node->prev->next=node;
+		node->prev=old_node->prev;
 		free(old_node);
 		old_node=NULL;
 		stk->index[i]=node;
@@ -274,15 +276,28 @@ StackNode* stack_node_string(const char* value){
 }
 
 /**
+ * @brief reverse the stack
+ * @details [long description]
+ * 
+ * @param stk [description]
+ * @return [description]
+ */
+Stack* stack_reverse(Stack* stk){
+	;
+}
+
+/**
  * @brief destroy the stack
  * @details [long description]
  * 
  */
 void stack_destroy(Stack* stk){
-	while(stk->top!=NULL){
-		stack_pop(stk);		
+	while(stk->size=0){
+		stack_pop(stk);
 	}
-	free(stk->index);
+	// free(stk->index);
+	// free(stk);
+	// stk=NULL;
 }
 
 //////////////////////////////////////////////////////////////////
@@ -311,5 +326,26 @@ void stack_print(Stack* stack){
 		psn=psn->next;
 	}
 	printf("%s\n", "BOTTOM");
+	printf("%s\n", "-----------------------------");
+}
+
+void stack_reverse_print(Stack* stack){
+	StackNode* psn=stack->index[0];
+	printf("the stack(size:%d) content is:\n", stack->size);
+	printf("%s\n", "-----------------------------");
+	printf("%s\n", "BUTTOM");
+	while(psn!=NULL){
+		if(psn->type==inte){
+			printf("[int]   \t\t%d\n",psn->int_value);
+		}else if(psn->type==floate){
+			printf("[float] \t\t%f\n",psn->float_value);
+		}else if(psn->type==stringe){
+			printf("[string]\t\t%s\n",psn->string_value);
+		}else if(psn->type==doublee){
+			printf("[double]\t\t%lf\n",psn->double_value);
+		}
+		psn=psn->prev;
+	}
+	printf("%s\n", "TOP");
 	printf("%s\n", "-----------------------------");
 }
