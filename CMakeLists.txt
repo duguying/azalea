@@ -90,9 +90,13 @@ target_link_libraries(ichat pthread dl log pool ds)	# here, static has no differ
 target_link_libraries(tcper pthread)
 target_link_libraries(mysql_drv mysqlclient)
 target_link_libraries(pool ds)
-target_link_libraries(ds dmalloc)
-target_link_libraries(log dmalloc)
-target_link_libraries(config dmalloc)
+# local model, use dmalloc for memory debug
+if(NOT CI)
+	target_link_libraries(ds dmalloc)
+	target_link_libraries(log dmalloc)
+	target_link_libraries(config dmalloc)
+	add_definitions(-D_DMALLOC_)
+endif()
 
 #############################################
 # set targets directories

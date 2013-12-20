@@ -14,9 +14,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #ifdef DMALLOC
+#ifdef _DMALLOC_
 #include "dmalloc.h"
-// #endif
+#endif
 
 ///buffer length
 #define BUF_LEN 1000 
