@@ -4,6 +4,7 @@ compiler:
     - "clang"
 before_script:
     - "sudo apt-get install libdmalloc-dev"
+    - "export DMALLOC_OPTIONS=debug=0x4e48503,inter=100,log=logfile"
 script: 
     - "mkdir build"
     - "cd build"
