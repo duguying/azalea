@@ -9,6 +9,7 @@
  */
 
 #include "ichat.h"
+#include <stdarg.h>
 #include <time.h>
 
 ///the global logfile handle
