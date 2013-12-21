@@ -7,32 +7,38 @@
  * you can redistribute it and/or modify
  * it under the terms of the GNU General Public License
  */
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "ichat.h"
+#include <time.h>
 
 /**
- * initialize the model
- * @return  0 for success
+ * @brief get current time as string
+ * @details get current time as string, 
+ * attention! a tring allocaled, user should free it after used
+ * 
+ * @return [description]
  */
-int initial(void);
+void log_now(void);
 
 /**
  * create a log
  * @param  file file filename
  * @return      log handle
  */
-int log_create(const char* file);
+FILE* log_create(const char* file);
 
 /**
  * write log
  * @param  string log message
  * @return        the byte size have written
  */
-int log_printf(const char* string);
+void log_printf(const char *format,...);
 
 /**
  * close log
  * @return  if success, return 0
  */
 int log_close(void);
+
+
+
+

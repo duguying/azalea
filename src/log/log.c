@@ -9,20 +9,34 @@
  */
 
 #include "ichat.h"
-#include <fcntl.h>
+#include <time.h>
 
-//the global logfile handle
-static int logh;
+///the global logfile handle
+static FILE *LOG_FILE;
+///time string, it is current time after generate(call function log_now)
+static char TIME_NOW[20];
 
 /**
- * initialize the model
- * @return  0 for success
+ * @brief generate current time string
+ * @details get current time as string, after generate, the time is in TIME_NOW
+ * @return the pointer of TIME_NOW
  */
-int initial(void)
-{
-	printf("Load Log Model success!\n");
-	//log_create("test.log");
-	return 0;
+char* log_now(void){
+	time_t now;
+	struct tm *timenow;
+
+	time(&now);
+	timenow = localtime(&now);
+
+	sprintf(TIME_NOW,"%d-%d-%d %d:%d:%d",\
+		timenow->tm_year+1900,\
+		timenow->tm_mon,\
+		timenow->tm_mday,\
+		timenow->tm_hour,\
+		timenow->tm_min,\
+		timenow->tm_sec);
+
+	return TIME_NOW;
 }
 
 /**
@@ -30,23 +44,16 @@ int initial(void)
  * @param  file file filename
  * @return      log handle
  */
-int log_create(const char* file)
+FILE* log_create(const char* file)
 {
-	logh=open(file, O_RDWR|O_CREAT|O_APPEND);
-	if(-1==logh){
-		printf("create log file error!\n");
-	}
-	return logh;
-}
 
-/**
- * write log
- * @param  string log message
- * @return        the byte size have written
- */
-int log_printf(const char* string)
-{
-	return write(logh, string, strlen(string));
+	if ((LOG_FILE = fopen(file, "a+")) == NULL)
+    {
+        fprintf(stderr, "Cannot open output file.\n");
+        return (FILE*)0;
+    }
+
+	return LOG_FILE;
 }
 
 /**
@@ -55,5 +62,38 @@ int log_printf(const char* string)
  */
 int log_close(void)
 {
-	return close(logh);
+	return fclose(LOG_FILE);
 }
+
+/**
+ * @brief log my printf
+ * @details [long description]
+ * 
+ * @param format [description]
+ */
+void log_printf(const char *format,...)
+{
+    va_list args,argsb;
+
+    ///generate the time string
+    log_now();
+
+ ///if define _SRC_LOG_ print the log on the screen
+ #ifdef _SCR_LOG_
+	printf("[%s]\n", TIME_NOW);
+
+    va_start(args,format);
+    vprintf(format,args);
+    va_end(args);
+ #endif
+
+	fprintf(LOG_FILE,"[%s]\n",TIME_NOW);
+
+	va_start(argsb,format);
+    vfprintf(LOG_FILE,format,argsb);
+    va_end(argsb);
+    fflush(LOG_FILE);
+}
+
+
+

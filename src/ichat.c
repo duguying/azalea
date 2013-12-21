@@ -98,7 +98,7 @@ void* sock_listen(void *arg){
 	memset(&packed_msg, ECF, sizeof(Msg));
 
 	tskt=*(int*)arg;
-	printf("tskt is %d\n", tskt);
+	log_printf("tskt is %d\n", tskt);
 
 	packed_msg.to_id=0;	//default is 0	
 
@@ -123,7 +123,7 @@ void* sock_listen(void *arg){
 		if(pooled&&(!strcmp("*", tmpchar))){//TODO Here is a bug will create segment fault, when can not find the result from the hashtable, the bug appear
 			int stskt;
 			stskt=pool_get(packed_msg.message+1);//here the packed_msg.message+1 is username
-			printf("\033[0;33myou will send to skt %d\033[0;0m\n", stskt);
+			log_printf("\033[0;33myou will send to skt %d\033[0;0m\n", stskt);
 			packed_msg.to_id=stskt;	//default is 0
 		}
 		
@@ -132,7 +132,7 @@ void* sock_listen(void *arg){
 		
 		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
 
-		printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), packed_msg.message);
+		log_printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), packed_msg.message);
 		//send buffer into pipe
 		
 		//printf("pipe send: %s", (char*)pipe_buffer);
@@ -149,7 +149,7 @@ void* sock_listen(void *arg){
 	
 	pool_discon((const char*)&username);
 	
-	printf("\033[1;34m%s,%u;skt %d: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), tskt);
+	log_printf("\033[1;34m%s,%u;skt %d: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), tskt);
 	//here the thread is exit
 	return ((void *) 0);
 }
@@ -173,7 +173,7 @@ void* pipe_listen(void* arg){
 
 	while((rc = read(po[0], fa_pipe_buffer, PPB_LEN)) > 0){//!!!Here Cannot Print Message
 		//printf("son pipe recv: %s\n",bf);
-		printf("to id %d\n", ((Msg*)fa_pipe_buffer)->to_id);
+		log_printf("to id %d\n", ((Msg*)fa_pipe_buffer)->to_id);
 		if(((Msg*)fa_pipe_buffer)->to_id){
 			send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, BUF_LEN, 0);//socket send message
 		}
@@ -231,7 +231,6 @@ int main(int argc,char **argv){
 	
 	log_create("test.log");
 	log_printf("test, this is a log!\n");
-	
 
 	int c;
     
@@ -245,15 +244,14 @@ int main(int argc,char **argv){
 				};
 				break;
 			case 'P':
-				printf("Her name is BX.\n");
+				log_printf("Her name is BX.\n");
 				break;
 			case 'R':
 				l_opt_arg = optarg;
-				printf("Our love is %s!\n", l_opt_arg);
+				log_printf("Our love is %s!\n", l_opt_arg);
 				break;
 		}
-	}  
-	// iprintf("hello%d",123);
+	}
 
 
 	//pool initial
@@ -274,11 +272,11 @@ int main(int argc,char **argv){
 	if(0==pid){//in son process
 		close(pi[1]);//close send, use recv
 		close(po[0]);//close recv, use send
-		printf("son start\n");
+		log_printf("son start\n");
 		char pipe_buffer[PPB_LEN];
 		int rc;
 		while((rc = read(pi[0], pipe_buffer, PPB_LEN)) > 0){
-			printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->from);
+			log_printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->from);
 
 			//pipe_buffer[PPB_LEN]=13;
 			//memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
@@ -297,7 +295,7 @@ int main(int argc,char **argv){
 		for(;1;){
 			//The function `accept` can block the process, so, i need't sleep
 			if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
-				printf("\033[1;32m%s,%u;skt %d: Connected!\033[1;0m\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
+				log_printf("\033[1;32m%s,%u;skt %d: Connected!\033[1;0m\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
 				//if accepted, create thread!
 				err = pthread_create(&ntid, NULL, sock_listen, &son_skt);//send the son socket
 			}

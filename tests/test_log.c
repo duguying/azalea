@@ -13,12 +13,14 @@
 
 int main(void)
 {
-	int i;
+	int i=0;
 	log_create("test.log");
 
-	for(i=0;i<10000;i++){
-		log_printf("hello world, this is a log!\n");
+	for(i=0;i<1000;i++){
+		log_printf("hello, i am rex\n");
+		log_printf("%s:%d:%f:%lf\n","hello world!",12,12.3,12.56789);
 	}
+
 	log_close();
 	
 	return 0;
