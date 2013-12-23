@@ -39,8 +39,6 @@ set(
 	${SRC_DIR}/ds/hashtable.c 
 	${SRC_DIR}/ds/stack.c
 )
-# Service Model
-set(SERVICE ${SRC_DIR}/service.c)
 #############################################
 # include directories
 include_directories("/usr/include/mysql")
@@ -52,7 +50,6 @@ include_directories("src")
 link_directories("/usr/lib/mysql")
 
 #############################################
-add_executable(ichatd ${SERVICE})
 # main executation
 add_executable(ichat ${SRC_LIST})
 
