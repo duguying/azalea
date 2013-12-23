@@ -73,6 +73,10 @@ int socket_listen(){
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	servaddr.sin_port = htons(PORT);
 	skt=socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if(skt<0){
+		log_printf("Create socket ERROR!");
+		return ERROR;
+	};
 	bind(skt, (struct sockaddr*)&servaddr, sizeof(servaddr));
 	return listen(skt, 10);
 }
@@ -200,16 +204,6 @@ void* loadmodel(void* arg){
 	return ((void *) 0);
 }
 
-int do_name, do_gf_name;
-char *l_opt_arg;
-struct option longopts[] = {
-     { "start",no_argument,NULL,'S'},
-     { "stop",no_argument,NULL,'P'},
-     { "restart",no_argument,NULL,'R'},
-     {      0,     0,     0,     0},
-};
-
-
 /**
  * main function
  * @param  argc [description]
@@ -217,23 +211,28 @@ struct option longopts[] = {
  * @return      [description]
  */
 int main(int argc,char **argv){
-	int err;
+	///create thread result
+	int create_thread_result;
+	///create pipe result
+	int create_pipe1_result,create_pipe2_result;
 	socklen_t len;
+	///father pid to start service
+	int main_pid;
 	//dealing process id
 	int pid;
 	//son socket id
 	int son_skt;
 	int c;
-	log_create("test.log");
-	
+	log_create("ichat.log");
+
  /////////////////////
 	///The main process ended, and then, the son adopt by init
 
-    int main_pid;
  	main_pid=fork();
  	if (main_pid<0)
  	{
- 		printf("An error occurred! Service have NOT start!\n");
+ 		printf("create process failed! service have NOT start!\n");
+ 		return ERROR;
  	}else if (main_pid>0)//in father
  	{
  		printf("ichat started...\n");
@@ -241,38 +240,28 @@ int main(int argc,char **argv){
  	}else if(main_pid==0){
 //////////////////////
 
-		while((c = getopt_long(argc, argv, ":", longopts, NULL)) != -1){
-			switch (c){
-				case 'S':
-					if(0==fork()){//son
-						system("./ichat");
-					}else{
-						abort();
-					};
-					break;
-				case 'P':
-					log_printf("Her name is BX.\n");
-					break;
-				case 'R':
-					l_opt_arg = optarg;
-					log_printf("Our love is %s!\n", l_opt_arg);
-					break;
-			}
-		}
-
-
 		//pool initial
 		Pool* pool=pool_init();
 
 		//create pipe
-		pipe(pi);
-		pipe(po);
+		create_pipe1_result=pipe(pi);
+		create_pipe2_result=pipe(po);
+		if(create_pipe1_result==ERROR||create_pipe2_result==ERROR){
+			log_printf("create pipe failed!\n");
+			return ERROR;
+		}
 
 		//start listen
-		socket_listen();
+		if(ERROR==socket_listen()){
+			return ERROR;
+		};
 
 		//create process for message dealing task
 		pid=fork();
+		if(ERROR==pid){
+			log_printf("create process failed!\n");
+			return ERROR;
+		}
 		if(0==pid){//in son process
 			close(pi[1]);//close send, use recv
 			close(po[0]);//close recv, use send
@@ -289,7 +278,11 @@ int main(int argc,char **argv){
 			close(pi[0]);//close recv, use send
 			close(po[1]);//close send, use recv
 			//create new thread to manage pipe listen
-			err = pthread_create(&ptid, NULL, pipe_listen, NULL);
+			create_thread_result = pthread_create(&ptid, NULL, pipe_listen, NULL);
+			if(create_thread_result!=0){
+				log_printf("create thread error!\n");
+				return ERROR;
+			}
 			//sock length
 			len = sizeof(clientaddr);
 			//loop listen and accept
@@ -298,7 +291,11 @@ int main(int argc,char **argv){
 				if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
 					log_printf("\033[1;32m%s,%u;skt %d: Connected!\033[1;0m\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
 					//if accepted, create thread!
-					err = pthread_create(&ntid, NULL, sock_listen, &son_skt);//send the son socket
+					create_thread_result = pthread_create(&ntid, NULL, sock_listen, &son_skt);//send the son socket
+					if(create_thread_result!=0){
+						log_printf("create thread error!\n");
+						return ERROR;
+					}
 				}
 			}
 		}

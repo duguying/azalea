@@ -28,6 +28,8 @@
 #define PORT 6666 
 ///Empty Char Fill
 #define ECF 0 
+///Error
+#define ERROR -1
 
 ///the struct of message 
 typedef struct Msg{
