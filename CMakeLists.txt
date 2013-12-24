@@ -1,5 +1,8 @@
 project(iChat)
 
+# set compilers
+# SET(CMAKE_C_COMPILER gcc)
+# SET(CMAKE_CXX_COMPILER g++)
 #############################################
 # gdb Debug support
 set(TEST true)
@@ -113,6 +116,11 @@ if(TEST)
 	ADD_TEST(T_STACK "./bin/test_stack")
 endif()
 
+# installation
+#############################################
+INSTALL(PROGRAMS build/bin/ichat DESTINATION /usr/local/azalea/bin)
+INSTALL(PROGRAMS build/bin/tcper DESTINATION /usr/local/azalea/bin)
+INSTALL(PROGRAMS build/lib/libmysql_drv.so DESTINATION /usr/local/azalea/lib)
 #############################################
 # cmake configuration
 cmake_minimum_required(VERSION 2.8)
