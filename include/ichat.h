@@ -21,7 +21,7 @@
 ///buffer length
 #define BUF_LEN 1000 
 ///username and etc name
-#define ID_LEN 20 
+#define ID_LEN 20
 ///pipe buffer
 #define PPB_LEN sizeof(Msg)/sizeof(char) 
 ///port
@@ -30,6 +30,8 @@
 #define ECF 0 
 ///Error
 #define ERROR -1
+///pid file
+#define PID "pid"
 
 ///the struct of message 
 typedef struct Msg{

@@ -9,7 +9,6 @@
  */
 
 #include "ichat.h"
-#include <string.h>
 #include <pthread.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -68,6 +67,8 @@ Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt){
  * @return socket id
  */
 int socket_listen(){
+	int bind_result;
+
 	memset(&servaddr, ECF, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -77,7 +78,11 @@ int socket_listen(){
 		log_printf("Create socket ERROR!");
 		return ERROR;
 	};
-	bind(skt, (struct sockaddr*)&servaddr, sizeof(servaddr));
+	bind_result=bind(skt, (struct sockaddr*)&servaddr, sizeof(servaddr));
+	if(ERROR==bind_result){
+		log_printf("binding failed!\n");
+		return ERROR;
+	}
 	return listen(skt, 10);
 }
 
@@ -219,10 +224,12 @@ int main(int argc,char **argv){
 	///father pid to start service
 	int main_pid;
 	//dealing process id
-	int pid;
+	int pid,son_pid;
 	//son socket id
 	int son_skt;
-	int c;
+	///pid log file handle
+	FILE* pid_log_file_handle;
+
 	log_create("ichat.log");
 
  /////////////////////
@@ -235,7 +242,11 @@ int main(int argc,char **argv){
  		return ERROR;
  	}else if (main_pid>0)//in father
  	{
- 		printf("ichat started...\n");
+ 		printf("ichat(%d) started...\n",main_pid);
+ 		///write the pid into file
+ 		pid_log_file_handle=fopen(PID,"w");
+ 		fprintf(pid_log_file_handle,"%d\n",main_pid);
+ 		fclose(pid_log_file_handle);
  		exit(0);//in father
  	}else if(main_pid==0){
 //////////////////////
@@ -265,18 +276,18 @@ int main(int argc,char **argv){
 		if(0==pid){//in son process
 			close(pi[1]);//close send, use recv
 			close(po[0]);//close recv, use send
-			log_printf("son start\n");
 			char pipe_buffer[PPB_LEN];
 			int rc;
 			while((rc = read(pi[0], pipe_buffer, PPB_LEN)) > 0){
 				log_printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->from);
-
 				rc = write(po[1], pipe_buffer, PPB_LEN);	//write the recvd msg into po for sendding to sock sender
 				memset(pipe_buffer, ECF, PPB_LEN);
 			}
 		}else{// in fahter
-			close(pi[0]);//close recv, use send
-			close(po[1]);//close send, use recv
+			log_printf("son(%d) start\n",pid);
+	 		///close the extra pipe port
+			close(pi[0]);
+			close(po[1]);
 			//create new thread to manage pipe listen
 			create_thread_result = pthread_create(&ptid, NULL, pipe_listen, NULL);
 			if(create_thread_result!=0){
