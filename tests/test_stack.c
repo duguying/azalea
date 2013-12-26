@@ -30,7 +30,6 @@ int main(void){
 		stack_pop(test_stack);
 		stack_pop(test_stack);
 
-		
 		stack_destroy(test_stack);
 	}
 	

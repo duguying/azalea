@@ -24,6 +24,8 @@ typedef struct conf
 	int config_handle;
 	///file content
 	char* content;
+	///original file content
+	char* origin_content;
 	///the vernier of current parsing point 当前解析位置游标
 	int vernier;
 	///the config contener
@@ -35,9 +37,9 @@ typedef struct conf
  * @details [long description]
  * 
  * @param config_file configuration file
- * @return [description]
+ * @return the pointer of conf struct
  */
-conf* config_init(const char* config_file, conf* config);
+conf* config_init(const char* config_file);
 
 char* config_get(int config_handle, const char* key);
 

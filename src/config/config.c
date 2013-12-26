@@ -20,9 +20,12 @@
  * @param config_file [description]
  * @return config file handle
  */
-conf* config_init(const char* config_file,conf* config){
+conf* 
+config_init(const char* config_file){
 	struct stat buf;
+	conf* config;
 	
+	config=(conf*)malloc(sizeof(conf));
 	memset(config,0,sizeof(conf));
 	memset(&buf,0,sizeof(struct stat));
 	stat(config_file,&buf);
@@ -34,12 +37,15 @@ conf* config_init(const char* config_file,conf* config){
 		return (void*)0;
 	}
 	config->content=(char*)malloc(buf.st_size*sizeof(char));
-	read(config->config_handle,config->content,buf.st_size);
+	config->origin_content=(char*)malloc(buf.st_size*sizeof(char));
+	read(config->config_handle,config->origin_content,buf.st_size);
+	strncpy(config->content,config->origin_content,buf.st_size*sizeof(char));
 	config->vernier=0;
 	return config;
 }
 
-char* config_get(int config_handle, const char* key){
+char* 
+config_get(int config_handle, const char* key){
 	char* rst=0;
 	return rst;
 }
@@ -51,9 +57,11 @@ char* config_get(int config_handle, const char* key){
  * @param config the struct pointer of config
  * @return the struct pointer of config, but carefully if you want to assignment
  */
-void* config_remove_comment(conf* config){
+void* 
+config_remove_comment(conf* config){
 	int i=0,j=0,tag=0,length=0;
 	char* final=NULL;
+	if(config==NULL){return (void*)ERROR;}
 	char* tmp=(char*)malloc(sizeof(char)*config->size);
 	memset(tmp,0,sizeof(char)*config->size);
 	for (i = 0; i < config->size; ++i)
@@ -94,7 +102,8 @@ void* config_remove_comment(conf* config){
  * @param config config the struct pointer of config
  * @return [description]
  */
-void* config_strip(conf* config){
+void* 
+config_strip(conf* config){
 	int i=0,j=0;
 	char* final=NULL;
 	char* tmp=(char*)malloc(sizeof(char)*config->size);
@@ -141,7 +150,8 @@ void* config_strip(conf* config){
  * @param config config struct
  * @return the string of current line
  */
-int config_current_line(conf* config){
+int 
+config_current_line(conf* config){
 	int line_length=0;
 	int vernier_point=config->vernier;
 	while('\n'!=*(config->content+vernier_point)){
@@ -160,7 +170,8 @@ int config_current_line(conf* config){
  * @param config [description]
  * @return [description]
  */
-void* config_equation(conf* config){
+void* 
+config_equation(conf* config){
 	;
 }
 
@@ -170,7 +181,10 @@ void* config_equation(conf* config){
  * 
  * @param config config struct
  */
-void config_destroy(conf* config){
+void 
+config_destroy(conf* config){
 	free(config->content);
-	config->content=NULL;
+	free(config->origin_content);
+	free(config);
+	config=NULL;
 }

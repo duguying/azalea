@@ -8,24 +8,15 @@
  * it under the terms of the GNU General Public License
  */
 
+#include "ichat.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 #ifndef _STACK_H_
 #define _STACK_H_
 
-typedef enum etype etype;
-typedef enum stype stype;
 typedef struct StackNode StackNode;
 typedef struct Stack Stack;
-
-///element type
-enum etype {inte,floate,stringe,doublee};
-//			0		1		2		3
-
-///stack type
-enum stype {autos,ints,floats,strings,doubles};
-//			0		1		2		3		4
 
 ///stack node
 struct StackNode
@@ -43,7 +34,7 @@ struct StackNode
 struct Stack
 {
 	///stack type
-	stype type;
+	ntype type;
 	///the current stack size
 	int size;
 	///top of the stack
@@ -57,7 +48,7 @@ struct Stack
  * @details [long description]
  * 
  */
-Stack* stack_init(stype type);
+Stack* stack_init(ntype type);
 
 /**
  * basic push element into stack

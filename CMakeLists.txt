@@ -54,7 +54,7 @@ link_directories("/usr/lib/mysql")
 
 #############################################
 # main executation
-add_executable(ichat ${SRC_LIST})
+# add_executable(ichat ${SRC_LIST})
 
 # tools
 add_executable(tcper ${TCPER_LIST}) # tcp tester
@@ -81,7 +81,7 @@ endif()
 # solid library, static library
 add_library(log STATIC ${LOG_LIST})
 add_library(config STATIC ${CONF_LIST})
-add_library(pool STATIC ${POOL_LIST})
+# add_library(pool STATIC ${POOL_LIST})
 add_library(parser STATIC ${PARSER_LIST})
 add_library(ds STATIC ${DS_LIST})
 # dynamic libraries
@@ -89,10 +89,10 @@ add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
 
 #############################################
 # target link libraries
-target_link_libraries(ichat pthread dl log pool ds)	# here, static has no difference with shared
+# target_link_libraries(ichat pthread dl log pool ds)	# here, static has no difference with shared
 target_link_libraries(tcper pthread)
 target_link_libraries(mysql_drv mysqlclient)
-target_link_libraries(pool ds)
+# target_link_libraries(pool ds)
 # local model, use dmalloc for memory debug
 if(NOT CI)
 	target_link_libraries(ds dmalloc)

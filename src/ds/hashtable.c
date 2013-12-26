@@ -50,7 +50,7 @@ unsigned int ht_hash_str(const char* skey)
  * @param skey key
  * @param nvalue value
  */
-void ht_insert(HashTable* hash_table, const char* skey, int nvalue)
+void ht_insert(HashTable* hash_table, const char* skey, void* nvalue)
 {
 	unsigned int pos;
 	HashNode* pHead;
@@ -76,7 +76,7 @@ void ht_insert(HashTable* hash_table, const char* skey, int nvalue)
     memset(pNewNode, 0, sizeof(HashNode));
     pNewNode->sKey = (char*)malloc(sizeof(char) * (strlen(skey) + 1));
     strcpy(pNewNode->sKey, skey);
-    pNewNode->nValue = nvalue;
+    pNewNode->pValue = nvalue;
     pNewNode->pNext = hash_table->table[pos];
     hash_table->table[pos] = pNewNode;
 
@@ -84,7 +84,7 @@ void ht_insert(HashTable* hash_table, const char* skey, int nvalue)
 }
 
 
-void hash_table_print(HashTable* hash_table){
+void ht_print(HashTable* hash_table){
 	int i;
 
     printf("===========content of hash table=================\n");
@@ -95,7 +95,7 @@ void hash_table_print(HashTable* hash_table){
             printf("%d=>", i);
             while (pHead)
             {
-                printf("%s:%d  ", pHead->sKey, pHead->nValue);
+                printf("%s:0x%x  ", pHead->sKey, pHead->pValue);
                 pHead = pHead->pNext;
             }
             printf("\n");

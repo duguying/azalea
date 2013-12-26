@@ -17,7 +17,7 @@
  * @details [long description]
  * 
  */
-Stack* stack_init(stype type){
+Stack* stack_init(ntype type){
 	Stack* stk;
 	stk=(Stack*)malloc(sizeof(Stack));
 	memset(stk,0,sizeof(Stack));

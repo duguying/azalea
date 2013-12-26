@@ -16,12 +16,11 @@ int main(void){
 	HashNode* lookup_result;
 	int i;
 	ht_init(&hash_table);
-	for (i = 0; i < 1000; ++i)
-	{
-		ht_insert(&hash_table,"i", i);	
-	}
-	hash_table_print(&hash_table);
+	
+	ht_insert(&hash_table,"i", i);	
+	
+	ht_print(&hash_table);
 	ht_release(&hash_table);
-	hash_table_print(&hash_table);
+	ht_print(&hash_table);
 	return 0;
 }

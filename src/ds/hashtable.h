@@ -8,6 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
+#include "ichat.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -29,7 +30,9 @@ struct HashNode
 	///the key of node
     char* sKey;
     ///the value of node
-    int nValue;
+    void* pValue;
+    ///node type
+    ntype type;
     ///next node
     HashNode* pNext;
 } ;
@@ -61,7 +64,7 @@ void ht_init(HashTable* hash_table);
  * @param skey key
  * @param nvalue value
  */
-void ht_insert(HashTable* hash_table, const char* skey, int nvalue);
+void ht_insert(HashTable* hash_table, const char* skey, void* nvalue);
 
 /**
  * @brief remove the hash node from hashtable

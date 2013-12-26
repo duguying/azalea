@@ -1,24 +1,30 @@
-data structure: stack
+combine the node of stack and the node of hashtable
+refactor hashtable
+--let the hashtable support muilt type
+--and then refactor the pool
+
+pool
+
 config: equation
 
 #----------------------
 # Communication
-tcp model
+socket package
 websocket model
+
+# Parser
+message transport protocol
+message parser
 
 # Database Driver
 mysql driver
 sqlite driver
 
 # Log
-text log
 
 # Tcp Client Tester
 shutdown when server closed the socket
 
-# Parser
-message transport protocol
-message parser
 
 # attention
 we should design connection pool before the message exchange in the core
