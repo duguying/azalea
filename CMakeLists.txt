@@ -39,6 +39,7 @@ set(TEST_STACK_LIST ${TEST_DIR}test_stack.c)
 # Data Struct
 set(
 	DS_LIST 
+	${SRC_DIR}/ds/ds.c
 	${SRC_DIR}/ds/hashtable.c 
 	${SRC_DIR}/ds/stack.c
 )

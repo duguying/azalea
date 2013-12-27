@@ -9,26 +9,13 @@
  */
 
 #include "ichat.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "ds.h"
 
 #ifndef _STACK_H_
 #define _STACK_H_
 
-typedef struct StackNode StackNode;
+///stack
 typedef struct Stack Stack;
-
-///stack node
-struct StackNode
-{
-	etype type;
-	int int_value;
-	float float_value;
-	char* string_value;
-	double double_value;
-	StackNode* next;
-	StackNode* prev;
-};
 
 ///the stack
 struct Stack
@@ -38,9 +25,9 @@ struct Stack
 	///the current stack size
 	int size;
 	///top of the stack
-	StackNode* top;
+	Node* top;
 	///the stack index
-	StackNode** index;
+	Node** index;
 };
 
 /**
@@ -55,44 +42,7 @@ Stack* stack_init(ntype type);
  * @param stk  the stack
  * @param elem the element:stack node
  */
-void extern stack_push(Stack* stk,StackNode* elem);
-
-/**
- * push the element(which is int) into stack
- * @param stk   [the stack]
- * @param value [the int element]
- */
-int stack_push_int(Stack* stk,int value);
-
-/**
- * @brief push the element(float) into stack
- * @details [long description]
- * 
- * @param stk [description]
- * @param value [description]
- * @return [description]
- */
-int stack_push_float(Stack* stk,float value);
-
-/**
- * @brief push the element(double) into stack
- * @details [long description]
- * 
- * @param stk [description]
- * @param value [description]
- * @return [description]
- */
-int stack_push_double(Stack* stk,double value);
-
-/**
- * @brief push the element(string:char*) into stack
- * @details [long description]
- * 
- * @param stk [description]
- * @param value [description]
- * @return [description]
- */
-int stack_push_string(Stack* stk,const char* value);
+void stack_push(Stack* stk,Node* elem);
 
 /**
  * @brief pop the top element of stack
@@ -110,7 +60,7 @@ void stack_pop(Stack* stk);
  * @param i [description]
  * @return [description]
  */
-StackNode* stack_get(Stack* stk,int i);
+Node* stack_get(Stack* stk,int i);
 
 /**
  * @brief set the node by index
@@ -121,43 +71,8 @@ StackNode* stack_get(Stack* stk,int i);
  * @param node the node
  * @return [description]
  */
-void stack_set(Stack* stk,int i,StackNode* node);
+void stack_set(Stack* stk,int i,Node* node);
 
-/**
- * @brief create a int stack node
- * @details [long description]
- * 
- * @param value [description]
- * @return [description]
- */
-StackNode* stack_node_int(int value);
-
-/**
- * @brief create a string stack node
- * @details [long description]
- * 
- * @param value [description]
- * @return [description]
- */
-StackNode* stack_node_float(float value);
-
-/**
- * @brief create a double stack node
- * @details [long description]
- * 
- * @param value [description]
- * @return [description]
- */
-StackNode* stack_node_double(double value);
-
-/**
- * @brief create a string stack node
- * @details [long description]
- * 
- * @param value [description]
- * @return [description]
- */
-StackNode* stack_node_string(const char* value);
 
 Stack* stack_reverse(Stack* stk);
 

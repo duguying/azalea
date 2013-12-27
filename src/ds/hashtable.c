@@ -28,7 +28,7 @@ void ht_init(HashTable* hash_table)
  * @param  skey [description]
  * @return      [description]
  */
-unsigned int ht_hash_str(const char* skey)
+unsigned int ht_hash_function(const char* skey)
 {
     const signed char *p = (const signed char*)skey;
     unsigned int h = *p;
@@ -40,7 +40,6 @@ unsigned int ht_hash_str(const char* skey)
     }
     return h;
 }
-
 
 /**
  * @brief insert key-value into hash table
@@ -61,7 +60,7 @@ void ht_insert(HashTable* hash_table, const char* skey, void* nvalue)
         printf("out of hash table memory!\n");
         return;
     }
-    pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
+    pos = ht_hash_function(skey) % HASH_TABLE_MAX_SIZE;
     pHead =  hash_table->table[pos];
     while(pHead)
     {
@@ -111,7 +110,7 @@ void ht_print(HashTable* hash_table){
  * @param skey the key of hashtable you'll remove
  */
 void ht_remove(HashTable* hash_table, const char* skey){
-    unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
+    unsigned int pos = ht_hash_function(skey) % HASH_TABLE_MAX_SIZE;
 
     if(hash_table->table[pos])
     {
@@ -150,7 +149,7 @@ void ht_remove(HashTable* hash_table, const char* skey){
  */
 HashNode* ht_lookup(HashTable* hash_table, const char* skey){
     HashNode* pHead;
-    unsigned int pos = ht_hash_str(skey) % HASH_TABLE_MAX_SIZE;
+    unsigned int pos = ht_hash_function(skey) % HASH_TABLE_MAX_SIZE;
     
     if(hash_table->table[pos])
     {

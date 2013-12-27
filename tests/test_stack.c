@@ -19,14 +19,14 @@ int main(void){
 
 	for(i=0;i<1000;i++){
 		test_stack=stack_init(autos);
-		stack_push_int(test_stack,12);
-		stack_push_int(test_stack,3);
-		stack_push_int(test_stack,41);
-		stack_push_int(test_stack,5);
-		stack_push_int(test_stack,9);
-		stack_push_string(test_stack,"hello world!");
-		stack_push_float(test_stack,12.23);
-		stack_push_double(test_stack,12.2345);
+		stack_push(test_stack,create_node_int(12));
+		stack_push(test_stack,create_node_int(3));
+		stack_push(test_stack,create_node_int(41));
+		stack_push(test_stack,create_node_int(5));
+		stack_push(test_stack,create_node_int(9));
+		stack_push(test_stack,create_node_string("hello world!"));
+		stack_push(test_stack,create_node_float(12.23));
+		stack_push(test_stack,create_node_double(12.2345));
 		stack_pop(test_stack);
 		stack_pop(test_stack);
 
