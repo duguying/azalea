@@ -61,8 +61,8 @@ elseif(UNIX)
 	message("In Unix System!")
 	message("dmalloc tools will be used...")
 	set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
-	add_executable(ichat ${SRC_LIST})
-	target_link_libraries(ichat pthread dl log pool ds)
+	# add_executable(ichat ${SRC_LIST})
+	# target_link_libraries(ichat pthread dl log pool ds)
 	add_executable(tcper ${TCPER_LIST}) # tcp tester
 	target_link_libraries(tcper pthread)
 	add_library(mysql_drv SHARED ${MYDRV_LIST})
@@ -90,12 +90,6 @@ if(TEST)
 	add_executable(test_conf ${CONFIG_TEST}) # config test
 	add_executable(test_hashtable ${HASH_LIST})
 	add_executable(test_stack ${TEST_STACK_LIST})
-<<<<<<< HEAD
-	# add_executable(test_pool ${TEST_POOL_LIST})
-	target_link_libraries(test_mysql mysqlclient)
-	target_link_libraries(test_mysqldrv mysql_drv)
-=======
->>>>>>> 727b064d81d313ccea421ce2c80ef4c4b3a054be
 	target_link_libraries(test_log log)
 	target_link_libraries(test_conf config)
 	target_link_libraries(test_hashtable ds)
