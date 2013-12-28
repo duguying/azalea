@@ -20,7 +20,7 @@ void* test_func(){
 
 int main(void){
 	TID tid;
-	thread_create(&tid,(LPTHREAD_START_ROUTINE)test_func,NULL);
+	thread_create(&tid,test_func,NULL);
 	printf("Rex, i am not in thread.\n");
 	return 0;
 }

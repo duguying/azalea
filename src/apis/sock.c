@@ -21,6 +21,7 @@
 SOCKET_ID
 sock_server(){}
 
+#if defined _WIN32
 /**
  * @brief create a socket
  * @details [long description]
@@ -62,6 +63,25 @@ sock_client(
 	}
 	return skt_id;
 }
+#endif
+#if defined linux
+SOCKET_ID
+sock_client(
+	///address family
+	int af,
+	///socket type: SOCK_STREAM,SOCK_DGRAM,SOCK_RAW,etc
+	int type,
+	///trasfer protocol: PROTO_TCP,PROTO_UDP
+	int protocol
+	){
+	SOCKET_ID skt_id;
+	skt_id=socket(af,type,protocol);
+	if(-1==skt_id){
+		return ERROR;
+	}
+	return skt_id;
+}
+#endif
 
 int
 sock_connect(

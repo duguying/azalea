@@ -17,6 +17,7 @@
  	#include "windows.h"
 #endif
 
+#if defined _WIN32
 int
 thread_create(
 	///thread id
@@ -26,7 +27,6 @@ thread_create(
 	///the arguments
 	void* arg
 	){
-#if defined _WIN32
 	HANDLE create_thread_result;
 	create_thread_result=CreateThread(NULL,0,fun,arg,0,tid);
 	if(NULL==create_thread_result){
@@ -34,10 +34,29 @@ thread_create(
 	}else{
 		return OK;
 	}
-#endif
 }
+#endif
 
-
+#if defined linux
+int
+thread_create(
+	///thread id
+	TID* tid,
+	///the routine function
+	void* fun,
+	///the arguments
+	void* arg
+	){
+	int create_thread_result;
+	create_thread_result=pthread_create(tid,NULL,fun,arg);
+	if (0!=create_thread_result)
+	{
+		return ERROR;
+	}else{
+		return OK;
+	}
+}
+#endif
 
 
 

@@ -77,7 +77,7 @@ elseif(UNIX)
 		target_link_libraries(test_mysql mysqlclient)
 		target_link_libraries(test_mysqldrv mysql_drv)
 		target_link_libraries(test_sqlite sqlite3)
-		target_link_libraries(test_pth pthread)
+		target_link_libraries(test_pth apis)
 	endif(TEST)
 	
 elseif(APPLE)

@@ -13,6 +13,9 @@
 
 #include "ichat.h"
 #if defined linux
+ 	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
 	typedef int SOCKET_ID;
 	#define PROTO_TCP 0
 	#define PROTO_UDP 0
