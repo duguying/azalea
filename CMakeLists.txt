@@ -6,9 +6,10 @@ project(iChat)
 #############################################
 # gdb Debug support
 set(TEST true)
-set(CMAKE_BUILD_TYPE "Debug")  
-set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")  
-set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+set(CMAKE_BUILD_TYPE "Debug")
+# set(CMAKE_C_FLAGS "-std=c99")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g -ggdb -pg")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -s -DNDEBUG")
 
 # root directory
 set(SRC_DIR "src/")

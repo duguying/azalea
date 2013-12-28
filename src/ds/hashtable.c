@@ -26,6 +26,7 @@ HashTable* ht_init(int size){
     ht_pointer->table=(HashNode**)malloc(sizeof(HashNode*)*ht_pointer->ht_max_size);
     memset(ht_pointer->table,0,sizeof(HashNode*)*ht_pointer->ht_max_size);
     ht_pointer->ht_size= 0;
+    return ht_pointer;
 }
 
 /**
