@@ -9,12 +9,13 @@
  */
 
 #include "ichat.h"
+#include "ds.h"
 
 #ifndef _HASHTABLE_H_
 #define _HASHTABLE_H_
 
 ///hashtable max size
-#define HASH_TABLE_MAX_SIZE 10000
+// #define HASH_TABLE_MAX_SIZE 10000
 
 typedef struct HashNode HashNode;
 
@@ -28,9 +29,9 @@ struct HashNode
 	///the key of node
     char* sKey;
     ///the value of node
-    void* pValue;
+    Node* pValue;
     ///node type
-    ntype type;
+    etype type;
     ///next node
     HashNode* pNext;
 } ;
@@ -42,8 +43,10 @@ struct HashTable
 {
 	///hashtable current size
 	int ht_size;
+    ///hashtable max size
+    int ht_max_size;
 	///the hashtable nodes array
-	HashNode* table[HASH_TABLE_MAX_SIZE];
+	HashNode** table;
 };
 
 /**
@@ -52,7 +55,7 @@ struct HashTable
  * 
  * @param HashTable the pointer of hashtable
  */
-void ht_init(HashTable* hash_table);
+HashTable* ht_init(int size);
 
 /**
  * @brief insert key-value into hash table
@@ -62,7 +65,7 @@ void ht_init(HashTable* hash_table);
  * @param skey key
  * @param nvalue value
  */
-void ht_insert(HashTable* hash_table, const char* skey, void* nvalue);
+int ht_insert(HashTable* hash_table, const char* skey, Node* pvalue);
 
 /**
  * @brief remove the hash node from hashtable
@@ -81,14 +84,14 @@ void ht_remove(HashTable* hash_table, const char* skey);
  * @param skey [description]
  * @return [description]
  */
-HashNode* ht_lookup(HashTable* hash_table, const char* skey);
+Node* ht_lookup(HashTable* hash_table, const char* skey);
 
 /**
- * @brief release the hashtable
+ * @brief destroy the hashtable
  * @details [long description]
  * 
  * @param hash_table the hashtable
  */
-void ht_release(HashTable* hash_table);
+void ht_destroy(HashTable* hash_table);
 
 #endif

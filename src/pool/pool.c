@@ -22,9 +22,7 @@ HashTable* pool=NULL;
  * @return pointer of pool
  */
 HashTable* pool_init(void){
-	
-	pool=(HashTable*)malloc(sizeof(HashTable));
-	ht_init(pool);
+	HashTable* pool=ht_init(10000);
 	return pool;
 }
 

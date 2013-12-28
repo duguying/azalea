@@ -13,20 +13,6 @@
 #ifndef _DS_H_
 #define _DS_H_
 
-///data struct node
-typedef struct Node Node;
-///stack node
-struct Node
-{
-	etype type;
-	int int_value;
-	float float_value;
-	char* string_value;
-	double double_value;
-	Node* next;
-	Node* prev;
-};
-
 
 
 /**

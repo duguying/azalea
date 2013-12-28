@@ -33,17 +33,23 @@
 ///pid file
 #define PID "pid"
 
-
 typedef enum etype etype;
-typedef enum ntype ntype;
 ///element type
 enum etype {inte,floate,stringe,doublee};
 //			0		1		2		3
-///node type
-enum ntype {autos,ints,floats,strings,doubles};
-//			0		1		2		3		4
-
-
+///basic data struct node
+typedef struct Node Node;
+///stack node
+struct Node
+{
+	etype type;
+	int int_value;
+	float float_value;
+	char* string_value;
+	double double_value;
+	Node* next;
+	Node* prev;
+};
 ///the struct of message 
 typedef struct Msg{
 	///the user socket you send to

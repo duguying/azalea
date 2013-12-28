@@ -14,6 +14,11 @@
 #ifndef _STACK_H_
 #define _STACK_H_
 
+typedef enum ntype ntype;
+///node type
+enum ntype {autos,ints,floats,strings,doubles};
+//			0		1		2		3		4
+
 ///stack
 typedef struct Stack Stack;
 

@@ -1,4 +1,3 @@
-combine the node of stack and the node of hashtable
 refactor hashtable
 --let the hashtable support muilt type
 --and then refactor the pool
@@ -28,3 +27,10 @@ shutdown when server closed the socket
 
 # attention
 we should design connection pool before the message exchange in the core
+
+#----------------------
+HAVEDONE
+
+2013-12-17
+refactor hashtable finished, combine the two node,
+node in hashtable(not hashnode) and node in stack

@@ -96,5 +96,23 @@ void log_printf(const char *format,...)
     fflush(LOG_FILE);
 }
 
-
+/**
+ * @brief dump the basic node var
+ * @details [long description]
+ * 
+ * @param node the node
+ */
+void log_node_dump(Node* node){
+	if(inte==node->type){
+		printf("%d", node->int_value);
+	}else if(floate==node->type){
+		printf("%f", node->float_value);
+	}else if(doublee==node->type){
+		printf("%lf", node->double_value);
+	}else if(stringe==node->type){
+		printf("%s", node->string_value);
+	}else{
+		printf("can not dump the var!");
+	}
+}
 

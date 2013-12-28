@@ -13,7 +13,7 @@
 #include "../src/ds/stack.h"
 
 int main(void){
-	Stack* test_stack,*test_pressure;
+	Stack* test_stack;
 
 	int i=0;
 
@@ -29,6 +29,9 @@ int main(void){
 		stack_push(test_stack,create_node_double(12.2345));
 		stack_pop(test_stack);
 		stack_pop(test_stack);
+
+		// stack_print(test_stack);
+		// stack_reverse_print(test_stack);
 
 		stack_destroy(test_stack);
 	}

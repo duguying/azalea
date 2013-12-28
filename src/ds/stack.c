@@ -13,11 +13,13 @@
 #include <stdarg.h>
 #include "stack.h"
 
-/**
- * @brief initial the stack
- * @details [long description]
- * 
- */
+ /**
+  * @brief initial the stack
+  * @details [long description]
+  * 
+  * @param type stack type
+  * @return the pointer of stack
+  */
 Stack* stack_init(ntype type){
 	Stack* stk;
 	stk=(Stack*)malloc(sizeof(Stack));

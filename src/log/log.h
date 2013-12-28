@@ -39,6 +39,12 @@ void log_printf(const char *format,...);
  */
 int log_close(void);
 
-
+/**
+ * @brief dump the basic node var
+ * @details [long description]
+ * 
+ * @param node the node
+ */
+void log_node_dump(Node* node);
 
 

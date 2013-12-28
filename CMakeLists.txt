@@ -36,6 +36,7 @@ set(MYSQLDRV_TEST ${TEST_DIR}test_mysqldrv.c)
 set(SQLITE_TEST ${TEST_DIR}test_sqlite.c)
 set(HASH_LIST ${TEST_DIR}test_hashtable.c)
 set(TEST_STACK_LIST ${TEST_DIR}test_stack.c)
+set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
 # Data Struct
 set(
 	DS_LIST 
@@ -70,6 +71,7 @@ if(TEST)
 	add_executable(test_conf ${CONFIG_TEST}) # config test
 	add_executable(test_hashtable ${HASH_LIST})
 	add_executable(test_stack ${TEST_STACK_LIST})
+	# add_executable(test_pool ${TEST_POOL_LIST})
 	target_link_libraries(test_mysql mysqlclient)
 	target_link_libraries(test_mysqldrv mysql_drv)
 	target_link_libraries(test_log log)
@@ -77,6 +79,7 @@ if(TEST)
 	target_link_libraries(test_conf config)
 	target_link_libraries(test_hashtable ds)
 	target_link_libraries(test_stack ds)
+	# target_link_libraries(test_pool pool)
 endif()
 
 # solid library, static library
