@@ -244,7 +244,7 @@ int main(int argc,char **argv){
  	{
  		printf("ichat(%d) started...\n",main_pid);
  		///write the pid into file
- 		pid_log_file_handle=fopen(PID,"w");
+ 		pid_log_file_handle=fopen(PIDF,"w");
  		fprintf(pid_log_file_handle,"%d\n",main_pid);
  		fclose(pid_log_file_handle);
  		exit(0);//in father

@@ -14,8 +14,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef _DMALLOC_
-#include "dmalloc.h"
+#include "apis/sock.h"
+#include "apis/pth.h"
+#if defined linux
+	#ifdef _DMALLOC_
+	#include "dmalloc.h"
+	#endif
+	///Error
+	#define ERROR -1
+ 	#define OK 0
+#endif
+#if defined _WIN32
+ 	#include "windows.h"
+ 	#define OK 1
 #endif
 
 ///buffer length
@@ -28,14 +39,12 @@
 #define PORT 6666 
 ///Empty Char Fill
 #define ECF 0 
-///Error
-#define ERROR -1
 ///pid file
-#define PID "pid"
+#define PIDF "pid"
 
 typedef enum etype etype;
 ///element type
-enum etype {inte,floate,stringe,doublee};
+enum etype{inte,floate,stringe,doublee};
 //			0		1		2		3
 ///basic data struct node
 typedef struct Node Node;
@@ -50,6 +59,7 @@ struct Node
 	Node* next;
 	Node* prev;
 };
+
 ///the struct of message 
 typedef struct Msg{
 	///the user socket you send to

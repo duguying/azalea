@@ -9,11 +9,7 @@
  */
 
 #include "ichat.h"
-#include <pthread.h>
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include <unistd.h>
 
 #define IP 16
@@ -102,7 +98,7 @@ int main(int argc, char** argv)
 		int err;
 		pthread_t tid;
 		//create thread to recv message here!!!
-		err = pthread_create(&tid, NULL, listen_message, &skt);
+		err = thread_create(&tid, listen_message, &skt);
 		memset(buf, 0, sizeof(char)*1000);
 		for(;1;){
 			fgets(buf, 1000, stdin);

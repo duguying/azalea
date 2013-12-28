@@ -38,6 +38,7 @@ set(SQLITE_TEST ${TEST_DIR}test_sqlite.c)
 set(HASH_LIST ${TEST_DIR}test_hashtable.c)
 set(TEST_STACK_LIST ${TEST_DIR}test_stack.c)
 set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
+set(TEST_PTH_LIST ${TEST_DIR}test_pth.c)
 # Data Struct
 set(
 	DS_LIST 
@@ -58,14 +59,18 @@ link_directories("/usr/lib/mysql")
 #############################################
 if(WIN32)
 	message("In Windows System!")
+	# add_executable(tcper ${TCPER_LIST}) # tcp tester
+	# target_link_libraries(tcper apis)
+	add_executable(test_pth ${TEST_PTH_LIST})
+	target_link_libraries(test_pth apis)
 elseif(UNIX)
 	message("In Unix System!")
 	message("dmalloc tools will be used...")
 	set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
 	# add_executable(ichat ${SRC_LIST})
 	# target_link_libraries(ichat pthread dl log pool ds)
-	add_executable(tcper ${TCPER_LIST}) # tcp tester
-	target_link_libraries(tcper pthread)
+	# add_executable(tcper ${TCPER_LIST}) # tcp tester
+	# target_link_libraries(tcper apis)
 	add_library(mysql_drv SHARED ${MYDRV_LIST})
 	target_link_libraries(mysql_drv mysqlclient)
 	message("Tests will be build!")
@@ -73,9 +78,11 @@ elseif(UNIX)
 		add_executable(test_mysql ${MYSQL_VER})
 		add_executable(test_mysqldrv ${MYSQLDRV_TEST}) 
 		add_executable(test_sqlite ${SQLITE_TEST})
+		add_executable(test_pth ${TEST_PTH_LIST})
 		target_link_libraries(test_mysql mysqlclient)
 		target_link_libraries(test_mysqldrv mysql_drv)
 		target_link_libraries(test_sqlite sqlite3)
+		target_link_libraries(test_pth pthread)
 	endif(TEST)
 	
 elseif(APPLE)
@@ -103,6 +110,16 @@ add_library(config STATIC ${CONF_LIST})
 add_library(parser STATIC ${PARSER_LIST})
 add_library(ds STATIC ${DS_LIST})
 # add_library(pool STATIC ${POOL_LIST})
+# apis
+set(
+	APIS_LIST
+	${SRC_DIR}/apis/pth.c
+	${SRC_DIR}/apis/sock.c
+)
+add_library(apis STATIC ${APIS_LIST})
+if(UNIX)
+	target_link_libraries(apis pthread)
+endif(UNIX)
 # dmalloc support
 if(NOT CI)
 	target_link_libraries(ds dmalloc)
