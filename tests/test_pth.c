@@ -11,7 +11,11 @@
 #include "apis/pth.h"
 
 void* test_func(){
-	printf("hello world, i am in thread.\n");;
+	printf("hello world, i am in thread.\n");
+	for(;1;){
+		//hold on the thread
+	}
+	
 }
 
 int main(void){

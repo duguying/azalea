@@ -39,6 +39,7 @@ set(HASH_LIST ${TEST_DIR}test_hashtable.c)
 set(TEST_STACK_LIST ${TEST_DIR}test_stack.c)
 set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
 set(TEST_PTH_LIST ${TEST_DIR}test_pth.c)
+set(TEST_SOCK_LIST ${TEST_DIR}test_sock.c)
 # Data Struct
 set(
 	DS_LIST 
@@ -59,18 +60,12 @@ link_directories("/usr/lib/mysql")
 #############################################
 if(WIN32)
 	message("In Windows System!")
-	# add_executable(tcper ${TCPER_LIST}) # tcp tester
-	# target_link_libraries(tcper apis)
 	add_executable(test_pth ${TEST_PTH_LIST})
 	target_link_libraries(test_pth apis)
 elseif(UNIX)
 	message("In Unix System!")
 	message("dmalloc tools will be used...")
 	set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
-	# add_executable(ichat ${SRC_LIST})
-	# target_link_libraries(ichat pthread dl log pool ds)
-	# add_executable(tcper ${TCPER_LIST}) # tcp tester
-	# target_link_libraries(tcper apis)
 	add_library(mysql_drv SHARED ${MYDRV_LIST})
 	target_link_libraries(mysql_drv mysqlclient)
 	message("Tests will be build!")
@@ -90,7 +85,11 @@ elseif(APPLE)
 elseif(CI)
 	message("In Travis CI System!")
 endif(WIN32)
-
+#############################################
+# add_executable(ichat ${SRC_LIST})
+# target_link_libraries(ichat dl apis log pool ds)
+add_executable(tcper ${TCPER_LIST}) # tcp tester
+target_link_libraries(tcper apis)
 #############################################
 # tests
 if(TEST)
@@ -98,10 +97,12 @@ if(TEST)
 	add_executable(test_conf ${CONFIG_TEST}) # config test
 	add_executable(test_hashtable ${HASH_LIST})
 	add_executable(test_stack ${TEST_STACK_LIST})
+	add_executable(test_sock ${TEST_SOCK_LIST})
 	target_link_libraries(test_log log)
 	target_link_libraries(test_conf config)
 	target_link_libraries(test_hashtable ds)
 	target_link_libraries(test_stack ds)
+	target_link_libraries(test_sock apis)
 	# target_link_libraries(test_pool pool)
 endif()
 # solid library, static library
@@ -119,6 +120,8 @@ set(
 add_library(apis STATIC ${APIS_LIST})
 if(UNIX)
 	target_link_libraries(apis pthread)
+elseif(WIN32)
+	target_link_libraries(apis ws2_32)
 endif(UNIX)
 # dmalloc support
 if(NOT CI)

@@ -8,26 +8,13 @@
  * it under the terms of the GNU General Public License
  */
 
-#ifndef _PTH_H_
-#define _PTH_H_
-
 #include "ichat.h"
-#if defined linux
- 	typedef pthread_t TID;
-#endif
-#if defined _WIN32
- 	typedef unsigned long int TID;
-#endif
-
-int
-thread_create(
-	///thread id
-	TID* tid,
-	///the routine function
-	void* fun,
-	///the arguments
-	void* arg
-	);
+#include "apis/sock.h"
 
 
-#endif
+int main(void){
+	int skt;
+	sock_client(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+	return OK;
+}

@@ -10,6 +10,12 @@
 
 #include "ichat.h"
 #include "pth.h"
+#if defined linux
+	#include <pthread.h>
+#endif
+#if defined _WIN32
+ 	#include "windows.h"
+#endif
 
 int
 thread_create(

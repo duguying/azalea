@@ -9,6 +9,8 @@
  */
 
 #include "ichat.h"
+#include "apis/pth.h"
+#include "apis/sock.h"
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -56,8 +58,8 @@ void* listen_message(void *arg){
  */
 int main(int argc, char** argv)
 {
-	int skt;
-	socklen_t len;
+	SOCKET_ID skt;
+	size_t len;
 	char ch;
 	char ip[IP];
 	char port[PORT_LEN];
@@ -83,20 +85,20 @@ int main(int argc, char** argv)
 	}  
 
     memset(&saddr, 0, sizeof(struct sockaddr));
-    skt=socket(AF_INET, SOCK_STREAM, 0);
+    skt=sock_client(AF_INET, SOCK_STREAM, PROTO_TCP);
 	
 	saddr.sin_family=AF_INET;
     saddr.sin_addr.s_addr=inet_addr(ip);
     saddr.sin_port=htons(atoi(port));
     
 	len=sizeof(struct sockaddr);
-	
+	//the connect() will return 0 if success in win32
 	if(connect(skt, (struct sockaddr*)&saddr, len)<0){
 		printf("Connected Failed!\n");
 		return 0;
 	}else{
 		int err;
-		pthread_t tid;
+		TID tid;
 		//create thread to recv message here!!!
 		err = thread_create(&tid, listen_message, &skt);
 		memset(buf, 0, sizeof(char)*1000);
