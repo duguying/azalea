@@ -2,7 +2,7 @@ project(iChat)
 
 # set compilers
 # SET(CMAKE_C_COMPILER gcc)
-# SET(CMAKE_CXX_COMPILER g++)
+# SET(CMAKE_C_COMPILER clang)
 #############################################
 # gdb Debug support
 set(TEST true)
