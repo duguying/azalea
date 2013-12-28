@@ -9,7 +9,7 @@ set(TEST true)
 set(CMAKE_BUILD_TYPE "Debug")  
 set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")  
 set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
-# set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
+
 # root directory
 set(SRC_DIR "src/")
 set(TEST_DIR "tests/")
@@ -52,60 +52,61 @@ include_directories("include")
 include_directories("src")
 # link directories
 link_directories("/usr/lib/mysql")
+#############################################
+#############################################
+if(WIN32)
+	message("In Windows System!")
+elseif(UNIX)
+	message("In Unix System!")
+	message("dmalloc tools will be used...")
+	set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
+	add_executable(ichat ${SRC_LIST})
+	target_link_libraries(ichat pthread dl log pool ds)
+	add_executable(tcper ${TCPER_LIST}) # tcp tester
+	target_link_libraries(tcper pthread)
+	add_library(mysql_drv SHARED ${MYDRV_LIST})
+	target_link_libraries(mysql_drv mysqlclient)
+	message("Tests will be build!")
+	if(TEST)
+		add_executable(test_mysql ${MYSQL_VER})
+		add_executable(test_mysqldrv ${MYSQLDRV_TEST}) 
+		add_executable(test_sqlite ${SQLITE_TEST})
+		target_link_libraries(test_mysql mysqlclient)
+		target_link_libraries(test_mysqldrv mysql_drv)
+		target_link_libraries(test_sqlite sqlite3)
+	endif(TEST)
+	
+elseif(APPLE)
+	message("In Mac System!")
+elseif(CI)
+	message("In Travis CI System!")
+endif(WIN32)
 
 #############################################
-# main executation
-# add_executable(ichat ${SRC_LIST})
-
-# tools
-add_executable(tcper ${TCPER_LIST}) # tcp tester
-
 # tests
 if(TEST)
-	message("Tests will be build!")
-	add_executable(test_mysql ${MYSQL_VER}) # mysql version test
-	add_executable(test_mysqldrv ${MYSQLDRV_TEST}) # mysql extension test
 	add_executable(test_log ${LOG_TEST}) # log test
-	add_executable(test_sqlite ${SQLITE_TEST}) # sqlite3 test
 	add_executable(test_conf ${CONFIG_TEST}) # config test
 	add_executable(test_hashtable ${HASH_LIST})
 	add_executable(test_stack ${TEST_STACK_LIST})
-	target_link_libraries(test_mysql mysqlclient)
-	target_link_libraries(test_mysqldrv mysql_drv)
 	target_link_libraries(test_log log)
-	target_link_libraries(test_sqlite sqlite3)
 	target_link_libraries(test_conf config)
 	target_link_libraries(test_hashtable ds)
 	target_link_libraries(test_stack ds)
 endif()
-
 # solid library, static library
 add_library(log STATIC ${LOG_LIST})
 add_library(config STATIC ${CONF_LIST})
-# add_library(pool STATIC ${POOL_LIST})
 add_library(parser STATIC ${PARSER_LIST})
 add_library(ds STATIC ${DS_LIST})
-# dynamic libraries
-add_library(mysql_drv SHARED ${MYDRV_LIST}) # mysql driver extension
-
-#############################################
-# target link libraries
-# target_link_libraries(ichat pthread dl log pool ds)	# here, static has no difference with shared
-target_link_libraries(tcper pthread)
-target_link_libraries(mysql_drv mysqlclient)
-# target_link_libraries(pool ds)
-# local model, use dmalloc for memory debug
+# add_library(pool STATIC ${POOL_LIST})
+# dmalloc support
 if(NOT CI)
 	target_link_libraries(ds dmalloc)
 	target_link_libraries(log dmalloc)
 	target_link_libraries(config dmalloc)
 	add_definitions(-D_DMALLOC_)
 endif()
-
-#############################################
-# set targets directories
-# set_target_properties(ichat PROPERTIES RUNTIME_OUTPUT_DIRECTORY ".")
-
 #############################################
 if(TEST)
 	ENABLE_TESTING()
@@ -116,7 +117,6 @@ if(TEST)
 	ADD_TEST(T_SQLITE "./bin/test_sqlite")
 	ADD_TEST(T_STACK "./bin/test_stack")
 endif()
-
 # installation
 #############################################
 INSTALL(PROGRAMS build/bin/ichat DESTINATION /usr/local/azalea/bin)
