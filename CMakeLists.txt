@@ -3,7 +3,7 @@ project(iChat)
 # set compilers
 # SET(CMAKE_C_COMPILER gcc)
 # SET(CMAKE_C_COMPILER clang)
-#############################################
+############################################################
 # gdb Debug support
 set(TEST true)
 set(CMAKE_BUILD_TYPE "Debug")
@@ -20,147 +20,175 @@ set(LIBRARY_OUTPUT_PATH lib)
 
 # show log on screen
 add_definitions(-D_SCR_LOG_)
-#############################################
-# source directories varibility
-set(SRC_LIST ${SRC_DIR}/ichat.c)
-set(LOG_LIST ${SRC_DIR}/log/log.c)
-set(TCPER_LIST ${SRC_DIR}/tcper/tcper.c)
-set(MYDRV_LIST ${SRC_DIR}/dbs/mysql/mysql_driver.c)
-set(CONF_LIST ${SRC_DIR}/config/config.c)
-set(POOL_LIST ${SRC_DIR}/pool/pool.c)
-set(PARSER_LIST ${SRC_DIR}/parser/parser.c)
-# Tests
-set(CONFIG_TEST ${TEST_DIR}test_conf.c)
-set(LOG_TEST ${TEST_DIR}test_log.c)
-set(MYSQL_VER ${TEST_DIR}test_mysql.c)
-set(MYSQLDRV_TEST ${TEST_DIR}test_mysqldrv.c)
-set(SQLITE_TEST ${TEST_DIR}test_sqlite.c)
-set(HASH_LIST ${TEST_DIR}test_hashtable.c)
-set(TEST_STACK_LIST ${TEST_DIR}test_stack.c)
-set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
-set(TEST_PTH_LIST ${TEST_DIR}test_pth.c)
-set(TEST_SOCK_LIST ${TEST_DIR}test_sock.c)
-# Data Struct
-set(
-	DS_LIST 
-	${SRC_DIR}/ds/ds.c
-	${SRC_DIR}/ds/hashtable.c 
-	${SRC_DIR}/ds/stack.c
-)
-#############################################
-
-# library directory
 link_directories("build/lib")
 include_directories("include")
 include_directories("src")
-# link directories
-if(WIN32)
-	link_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\lib\vs11")
-	# link_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\lib")
-	include_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\include")
-	if(TEST)
-		add_executable(test_mysql ${MYSQL_VER})
-		target_link_libraries(test_mysql mysqlclient)
-	endif(TEST)
-elseif(UNIX)
-	link_directories("/usr/lib/mysql")
-	include_directories("/usr/include/mysql")
-	if(TEST)
-		add_executable(test_mysql ${MYSQL_VER})
-		target_link_libraries(test_mysql mysqlclient)
-	endif(TEST)
-endif(WIN32)
-#############################################
-#############################################
-if(WIN32)
-	message("In Windows System!")
-	set(CI true)
-	add_executable(test_pth ${TEST_PTH_LIST})
-	target_link_libraries(test_pth apis)
-elseif(UNIX)
+#############################################################
+if(CI)
+	message("In Travis CI System!")
+endif(CI)
+if(UNIX)
 	message("In Unix System!")
 	message("dmalloc tools will be used...")
-	set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
-	add_library(mysql_drv SHARED ${MYDRV_LIST})
-	target_link_libraries(mysql_drv mysqlclient)
-	message("Tests will be build!")
-	if(TEST)
-		# add_executable(test_mysql ${MYSQL_VER})
-		add_executable(test_mysqldrv ${MYSQLDRV_TEST}) 
-		add_executable(test_sqlite ${SQLITE_TEST})
-		add_executable(test_pth ${TEST_PTH_LIST})
-		# target_link_libraries(test_mysql mysqlclient)
-		target_link_libraries(test_mysqldrv mysql_drv)
-		target_link_libraries(test_sqlite sqlite3)
-		target_link_libraries(test_pth apis)
-	endif(TEST)
-	
-elseif(APPLE)
-	message("In Mac System!")
-elseif(CI)
-	message("In Travis CI System!")
-endif(WIN32)
-#############################################
+	if(NOT CI)
+		add_definitions(-D_DMALLOC_)
+		set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
+	endif()
+	link_directories("/usr/lib/mysql")
+	include_directories("/usr/include/mysql")
+elseif(WIN32)
+	message("In Windows System!")
+	set(CI true)
+	link_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\lib\vs11")
+	include_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\include")
+endif(UNIX)
+
+#############################################################
+# main excutable
+set(SRC_LIST ${SRC_DIR}/ichat.c)
 # add_executable(ichat ${SRC_LIST})
 # target_link_libraries(ichat dl apis log pool ds)
-add_executable(tcper ${TCPER_LIST}) # tcp tester
-target_link_libraries(tcper apis)
 
-#############################################
-# tests
-if(TEST)
-	add_executable(test_log ${LOG_TEST}) # log test
-	add_executable(test_conf ${CONFIG_TEST}) # config test
-	add_executable(test_hashtable ${HASH_LIST})
-	add_executable(test_stack ${TEST_STACK_LIST})
-	add_executable(test_sock ${TEST_SOCK_LIST})
-	target_link_libraries(test_log log)
-	target_link_libraries(test_conf config)
-	target_link_libraries(test_hashtable ds)
-	target_link_libraries(test_stack ds)
-	target_link_libraries(test_sock apis)
-	# target_link_libraries(test_pool pool)
-endif()
-# solid library, static library
-add_library(log STATIC ${LOG_LIST})
-add_library(config STATIC ${CONF_LIST})
-add_library(parser STATIC ${PARSER_LIST})
-add_library(ds STATIC ${DS_LIST})
-# add_library(pool STATIC ${POOL_LIST})
-# apis
-set(
-	APIS_LIST
-	${SRC_DIR}/apis/pth.c
-	${SRC_DIR}/apis/sock.c
-)
-add_library(apis STATIC ${APIS_LIST})
+# tcper
 if(UNIX)
+	set(TCPER_LIST ${SRC_DIR}/tcper/tcper.c)
+	add_executable(tcper ${TCPER_LIST})
+	target_link_libraries(tcper apis)
+elseif(WIN32)
+	set(TCPER_LIST ${SRC_DIR}/tcper/tcper.c)
+	add_executable(tcper ${TCPER_LIST})
+	target_link_libraries(tcper apis)
+endif(UNIX)
+#############################################################
+# APIS
+if(UNIX)
+	set(
+		APIS_LIST
+		${SRC_DIR}/apis/pth.c
+		${SRC_DIR}/apis/sock.c
+	)
+	add_library(apis STATIC ${APIS_LIST})
 	target_link_libraries(apis pthread)
 elseif(WIN32)
+	set(
+		APIS_LIST
+		${SRC_DIR}/apis/pth.c
+		${SRC_DIR}/apis/sock.c
+	)
+	add_library(apis STATIC ${APIS_LIST})
 	target_link_libraries(apis ws2_32)
 endif(UNIX)
-# dmalloc support
-if(NOT CI)
-	target_link_libraries(ds dmalloc)
-	target_link_libraries(log dmalloc)
-	target_link_libraries(config dmalloc)
-	add_definitions(-D_DMALLOC_)
-endif()
-#############################################
+
+# Data Struct library
+if(UNIX)
+	set(
+		DS_LIST 
+		${SRC_DIR}/ds/ds.c
+		${SRC_DIR}/ds/hashtable.c 
+		${SRC_DIR}/ds/stack.c
+	)
+	add_library(ds STATIC ${DS_LIST})
+	if(not CI)
+		target_link_libraries(ds dmalloc)
+	endif(CI)
+elseif(WIN32)
+	set(
+		DS_LIST 
+		${SRC_DIR}/ds/ds.c
+		${SRC_DIR}/ds/hashtable.c 
+		${SRC_DIR}/ds/stack.c
+	)
+	add_library(ds STATIC ${DS_LIST})
+endif(UNIX)
+
+#config library
+if(UNIX)
+	set(CONF_LIST ${SRC_DIR}/config/config.c)
+	add_library(config STATIC ${CONF_LIST})
+	if(NOT CI)
+		target_link_libraries(config dmalloc)
+	endif()
+elseif(WIN32)
+	set(CONF_LIST ${SRC_DIR}/config/config.c)
+	add_library(config STATIC ${CONF_LIST})
+endif(UNIX)
+
+#pool library
+if(UNIX)
+	# set(POOL_LIST ${SRC_DIR}/pool/pool.c)
+	# add_library(pool STATIC ${POOL_LIST})
+elseif(WIN32)
+	# set(POOL_LIST ${SRC_DIR}/pool/pool.c)
+	# add_library(pool STATIC ${POOL_LIST})
+endif(UNIX)
+
+#parser library
+if(UNIX)
+	set(PARSER_LIST ${SRC_DIR}/parser/parser.c)
+	add_library(parser STATIC ${PARSER_LIST})
+elseif(WIN32)
+	set(PARSER_LIST ${SRC_DIR}/parser/parser.c)
+	add_library(parser STATIC ${PARSER_LIST})
+endif(UNIX)
+
+#log library
+if(UNIX)
+	set(LOG_LIST ${SRC_DIR}/log/log.c)
+	add_library(log STATIC ${LOG_LIST})
+	if(NOT CI)
+		target_link_libraries(log dmalloc)
+	endif()
+elseif(WIN32)
+	set(LOG_LIST ${SRC_DIR}/log/log.c)
+	add_library(log STATIC ${LOG_LIST})
+endif(UNIX)
+
+############################################################################
+#build the tests
 if(TEST)
-	ENABLE_TESTING()
+ENABLE_TESTING()
+
+	set(CONFIG_TEST ${TEST_DIR}test_conf.c)
+	add_executable(test_conf ${CONFIG_TEST})
+	target_link_libraries(test_conf config)
 	ADD_TEST(T_CONF "./bin/test_conf")
-	ADD_TEST(T_HT "./bin/test_hashtable")
+
+	set(LOG_TEST ${TEST_DIR}test_log.c)
+	add_executable(test_log ${LOG_TEST})
+	target_link_libraries(test_log log)
 	ADD_TEST(T_LOG "./bin/test_log")
-	ADD_TEST(T_MYSQL "./bin/test_mysql")
-	ADD_TEST(T_SQLITE "./bin/test_sqlite")
+
+	set(HASH_LIST ${TEST_DIR}test_hashtable.c)
+	add_executable(test_hashtable ${HASH_LIST})
+	target_link_libraries(test_hashtable ds)
+	ADD_TEST(T_HT "./bin/test_hashtable")
+
+	set(TEST_STACK_LIST ${TEST_DIR}test_stack.c)
+	add_executable(test_stack ${TEST_STACK_LIST})
+	target_link_libraries(test_stack ds)
 	ADD_TEST(T_STACK "./bin/test_stack")
-endif()
+
+	# set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
+	# add_executable(test_pool ${TEST_POOL_LIST})
+	# target_link_libraries(test_pool pool)
+	# ADD_TEST(T_POOL "./bin/test_pool")
+
+	set(TEST_PTH_LIST ${TEST_DIR}test_pth.c)
+	add_executable(test_pth ${TEST_PTH_LIST})
+	target_link_libraries(test_pth apis)
+	ADD_TEST(T_PTH "./bin/test_pth")
+
+	set(TEST_SOCK_LIST ${TEST_DIR}test_sock.c)
+	add_executable(test_sock ${TEST_SOCK_LIST})
+	target_link_libraries(test_sock apis)
+	ADD_TEST(T_SOCK "./bin/test_sock")
+
+endif(TEST)
+
+##############################################################################
 # installation
-#############################################
 INSTALL(PROGRAMS build/bin/ichat DESTINATION /usr/local/azalea/bin)
 INSTALL(PROGRAMS build/bin/tcper DESTINATION /usr/local/azalea/bin)
-INSTALL(PROGRAMS build/lib/libmysql_drv.so DESTINATION /usr/local/azalea/lib)
-#############################################
+##############################################################################
 # cmake configuration
 cmake_minimum_required(VERSION 2.8)
