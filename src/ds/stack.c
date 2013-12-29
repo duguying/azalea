@@ -89,10 +89,11 @@ void extern stack_push(Stack* stk,Node* elem){
  * @param stk [description]
  */
 void stack_pop(Stack* stk){
+	Node* next;
 	if(stk->size<=0){
 		return;
 	}
-	Node* next=stk->top->next;
+	next=stk->top->next;
 	free(stk->top);
 	if (NULL!=next)
 	{

@@ -8,8 +8,8 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include <my_global.h>
+// #include "ichat.h"
+#include <winsock2.h>
 #include <mysql.h>
 
 /**

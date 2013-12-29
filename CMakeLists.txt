@@ -48,18 +48,33 @@ set(
 	${SRC_DIR}/ds/stack.c
 )
 #############################################
-# include directories
-include_directories("/usr/include/mysql")
+
 # library directory
-include_directories("build/lib")
+link_directories("build/lib")
 include_directories("include")
 include_directories("src")
 # link directories
-link_directories("/usr/lib/mysql")
+if(WIN32)
+	link_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\lib\vs11")
+	# link_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\lib")
+	include_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\include")
+	if(TEST)
+		add_executable(test_mysql ${MYSQL_VER})
+		target_link_libraries(test_mysql mysqlclient)
+	endif(TEST)
+elseif(UNIX)
+	link_directories("/usr/lib/mysql")
+	include_directories("/usr/include/mysql")
+	if(TEST)
+		add_executable(test_mysql ${MYSQL_VER})
+		target_link_libraries(test_mysql mysqlclient)
+	endif(TEST)
+endif(WIN32)
 #############################################
 #############################################
 if(WIN32)
 	message("In Windows System!")
+	set(CI true)
 	add_executable(test_pth ${TEST_PTH_LIST})
 	target_link_libraries(test_pth apis)
 elseif(UNIX)
@@ -70,11 +85,11 @@ elseif(UNIX)
 	target_link_libraries(mysql_drv mysqlclient)
 	message("Tests will be build!")
 	if(TEST)
-		add_executable(test_mysql ${MYSQL_VER})
+		# add_executable(test_mysql ${MYSQL_VER})
 		add_executable(test_mysqldrv ${MYSQLDRV_TEST}) 
 		add_executable(test_sqlite ${SQLITE_TEST})
 		add_executable(test_pth ${TEST_PTH_LIST})
-		target_link_libraries(test_mysql mysqlclient)
+		# target_link_libraries(test_mysql mysqlclient)
 		target_link_libraries(test_mysqldrv mysql_drv)
 		target_link_libraries(test_sqlite sqlite3)
 		target_link_libraries(test_pth apis)
@@ -90,6 +105,7 @@ endif(WIN32)
 # target_link_libraries(ichat dl apis log pool ds)
 add_executable(tcper ${TCPER_LIST}) # tcp tester
 target_link_libraries(tcper apis)
+
 #############################################
 # tests
 if(TEST)

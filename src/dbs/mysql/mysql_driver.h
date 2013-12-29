@@ -8,10 +8,12 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-//#include <my_global.h>
-//#include <mysql.h>
+#ifndef _MYSQL_DRIVER_
+#define _MYSQL_DRIVER_
+
+// #include <stdio.h>
+// #include <stdlib.h>
+#include <mysql.h>
 
 int mydrv_initial(char* link);
 
@@ -20,3 +22,5 @@ int mydrv_save(char* message);
 
 int mydrv_get(char* key);
 */
+
+#endif

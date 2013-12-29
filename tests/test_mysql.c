@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <my_global.h>
+// #include <my_global.h>
 #include <mysql.h>
 
 int main(int argc, char **argv)
