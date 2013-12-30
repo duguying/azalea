@@ -21,6 +21,8 @@
 	#define PROTO_UDP 0
 #endif
 #if defined _WIN32
+	#include "windows.h"
+	#include "winsock2.h"
  	typedef unsigned int SOCKET_ID;
  	#define PROTO_TCP 6
  	#define PROTO_UDP 17
@@ -49,5 +51,18 @@ sock_client(
 	///trasfer protocol: PROTO_TCP,PROTO_UDP
 	int protocol
 	);
-
+/**
+ * @brief socket connect
+ * @details [long description]
+ * 
+ * @param skt_id socket id
+ * @param addr socket address
+ * @param len length
+ */
+int
+sock_connect(
+	SOCKET_ID skt_id,
+	struct sockaddr* addr,
+	size_t len
+	);
 #endif

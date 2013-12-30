@@ -9,12 +9,13 @@
  */
 
 #include "ichat.h"
-#include "apis/sock.h"
 
+#if defined _WIN32
+ 	#include <windows.h>
+#endif
+#if defined linux
+ 	// 
+#endif
 
-int main(void){
-	int skt;
-	sock_client(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-	return 0;
-}
+int
+process_fork();

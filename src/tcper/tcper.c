@@ -92,8 +92,7 @@ int main(int argc, char** argv)
     saddr.sin_port=htons(atoi(port));
     
 	len=sizeof(struct sockaddr);
-	//the connect() will return 0 if success in win32
-	if(connect(skt, (struct sockaddr*)&saddr, len)<0){
+	if(sock_connect(skt, (struct sockaddr*)&saddr, len)<0){
 		printf("Connected Failed!\n");
 		return 0;
 	}else{

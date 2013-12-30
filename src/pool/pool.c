@@ -22,7 +22,7 @@ HashTable* pool=NULL;
  * @return pointer of pool
  */
 HashTable* pool_init(void){
-	HashTable* pool=ht_init(10000);
+	pool=ht_init(10000);
 	return pool;
 }
 
@@ -35,7 +35,7 @@ HashTable* pool_init(void){
  * @return [description]
  */
 int pool_save(const char* username, int skt){
-	ht_insert(pool, username, skt);
+	ht_insert(pool, username, create_node_int(skt));
 	printf("\033[0;33m%s has saved in pool, sock id is %d\033[0m\n", username, skt);
 }
 
@@ -47,10 +47,10 @@ int pool_save(const char* username, int skt){
  * @return get failed -1,others sktid
  */
 int pool_get(const char* username){
-	HashNode* tmp=ht_lookup(pool, username);
+	Node* tmp=ht_lookup(pool, username);
 	if (tmp)
 	{
-		return tmp->nValue;
+		return tmp->int_value;
 	}
 	printf("%s\n", "Attention! User dose not exits!");
 	return -1;
@@ -64,7 +64,7 @@ int pool_get(const char* username){
  * @return 0 when success, 1 when failed
  */
 int pool_discon(const char* username){
-	HashNode* tmp=ht_lookup(pool, username);
+	Node* tmp=ht_lookup(pool, username);
 	if (tmp)
 	{
 		ht_remove(pool, username);

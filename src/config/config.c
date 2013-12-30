@@ -61,7 +61,7 @@ void*
 config_remove_comment(conf* config){
 	int i=0,j=0,tag=0,length=0;
 	char* final=NULL;
-	if(config==NULL){return (void*)ERROR;}
+	if(config==NULL){return (void*)IERROR;}
 	char* tmp=(char*)malloc(sizeof(char)*config->size);
 	memset(tmp,0,sizeof(char)*config->size);
 	for (i = 0; i < config->size; ++i)

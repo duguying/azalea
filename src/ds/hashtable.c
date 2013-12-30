@@ -64,7 +64,7 @@ int ht_insert(HashTable* hash_table, const char* skey, Node* pvalue){
     if(hash_table->ht_size >= hash_table->ht_max_size)
     {
         printf("out of hash table memory!\n");
-        return ERROR;
+        return IERROR;
     }
     ///caculate the position of hashnode list
     pos = ht_hash_function(skey) % hash_table->ht_max_size;
@@ -76,7 +76,7 @@ int ht_insert(HashTable* hash_table, const char* skey, Node* pvalue){
         if(strcmp(pHead->sKey, skey) == 0)
         {
             printf("%s already exists!\n", skey);
-            return ERROR;
+            return IERROR;
         }
         pHead = pHead->pNext;
     }

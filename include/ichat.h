@@ -14,20 +14,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "apis/sock.h"
-#include "apis/pth.h"
 #if defined linux
 	#ifdef _DMALLOC_
 	#include "dmalloc.h"
 	#endif
-	///Error
-	#define ERROR -1
- 	#define OK 0
 #endif
 #if defined _WIN32
- 	#include "windows.h"
- 	// #define ERROR -1
- 	#define OK 1
 #endif
 
 ///buffer length
@@ -42,6 +34,10 @@
 #define ECF 0 
 ///pid file
 #define PIDF "pid"
+///error status
+#define IERROR -1
+///ok status
+#define IOK 0
 
 typedef enum etype etype;
 ///element type

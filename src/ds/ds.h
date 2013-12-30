@@ -8,12 +8,11 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-
 #ifndef _DS_H_
+///this file is just include by other files in ds dir
 #define _DS_H_
 
-
+#include "ichat.h"
 
 /**
  * @brief create a int stack node

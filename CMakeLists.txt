@@ -66,6 +66,7 @@ if(UNIX)
 		APIS_LIST
 		${SRC_DIR}/apis/pth.c
 		${SRC_DIR}/apis/sock.c
+		${SRC_DIR}/apis/process.c
 	)
 	add_library(apis STATIC ${APIS_LIST})
 	target_link_libraries(apis pthread)
@@ -74,6 +75,7 @@ elseif(WIN32)
 		APIS_LIST
 		${SRC_DIR}/apis/pth.c
 		${SRC_DIR}/apis/sock.c
+		${SRC_DIR}/apis/process.c
 	)
 	add_library(apis STATIC ${APIS_LIST})
 	target_link_libraries(apis ws2_32)
@@ -115,11 +117,11 @@ endif(UNIX)
 
 #pool library
 if(UNIX)
-	# set(POOL_LIST ${SRC_DIR}/pool/pool.c)
-	# add_library(pool STATIC ${POOL_LIST})
+	set(POOL_LIST ${SRC_DIR}/pool/pool.c)
+	add_library(pool STATIC ${POOL_LIST})
 elseif(WIN32)
-	# set(POOL_LIST ${SRC_DIR}/pool/pool.c)
-	# add_library(pool STATIC ${POOL_LIST})
+	set(POOL_LIST ${SRC_DIR}/pool/pool.c)
+	add_library(pool STATIC ${POOL_LIST})
 endif(UNIX)
 
 #parser library
@@ -168,10 +170,10 @@ ENABLE_TESTING()
 	target_link_libraries(test_stack ds)
 	ADD_TEST(T_STACK "./bin/test_stack")
 
-	# set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
-	# add_executable(test_pool ${TEST_POOL_LIST})
-	# target_link_libraries(test_pool pool)
-	# ADD_TEST(T_POOL "./bin/test_pool")
+	set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
+	add_executable(test_pool ${TEST_POOL_LIST})
+	target_link_libraries(test_pool pool)
+	ADD_TEST(T_POOL "./bin/test_pool")
 
 	set(TEST_PTH_LIST ${TEST_DIR}test_pth.c)
 	add_executable(test_pth ${TEST_PTH_LIST})

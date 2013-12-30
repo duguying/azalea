@@ -9,14 +9,6 @@
  */
 
 #include "sock.h"
-#if defined linux
-	#include <sys/socket.h>
-	#include <netinet/in.h>
-	#include <arpa/inet.h>
-#endif
-#if defined _WIN32
- 	#include "winsock2.h"
-#endif
 
 SOCKET_ID
 sock_server(){}
@@ -77,13 +69,50 @@ sock_client(
 	SOCKET_ID skt_id;
 	skt_id=socket(af,type,protocol);
 	if(-1==skt_id){
-		return ERROR;
+		return IERROR;
 	}
 	return skt_id;
 }
 #endif
 
+#if defined _WIN32
+/**
+ * @brief socket connect
+ * @details [long description]
+ * 
+ * @param skt_id socket id
+ * @param addr socket address
+ * @param len length
+ */
 int
 sock_connect(
-	// SOCKET_ID skt_id
-	){}
+	SOCKET_ID skt_id,
+	struct sockaddr* addr,
+	size_t len
+	){
+	if (SOCKET_ERROR==connect(skt_id,addr,len))
+	{
+		printf("Failed to connect.\n");
+		WSACleanup();
+		return -1;
+	}else{
+		return 0;
+	}
+}
+#endif
+#if defined linux
+int
+sock_connect(
+	SOCKET_ID skt_id,
+	struct sockaddr* addr,
+	size_t len
+	){
+	if (-1==connect(skt_id,addr,len))
+	{
+		printf("Failed to connect.\n");
+		return -1;
+	}else{
+		return 0;
+	}
+}
+#endif

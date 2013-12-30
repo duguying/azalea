@@ -34,3 +34,7 @@ HAVEDONE
 2013-12-17
 refactor hashtable finished, combine the two node,
 node in hashtable(not hashnode) and node in stack
+2013-12-30
+sock_connect()
+暂时移除load_model
+暂时修复pool，后续需要完全重构

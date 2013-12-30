@@ -8,14 +8,11 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include "ds.h"
-
 #ifndef _HASHTABLE_H_
 #define _HASHTABLE_H_
 
-///hashtable max size
-// #define HASH_TABLE_MAX_SIZE 10000
+#include "ichat.h"
+#include "ds.h"
 
 typedef struct HashNode HashNode;
 

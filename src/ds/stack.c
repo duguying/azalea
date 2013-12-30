@@ -32,6 +32,7 @@ Stack* stack_init(ntype type){
 
     if(type<0||type>4){
     	printf("%s\n", "stack type error!\n");
+    	return (void*)IERROR;
     }
 
     if (type==ints)

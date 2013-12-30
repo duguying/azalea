@@ -8,11 +8,11 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include "ds.h"
-
 #ifndef _STACK_H_
 #define _STACK_H_
+
+#include "ichat.h"
+#include "ds.h"
 
 typedef enum ntype ntype;
 ///node type

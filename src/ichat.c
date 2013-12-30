@@ -9,12 +9,9 @@
  */
 
 #include "ichat.h"
-#include <pthread.h>
+#include "apis/pth.h"
+#include "apis/sock.h"
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <dlfcn.h>
 #include <getopt.h>
 
 #include "pool/pool.h"
@@ -22,9 +19,9 @@
 #include "log/log.h"
 
 //thread id
-pthread_t ntid;//connect listening thread id
-pthread_t mtid;//model load thread id
-pthread_t ptid;//pipe listening thread id
+TID ntid;//connect listening thread id
+TID mtid;//model load thread id
+TID ptid;//pipe listening thread id
 
 //socket server address
 struct sockaddr_in servaddr;
@@ -164,10 +161,7 @@ void* sock_listen(void *arg){
  * listen the pipe, when recv msg, send it
  * @param arg argument
  */
-void* pipe_listen(void* arg){
-	//cause of this is a single thread
-	//the message should contain socket id (skt_id) information or message which can get the skt_id
-	//printf("father pipe");	
+void* pipe_listen(void* arg){	
 	int rc;
 	//int pooled=0;
 	char fa_pipe_buffer[BUF_LEN];//get 1000 char, but just one time
@@ -186,29 +180,6 @@ void* pipe_listen(void* arg){
 	return ((void *) 0);
 }
 
-////////////////////////////model/////////////////////////////////////
-
-/**
- * load model, *thread
- * @param arg model name
- */
-void* loadmodel(void* arg){
-	//load models
-	void *lib_handle;
-	int (*initial)(void);
-	char* error;
-	const char* library="cygmysql_drv.dll";
-	lib_handle=dlopen(library, RTLD_LAZY);
-	if(!lib_handle){
-		fprintf(stderr,"%s load failed: %s\n", library, dlerror());
-		//exit(1);
-	}else{
-		initial=dlsym(lib_handle, "initial");
-		initial();
-	}
-	return ((void *) 0);
-}
-
 /**
  * main function
  * @param  argc [description]
@@ -220,7 +191,7 @@ int main(int argc,char **argv){
 	int create_thread_result;
 	///create pipe result
 	int create_pipe1_result,create_pipe2_result;
-	socklen_t len;
+	size_t len;
 	///father pid to start service
 	int main_pid;
 	//dealing process id
@@ -289,7 +260,7 @@ int main(int argc,char **argv){
 			close(pi[0]);
 			close(po[1]);
 			//create new thread to manage pipe listen
-			create_thread_result = pthread_create(&ptid, NULL, pipe_listen, NULL);
+			create_thread_result = thread_create(&ptid, pipe_listen, NULL);
 			if(create_thread_result!=0){
 				log_printf("create thread error!\n");
 				return ERROR;
@@ -302,7 +273,7 @@ int main(int argc,char **argv){
 				if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
 					log_printf("\033[1;32m%s,%u;skt %d: Connected!\033[1;0m\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
 					//if accepted, create thread!
-					create_thread_result = pthread_create(&ntid, NULL, sock_listen, &son_skt);//send the son socket
+					create_thread_result = thread_create(&ntid, sock_listen, &son_skt);//send the son socket
 					if(create_thread_result!=0){
 						log_printf("create thread error!\n");
 						return ERROR;

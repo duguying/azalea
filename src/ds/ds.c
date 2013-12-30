@@ -8,7 +8,6 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
 #include "ds.h"
 
  /**

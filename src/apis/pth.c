@@ -8,14 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
 #include "pth.h"
-#if defined linux
-	#include <pthread.h>
-#endif
-#if defined _WIN32
- 	#include "windows.h"
-#endif
 
 #if defined _WIN32
 int
@@ -30,9 +23,9 @@ thread_create(
 	HANDLE create_thread_result;
 	create_thread_result=CreateThread(NULL,0,fun,arg,0,tid);
 	if(NULL==create_thread_result){
-		return ERROR;
+		return IERROR;
 	}else{
-		return OK;
+		return IOK;
 	}
 }
 #endif
@@ -51,9 +44,9 @@ thread_create(
 	create_thread_result=pthread_create(tid,NULL,fun,arg);
 	if (0!=create_thread_result)
 	{
-		return ERROR;
+		return IERROR;
 	}else{
-		return OK;
+		return IOK;
 	}
 }
 #endif

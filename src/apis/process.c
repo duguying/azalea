@@ -8,13 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include "apis/sock.h"
+#include "process.h"
 
-
-int main(void){
-	int skt;
-	sock_client(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-	return 0;
-}
+int
+process_fork(){}
