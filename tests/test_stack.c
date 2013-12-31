@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../src/ds/stack.h"
+#include "ds/stack.h"
 
 int main(void){
 	Stack* test_stack;

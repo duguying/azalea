@@ -9,7 +9,7 @@
  */
 
 #include "ichat.h"
-#include "apis/pth.h"
+#include "apis/thread.h"
 #include "apis/sock.h"
 #include <sys/types.h>
 #include <unistd.h>

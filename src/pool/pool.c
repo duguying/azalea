@@ -9,7 +9,6 @@
  */
 
 #include "ichat.h"
-// #include "../ds/hashtable.h"
 #include "pool.h"
 
 

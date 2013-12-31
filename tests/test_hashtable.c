@@ -9,7 +9,7 @@
  */
 
 #include <stdio.h>
-#include "../src/ds/hashtable.h"
+#include "ds/hashtable.h"
 
 int main(void){
 	HashTable* hash_table;

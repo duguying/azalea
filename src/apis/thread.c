@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "pth.h"
+#include "thread.h"
 
 #if defined _WIN32
 int

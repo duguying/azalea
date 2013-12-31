@@ -39,10 +39,9 @@ if(UNIX)
 elseif(WIN32)
 	message("In Windows System!")
 	set(CI true)
-	link_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\lib\vs11")
-	include_directories("C:\Program Files\MySQL\MySQL Connector C 6.1 6.1.2\include")
+	link_directories("C:/Program Files/MySQL/MySQL Connector C 6.1 6.1.2/lib/vs11")
+	include_directories("C:/Program Files/MySQL/MySQL Connector C 6.1 6.1.2/include")
 endif(UNIX)
-
 #############################################################
 # main excutable
 set(SRC_LIST ${SRC_DIR}/ichat.c)
@@ -64,7 +63,7 @@ endif(UNIX)
 if(UNIX)
 	set(
 		APIS_LIST
-		${SRC_DIR}/apis/pth.c
+		${SRC_DIR}/apis/thread.c
 		${SRC_DIR}/apis/sock.c
 		${SRC_DIR}/apis/process.c
 	)
@@ -73,7 +72,7 @@ if(UNIX)
 elseif(WIN32)
 	set(
 		APIS_LIST
-		${SRC_DIR}/apis/pth.c
+		${SRC_DIR}/apis/thread.c
 		${SRC_DIR}/apis/sock.c
 		${SRC_DIR}/apis/process.c
 	)

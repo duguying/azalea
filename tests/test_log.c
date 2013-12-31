@@ -9,7 +9,7 @@
  */
 
 #include <stdio.h>
-#include "../src/log/log.h"
+#include "log/log.h"
 
 int main(void)
 {

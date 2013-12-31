@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../ds/hashtable.h"
+#include "ds/hashtable.h"
 
 ///user node in the connection pool
 typedef struct UserNode

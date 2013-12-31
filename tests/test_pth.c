@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "apis/pth.h"
+#include "apis/thread.h"
 
 void* test_func(){
 	printf("hello world, i am in thread.\n");
