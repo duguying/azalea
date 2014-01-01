@@ -14,6 +14,8 @@ a chatting server
 
 # build #
 
+**linux**
+
 ```shell
 mkdir build
 cd build
@@ -21,9 +23,18 @@ cmake ..
 make
 ```
 
+**windows (MinGW build)**
+
+```shell
+mkdir build
+cd build
+cmake -G"MinGW Makefiles" ..
+make
+```
+
 # let's have a try #
 
-start OpenChat server in 1st terminal
+start Azalea server in 1st terminal
 >
 ```shell
 ./ichat
