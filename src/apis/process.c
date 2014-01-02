@@ -10,5 +10,9 @@
 
 #include "process.h"
 
+#if defined _WIN32
 int
 process_fork(){}
+#elif defined linux
+process_fork(){}
+#endif

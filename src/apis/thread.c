@@ -28,9 +28,7 @@ thread_create(
 		return IOK;
 	}
 }
-#endif
-
-#if defined linux
+#elif defined linux
 int
 thread_create(
 	///thread id
