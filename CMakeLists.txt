@@ -8,7 +8,7 @@ project(iChat)
 set(TEST true)
 set(CMAKE_BUILD_TYPE "Debug")
 # set(CMAKE_C_FLAGS "-std=c99")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g -ggdb -pg")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g -ggdb")
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -s -DNDEBUG")
 
 # root directory
@@ -45,8 +45,8 @@ endif(UNIX)
 #############################################################
 # main excutable
 set(SRC_LIST ${SRC_DIR}/ichat.c)
-# add_executable(ichat ${SRC_LIST})
-# target_link_libraries(ichat dl apis log pool ds)
+add_executable(ichat ${SRC_LIST})
+target_link_libraries(ichat dl apis log pool ds)
 
 # tcper
 if(UNIX)

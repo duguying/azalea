@@ -182,6 +182,7 @@ void ht_destroy(HashTable* hash_table){
                 if(pTemp)
                 {
                     free(pTemp->sKey);
+                    free(pTemp->pValue);
                     free(pTemp);
                 }
             }

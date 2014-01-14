@@ -46,7 +46,7 @@ HashTable* pool_init(void);
  * @param skt [description]
  * @return [description]
  */
-int pool_save(const char* username, int skt);
+int pool_connect(const char* username, int skt);
 
 /**
  * @brief get user information from pool
@@ -64,4 +64,4 @@ int pool_get(const char* username);
  * @param username [description]
  * @return 0 when success, 1 when failed
  */
-int pool_discon(const char* username);
+int pool_disconnect(const char* username);

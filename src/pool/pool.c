@@ -33,9 +33,10 @@ HashTable* pool_init(void){
  * @param skt [description]
  * @return [description]
  */
-int pool_save(const char* username, int skt){
+int pool_connect(const char* username, int skt){
 	ht_insert(pool, username, create_node_int(skt));
 	printf("\033[0;33m%s has saved in pool, sock id is %d\033[0m\n", username, skt);
+	// ht_print(pool);
 }
 
 /**
@@ -62,7 +63,7 @@ int pool_get(const char* username){
  * @param username [description]
  * @return 0 when success, 1 when failed
  */
-int pool_discon(const char* username){
+int pool_disconnect(const char* username){
 	Node* tmp=ht_lookup(pool, username);
 	if (tmp)
 	{

@@ -65,4 +65,12 @@ sock_connect(
 	struct sockaddr* addr,
 	size_t len
 	);
+
+SOCKET_ID 
+sock_accept(
+	SOCKET_ID skt_id,
+	struct sockaddr* client_addr,
+	size_t* len
+	);
+
 #endif

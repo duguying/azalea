@@ -50,7 +50,18 @@ char* config_get(int config_handle, const char* key);
  * @param config the struct pointer of config
  * @return the struct pointer of config, but carefully if you want to assignment
  */
-void* config_remove_comment(conf* config);
+void* 
+config_remove_comment(conf* config);
+
+/**
+ * @brief remove the empty chars
+ * @details [long description]
+ * 
+ * @param config config the struct pointer of config
+ * @return [description]
+ */
+void* 
+config_strip(conf* config);
 
 /**
  * @brief get current line of config, and move the vernier
@@ -59,4 +70,24 @@ void* config_remove_comment(conf* config);
  * @param config config struct
  * @return the string of current line
  */
-int config_current_line(conf* config);
+int 
+config_current_line(conf* config);
+
+/**
+ * @brief equation expression parse
+ * @details [long description]
+ * 
+ * @param config [description]
+ * @return [description]
+ */
+void* 
+config_equation(conf* config);
+
+/**
+ * @brief destroy the config
+ * @details destroy the config struct and free the memory
+ * 
+ * @param config config struct
+ */
+void 
+config_destroy(conf* config);

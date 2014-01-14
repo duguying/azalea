@@ -114,3 +114,14 @@ sock_connect(
 	}
 }
 #endif
+
+SOCKET_ID 
+sock_accept(
+	SOCKET_ID skt_id,
+	struct sockaddr* client_addr,
+	size_t* len
+	){
+	int return_son_skt=-1;
+	return_son_skt=accept(skt_id,client_addr,(socklen_t*)len);
+	return return_son_skt;
+}

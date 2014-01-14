@@ -20,10 +20,10 @@ int main(void){
 	ht_insert(hash_table,"i", create_node_int(12));
 	ht_insert(hash_table,"s", create_node_string("this is a string!"));	
 
-	ht_print(hash_table);
+	// ht_print(hash_table);
 
-	ht_remove(hash_table,"i");
-	printf("%s",ht_lookup(hash_table,"s")->string_value);
+	// ht_remove(hash_table,"i");
+	// printf("%s",ht_lookup(hash_table,"s")->string_value);
 	
 	ht_print(hash_table);
 	ht_destroy(hash_table);

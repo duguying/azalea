@@ -91,4 +91,15 @@ Node* ht_lookup(HashTable* hash_table, const char* skey);
  */
 void ht_destroy(HashTable* hash_table);
 
+//========================================================
+
+/**
+ * @brief print hashtable
+ * @details [long description]
+ * 
+ * @param hash_table [description]
+ */
+void ht_print(HashTable* hash_table);
+
+
 #endif

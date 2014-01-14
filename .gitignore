@@ -4,6 +4,7 @@
 
 # Cmake build
 /build
+/win32
 
 # sqlite
 /dbs/sqlite

@@ -11,7 +11,6 @@
 #include "ichat.h"
 #include "apis/thread.h"
 #include "apis/sock.h"
-#include <sys/types.h>
 #include <getopt.h>
 
 #include "pool/pool.h"
@@ -61,6 +60,8 @@ Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt){
 
 /**
  * socket_listen socket listen to connect
+ * listen whether there is a socket connet request, 
+ * and put socket id into connection pool
  * @return socket id
  */
 int socket_listen(){
@@ -73,12 +74,12 @@ int socket_listen(){
 	skt=socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if(skt<0){
 		log_printf("Create socket ERROR!");
-		return ERROR;
+		return IERROR;
 	};
 	bind_result=bind(skt, (struct sockaddr*)&servaddr, sizeof(servaddr));
-	if(ERROR==bind_result){
+	if(IERROR==bind_result){
 		log_printf("binding failed!\n");
-		return ERROR;
+		return IERROR;
 	}
 	return listen(skt, 10);
 }
@@ -117,7 +118,7 @@ void* sock_listen(void *arg){
 		if((!pooled)&&(!strcmp("$", tmpchar))){
 			memset(&tmpchar, 0, sizeof(char)*ID_LEN);
 			strncpy(tmpchar, packed_msg.message, ID_LEN);
-			pool_save((tmpchar+1), tskt);
+			pool_connect((tmpchar+1), tskt);
 			strncpy(username,(tmpchar+1),ID_LEN);
 			pooled=1;
 			memset(&tmpchar, 0, sizeof(char)*ID_LEN);
@@ -130,15 +131,10 @@ void* sock_listen(void *arg){
 			packed_msg.to_id=stskt;	//default is 0
 		}
 		
-		
 		packed_msg.from=tskt;
-		
 		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
-
 		log_printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), packed_msg.message);
-		
 		rc = write(pi[1], pipe_buffer, PPB_LEN);
-		
 		if( rc == -1 ){
 	      perror ("Parent: write");
 	      close(pi[1]);
@@ -148,7 +144,7 @@ void* sock_listen(void *arg){
 		memset(packed_msg.message, ECF, sizeof(char)*BUF_LEN);
 	}
 	
-	pool_discon((const char*)&username);
+	pool_disconnect((const char*)&username);
 	
 	log_printf("\033[1;34m%s,%u;skt %d: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), tskt);
 	//here the thread is exit
@@ -163,14 +159,13 @@ void* sock_listen(void *arg){
  */
 void* pipe_listen(void* arg){	
 	int rc;
-	//int pooled=0;
+
 	char fa_pipe_buffer[BUF_LEN];//get 1000 char, but just one time
 	char tmpchar[ID_LEN];//temprary chars
 
 	memset(fa_pipe_buffer, ECF, sizeof(char)*BUF_LEN);
 
-	while((rc = read(po[0], fa_pipe_buffer, PPB_LEN)) > 0){//!!!Here Cannot Print Message
-		//printf("son pipe recv: %s\n",bf);
+	while((rc = read(po[0], fa_pipe_buffer, PPB_LEN)) > 0){
 		log_printf("to id %d\n", ((Msg*)fa_pipe_buffer)->to_id);
 		if(((Msg*)fa_pipe_buffer)->to_id){
 			send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, BUF_LEN, 0);//socket send message
@@ -210,7 +205,7 @@ int main(int argc,char **argv){
  	if (main_pid<0)
  	{
  		printf("create process failed! service have NOT start!\n");
- 		return ERROR;
+ 		return IERROR;
  	}else if (main_pid>0)//in father
  	{
  		printf("ichat(%d) started...\n",main_pid);
@@ -228,21 +223,21 @@ int main(int argc,char **argv){
 		//create pipe
 		create_pipe1_result=pipe(pi);
 		create_pipe2_result=pipe(po);
-		if(create_pipe1_result==ERROR||create_pipe2_result==ERROR){
+		if(create_pipe1_result==IERROR||create_pipe2_result==IERROR){
 			log_printf("create pipe failed!\n");
-			return ERROR;
+			return IERROR;
 		}
 
 		//start listen
-		if(ERROR==socket_listen()){
-			return ERROR;
+		if(IERROR==socket_listen()){
+			return IERROR;
 		};
 
 		//create process for message dealing task
 		pid=fork();
-		if(ERROR==pid){
+		if(IERROR==pid){
 			log_printf("create process failed!\n");
-			return ERROR;
+			return IERROR;
 		}
 		if(0==pid){//in son process
 			close(pi[1]);//close send, use recv
@@ -263,20 +258,20 @@ int main(int argc,char **argv){
 			create_thread_result = thread_create(&ptid, pipe_listen, NULL);
 			if(create_thread_result!=0){
 				log_printf("create thread error!\n");
-				return ERROR;
+				return IERROR;
 			}
 			//sock length
 			len = sizeof(clientaddr);
 			//loop listen and accept
 			for(;1;){
 				//The function `accept` can block the process, so, i need't sleep
-				if(son_skt=accept(skt, (struct sockaddr*)&clientaddr, &len)){
+				if(son_skt=sock_accept(skt, (struct sockaddr*)&clientaddr, &len)){
 					log_printf("\033[1;32m%s,%u;skt %d: Connected!\033[1;0m\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
 					//if accepted, create thread!
 					create_thread_result = thread_create(&ntid, sock_listen, &son_skt);//send the son socket
 					if(create_thread_result!=0){
 						log_printf("create thread error!\n");
-						return ERROR;
+						return IERROR;
 					}
 				}
 			}
