@@ -1,8 +1,14 @@
 project(iChat)
 
+set(NDK true)
 # set compilers
 # SET(CMAKE_C_COMPILER gcc)
 # SET(CMAKE_C_COMPILER clang)
+if(NDK)
+	SET(CMAKE_C_COMPILER /usr/local/arm-linux-androideabi-4.6/arm-linux-androideabi/bin/gcc)
+	set(CI true)
+	message("Build in NDK environment for arm-linux-androideabi...")
+endif(NDK)
 ############################################################
 # gdb Debug support
 set(TEST true)
@@ -21,6 +27,7 @@ set(LIBRARY_OUTPUT_PATH lib)
 # show log on screen
 add_definitions(-D_SCR_LOG_)
 link_directories("build/lib")
+
 include_directories("include")
 include_directories("src")
 #############################################################
@@ -60,6 +67,7 @@ elseif(WIN32)
 endif(UNIX)
 #############################################################
 # APIS
+
 if(UNIX)
 	set(
 		APIS_LIST
@@ -68,7 +76,11 @@ if(UNIX)
 		${SRC_DIR}/apis/process.c
 	)
 	add_library(apis STATIC ${APIS_LIST})
-	target_link_libraries(apis pthread)
+	if(NDK)
+		target_link_libraries(apis thread_db)
+	else(NDK)
+		target_link_libraries(apis pthread)
+	endif(NDK)
 elseif(WIN32)
 	set(
 		APIS_LIST
@@ -117,10 +129,16 @@ endif(UNIX)
 
 #pool library
 if(UNIX)
-	set(POOL_LIST ${SRC_DIR}/pool/pool.c)
+	set(POOL_LIST 
+		${SRC_DIR}/pool/pool.c
+		${SRC_DIR}/pool/shakehands.c
+	)
 	add_library(pool STATIC ${POOL_LIST})
 elseif(WIN32)
-	set(POOL_LIST ${SRC_DIR}/pool/pool.c)
+	set(POOL_LIST 
+		${SRC_DIR}/pool/pool.c
+		${SRC_DIR}/pool/shakehands.c
+	)
 	add_library(pool STATIC ${POOL_LIST})
 endif(UNIX)
 

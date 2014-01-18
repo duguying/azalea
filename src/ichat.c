@@ -85,11 +85,10 @@ int socket_listen(){
 }
 
 /**
- * socket connect and listen to read sock message, *thread function
+ * socket connect and listen message from socket, *thread function
  * @param arg argument
  */
-void* sock_listen(void *arg){
-	int pooled=0;//if saved in pool is 1, else 0
+void* msg_listen(void *arg){
 	Msg packed_msg;
 
 	int tskt;//the socket id of this thread
@@ -114,24 +113,8 @@ void* sock_listen(void *arg){
 			break;
 		};
 		
-		strncpy(tmpchar,packed_msg.message,1);
-		if((!pooled)&&(!strcmp("$", tmpchar))){
-			memset(&tmpchar, 0, sizeof(char)*ID_LEN);
-			strncpy(tmpchar, packed_msg.message, ID_LEN);
-			pool_connect((tmpchar+1), tskt);
-			strncpy(username,(tmpchar+1),ID_LEN);
-			pooled=1;
-			memset(&tmpchar, 0, sizeof(char)*ID_LEN);
-		}
-
-		if(pooled&&(!strcmp("*", tmpchar))){//TODO Here is a bug will create segment fault, when can not find the result from the hashtable, the bug appear
-			int stskt;
-			stskt=pool_get(packed_msg.message+1);//here the packed_msg.message+1 is username
-			log_printf("\033[0;33myou will send to skt %d\033[0;0m\n", stskt);
-			packed_msg.to_id=stskt;	//default is 0
-		}
+		/// shake hands here
 		
-		packed_msg.from=tskt;
 		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
 		log_printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), packed_msg.message);
 		rc = write(pi[1], pipe_buffer, PPB_LEN);
@@ -268,7 +251,7 @@ int main(int argc,char **argv){
 				if(son_skt=sock_accept(skt, (struct sockaddr*)&clientaddr, &len)){
 					log_printf("\033[1;32m%s,%u;skt %d: Connected!\033[1;0m\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
 					//if accepted, create thread!
-					create_thread_result = thread_create(&ntid, sock_listen, &son_skt);//send the son socket
+					create_thread_result = thread_create(&ntid, msg_listen, &son_skt);//send the son socket
 					if(create_thread_result!=0){
 						log_printf("create thread error!\n");
 						return IERROR;

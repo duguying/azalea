@@ -72,4 +72,7 @@ typedef struct Msg{
 	char message[BUF_LEN];
 } Msg;
 
+/// ichat user id
+typedef unsigned int uid;
+
 #endif

@@ -73,3 +73,5 @@ int pool_disconnect(const char* username){
 	
 	return 1;
 }
+
+int pool_release(void){}
