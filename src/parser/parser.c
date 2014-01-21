@@ -20,15 +20,9 @@ int parse_init(void)
 	return 0;
 }
 
-char* parse_get_username(char* msg)
+char* varify_user(char* msg)
 {
 	memset(short_message, 0, sizeof(char)*ID_LEN);
 	strncpy(short_message, msg+1, ID_LEN);
 	return short_message;
-}
-
-int is_username(char* msg)
-{
-	int is=0;
-	return is;
 }

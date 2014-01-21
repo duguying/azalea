@@ -106,7 +106,7 @@ void* msg_listen(void *arg){
 	packed_msg.to_id=0;	//default is 0	
 
 	//The function recv could block thread
-	for(;1;){// in here, we shuold build a send model
+	for(;1;){
 		
 		//connect ended or error, exit
 		if(recv(tskt, packed_msg.message, BUF_LEN, 0)<=0){//recved and put it into packed msg

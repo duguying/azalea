@@ -8,8 +8,5 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "parser/message.h"
 
-char* varify_user(char* msg);

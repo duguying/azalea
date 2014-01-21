@@ -1,6 +1,6 @@
 project(iChat)
 
-set(NDK true)
+# set(NDK true)
 # set compilers
 # SET(CMAKE_C_COMPILER gcc)
 # SET(CMAKE_C_COMPILER clang)
@@ -76,8 +76,7 @@ if(UNIX)
 		${SRC_DIR}/apis/process.c
 	)
 	add_library(apis STATIC ${APIS_LIST})
-	if(NDK)
-		target_link_libraries(apis thread_db)
+	if(NDK)# if ndk, pthread is in core, needn't -lpthread
 	else(NDK)
 		target_link_libraries(apis pthread)
 	endif(NDK)
@@ -144,10 +143,16 @@ endif(UNIX)
 
 #parser library
 if(UNIX)
-	set(PARSER_LIST ${SRC_DIR}/parser/parser.c)
+	set(PARSER_LIST 
+		${SRC_DIR}/parser/parser.c
+		${SRC_DIR}/parser/message.c
+	)
 	add_library(parser STATIC ${PARSER_LIST})
 elseif(WIN32)
-	set(PARSER_LIST ${SRC_DIR}/parser/parser.c)
+	set(PARSER_LIST 
+		${SRC_DIR}/parser/parser.c
+		${SRC_DIR}/parser/message.c
+	)
 	add_library(parser STATIC ${PARSER_LIST})
 endif(UNIX)
 

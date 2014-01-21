@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <string.h>
+#include "parser/message.h"
+
 #if defined linux
 	#ifdef _DMALLOC_
 	#include "dmalloc.h"
@@ -23,8 +25,7 @@
 #if defined _WIN32
 #endif
 
-///buffer length
-#define BUF_LEN 1000 
+
 ///username and etc name
 #define ID_LEN 20
 ///pipe buffer
@@ -58,19 +59,7 @@ struct Node
 	Node* prev;
 };
 
-///the struct of message 
-typedef struct Msg{
-	///the user socket you send to
-	int to;
-	///the user id you send to
-	int to_id;
-	///from user socket
-	int from;
-	///from user id
-	int from_id;
-	///message
-	char message[BUF_LEN];
-} Msg;
+
 
 /// ichat user id
 typedef unsigned int uid;
