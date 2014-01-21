@@ -11,6 +11,7 @@
 #include "ichat.h"
 #include <fcntl.h>
 #include "ds/hashtable.h"
+#include <sys/stat.h>
 
 /**
  * @brief config struct

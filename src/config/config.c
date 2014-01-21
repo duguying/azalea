@@ -8,9 +8,6 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include <fcntl.h>
-#include <sys/stat.h>
 #include "config.h"
 
 /**

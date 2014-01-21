@@ -208,6 +208,11 @@ ENABLE_TESTING()
 	target_link_libraries(test_sock apis)
 	ADD_TEST(T_SOCK "./bin/test_sock")
 
+	set(TEST_MSG_LIST ${TEST_DIR}test_message.c)
+	add_executable(test_message ${TEST_MSG_LIST})
+	target_link_libraries(test_message parser)
+	ADD_TEST(T_MSG "./bin/test_message")
+
 endif(TEST)
 
 ##############################################################################
