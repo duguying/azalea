@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "parser/message.h"
+#include "net/message.h"
 #include <fcntl.h>
 #include <sys/stat.h>
 

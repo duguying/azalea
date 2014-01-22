@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <string.h>
-#include "parser/message.h"
+#include "net/message.h"
 
 #if defined linux
 	#ifdef _DMALLOC_

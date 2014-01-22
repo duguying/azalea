@@ -145,15 +145,30 @@ endif(UNIX)
 if(UNIX)
 	set(PARSER_LIST 
 		${SRC_DIR}/parser/parser.c
-		${SRC_DIR}/parser/message.c
 	)
 	add_library(parser STATIC ${PARSER_LIST})
 elseif(WIN32)
 	set(PARSER_LIST 
 		${SRC_DIR}/parser/parser.c
-		${SRC_DIR}/parser/message.c
 	)
 	add_library(parser STATIC ${PARSER_LIST})
+endif(UNIX)
+
+#net library
+if(UNIX)
+	set(NET_LIST 
+		${SRC_DIR}/net/net.c
+		${SRC_DIR}/net/message.c
+	)
+	add_library(net STATIC ${NET_LIST})
+	target_link_libraries(net apis)
+elseif(WIN32)
+	set(NET_LIST 
+		${SRC_DIR}/net/net.c
+		${SRC_DIR}/net/message.c
+	)
+	add_library(net STATIC ${NET_LIST})
+	target_link_libraries(net apis)
 endif(UNIX)
 
 #log library
@@ -208,10 +223,10 @@ ENABLE_TESTING()
 	target_link_libraries(test_sock apis)
 	ADD_TEST(T_SOCK "./bin/test_sock")
 
-	set(TEST_MSG_LIST ${TEST_DIR}test_message.c)
-	add_executable(test_message ${TEST_MSG_LIST})
-	target_link_libraries(test_message parser)
-	ADD_TEST(T_MSG "./bin/test_message")
+	set(TEST_NET_LIST ${TEST_DIR}test_message.c)
+	add_executable(test_net ${TEST_NET_LIST})
+	target_link_libraries(test_net net)
+	ADD_TEST(T_MSG "./bin/test_net")
 
 	set(TEST_OTHERS_LIST ${TEST_DIR}test_others.c)
 	add_executable(test_others ${TEST_OTHERS_LIST})
