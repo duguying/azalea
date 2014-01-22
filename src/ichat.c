@@ -34,28 +34,6 @@ int pi[2];
 //pipe out
 int po[2];
 
-//////////////////////////////////////////////////////////////////////
-
-/**
- * @brief package message
- * @details [long description]
- * 
- * @param packed_msg [description]
- * @param message [description]
- * @param to_id [description]
- * @param from_skt [description]
- * @return [description]
- */
-Msg* message(Msg* packed_msg, char* message, int to_id, int from_skt){
-	Msg m;
-	memset(packed_msg, 0, sizeof(Msg));
-	packed_msg->to_id = to_id;
-	packed_msg->from = from_skt;
-	strcpy(packed_msg->message,message);
-
-	return packed_msg;
-}
-
 //////////////////////////socket//////////////////////////////////////
 
 /**

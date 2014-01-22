@@ -16,18 +16,17 @@ int main(void){
 	char* file = "../Makefile";
 	Frame* msg;
 	int fh;
-	char content[10240];
+	char content[102400];
 	char* str;
 	
 	fh=open(file, O_RDONLY);
-	read(fh,content,10240);
+	read(fh,content,102400);
+	// char* content="hello world!";
 
 	msg=msg_modulate(content);
 	str=msg_demodulate(msg);
 
-	// printf("string:\n%s\n", str);
-
-	printf("%s\n", content);
+	printf("string:\n%s\n", str);
 
 	return 0;
 }

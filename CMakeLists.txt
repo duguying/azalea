@@ -213,6 +213,10 @@ ENABLE_TESTING()
 	target_link_libraries(test_message parser)
 	ADD_TEST(T_MSG "./bin/test_message")
 
+	set(TEST_OTHERS_LIST ${TEST_DIR}test_others.c)
+	add_executable(test_others ${TEST_OTHERS_LIST})
+	ADD_TEST(T_OTHERS "./bin/test_others")
+
 endif(TEST)
 
 ##############################################################################

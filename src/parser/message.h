@@ -14,7 +14,7 @@
 
 ///buffer length
 #define BUF_LEN 1000 
-#define FRAME_LEN (512-8)
+#define FRAME_LEN (64-8)
 
 ///the struct of message 
 typedef struct Msg
@@ -44,6 +44,7 @@ typedef struct Frame
 
 /// frame buffer
 Frame FRAME_BUFFER;
+
 
 /**
  * 调制
