@@ -226,7 +226,7 @@ ENABLE_TESTING()
 	set(TEST_NET_LIST ${TEST_DIR}test_message.c)
 	add_executable(test_net ${TEST_NET_LIST})
 	target_link_libraries(test_net net)
-	ADD_TEST(T_MSG "./bin/test_net")
+	ADD_TEST(T_NET "./bin/test_net")
 
 	set(TEST_OTHERS_LIST ${TEST_DIR}test_others.c)
 	add_executable(test_others ${TEST_OTHERS_LIST})

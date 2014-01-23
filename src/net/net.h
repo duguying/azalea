@@ -8,5 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "net.h"
+#include <stdio.h>
+#include "apis/sock.h"
+#include "apis/thread.h"
 

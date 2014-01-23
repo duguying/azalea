@@ -29,6 +29,22 @@
 #endif
 
 /**
+ * fill socket address with ip and port
+ * @param address the pointer of socket address
+ * @param ip      string of ip, NULL for server
+ * @param port    port
+ */
+void 
+sock_fill_address(
+	/// pointer of socket address
+	struct sockaddr_in* address, 
+	/// ip, NULL for server
+	const char* ip, 
+	/// port
+	int port
+	);
+
+/**
  * @brief create a socket
  * @details [long description]
  * 

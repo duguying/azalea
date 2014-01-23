@@ -45,10 +45,7 @@ int po[2];
 int socket_listen(){
 	int bind_result;
 
-	memset(&servaddr, ECF, sizeof(servaddr));
-	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	servaddr.sin_port = htons(PORT);
+	sock_fill_address(&servaddr,NULL,PORT);
 	skt=socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if(skt<0){
 		log_printf("Create socket ERROR!");
@@ -72,11 +69,11 @@ void* msg_listen(void *arg){
 	int tskt;//the socket id of this thread
 
 	int rc,strleng;
-	char tmpchar[ID_LEN];//temprary chars
-	char username[ID_LEN];//username
+	// char tmpchar[ID_LEN];//temprary chars
+	// char username[ID_LEN];//username
 
 	char pipe_buffer[PPB_LEN];
-	memset(&packed_msg, ECF, sizeof(Msg));
+	memset(&packed_msg, 0, sizeof(Msg));
 
 	tskt=*(int*)arg;
 	log_printf("tskt is %d\n", tskt);
@@ -105,7 +102,7 @@ void* msg_listen(void *arg){
 		memset(packed_msg.message, ECF, sizeof(char)*BUF_LEN);
 	}
 	
-	pool_disconnect((const char*)&username);
+	// pool_disconnect((const char*)&username); //TODO
 	
 	log_printf("\033[1;34m%s,%u;skt %d: Disconnected!\033[1;0m\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), tskt);
 	//here the thread is exit
@@ -225,7 +222,7 @@ int main(int argc,char **argv){
 			len = sizeof(clientaddr);
 			//loop listen and accept
 			for(;1;){
-				//The function `accept` can block the process, so, i need't sleep
+				//The function `accept` can block the process
 				if(son_skt=sock_accept(skt, (struct sockaddr*)&clientaddr, &len)){
 					log_printf("\033[1;32m%s,%u;skt %d: Connected!\033[1;0m\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port), son_skt);
 					//if accepted, create thread!

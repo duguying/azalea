@@ -10,6 +10,34 @@
 
 #include "sock.h"
 
+/**
+ * fill socket address with ip and port
+ * @param address the pointer of socket address
+ * @param ip      string of ip, NULL for server
+ * @param port    port
+ */
+void 
+sock_fill_address(
+	/// pointer of socket address
+	struct sockaddr_in* address, 
+	/// ip, NULL for server
+	const char* ip, 
+	/// port
+	int port
+	){
+	memset(address, 0, sizeof(struct sockaddr_in));
+	address->sin_family = AF_INET;
+
+	if (NULL==ip)
+	{
+		address->sin_addr.s_addr = htonl(INADDR_ANY);
+	}else{
+		address->sin_addr.s_addr = inet_addr(ip);
+	}
+	
+	address->sin_port = htons(port);
+}
+
 SOCKET_ID
 sock_server(){}
 

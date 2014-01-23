@@ -16,7 +16,7 @@
 
 typedef enum ntype ntype;
 ///node type
-enum ntype {autos,ints,floats,strings,doubles};
+enum ntype {autos,ints,floats,strings,doubles,structs};
 //			0		1		2		3		4
 
 ///stack

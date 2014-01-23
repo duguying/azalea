@@ -221,6 +221,8 @@ void ht_print(HashTable* hash_table){
                     printf("(%lf)",pHead->pValue->double_value);
                 }else if(stringe==pHead->pValue->type){
                     printf("(%s)",pHead->pValue->string_value);
+                }else if(structe==pHead->pValue->type){
+                    printf("(%p)",pHead->pValue->struct_value);
                 }
                 pHead = pHead->pNext;
             }

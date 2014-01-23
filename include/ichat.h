@@ -43,8 +43,8 @@
 
 typedef enum etype etype;
 ///element type
-enum etype{inte,floate,stringe,doublee};
-//			0		1		2		3
+enum etype{inte,floate,stringe,doublee,structe};
+//			0		1		2		3		4
 ///basic data struct node
 typedef struct Node Node;
 ///stack node
@@ -55,6 +55,7 @@ struct Node
 	float float_value;
 	char* string_value;
 	double double_value;
+	void* struct_value;
 	Node* next;
 	Node* prev;
 };

@@ -65,3 +65,15 @@ Node* create_node_string(const char* value){
 	sn->string_value=(char*)value;
 	return sn;
 }
+
+/**
+ * create a struct varible node
+ * @param  struct_content the pointer of the struct
+ * @return                [description]
+ */
+Node* create_node_struct(void* struct_content){
+	Node* sn=(Node*)malloc(sizeof(Node));
+	sn->type=structe;
+	sn->struct_value=struct_content;
+	return sn;
+}

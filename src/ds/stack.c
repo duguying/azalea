@@ -47,6 +47,9 @@ Stack* stack_init(ntype type){
     }else if (type==doubles)
     {
     	stk->type=doubles;
+    }else if (type==structs)
+    {
+    	stk->type=structs;
     }else
     {
     	stk->type=autos;
@@ -194,6 +197,8 @@ void stack_print(Stack* stack){
 			printf("[string]\t\t%s\n",psn->string_value);
 		}else if(psn->type==doublee){
 			printf("[double]\t\t%lf\n",psn->double_value);
+		}else if(psn->type==structe){
+			printf("[structe]\t\t%p\n",psn->struct_value);
 		}
 		psn=psn->next;
 	}
@@ -215,6 +220,8 @@ void stack_reverse_print(Stack* stack){
 			printf("[string]\t\t%s\n",psn->string_value);
 		}else if(psn->type==doublee){
 			printf("[double]\t\t%lf\n",psn->double_value);
+		}else if(psn->type==structe){
+			printf("[structe]\t\t%p\n",psn->struct_value);
 		}
 		psn=psn->prev;
 	}

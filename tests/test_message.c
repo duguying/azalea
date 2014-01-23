@@ -13,7 +13,7 @@
 #include <sys/stat.h>
 
 int main(void){
-	char* file = "../Makefile";
+	char* file = "./Makefile";
 	Frame* msg;
 	int fh;
 	char content[102400];

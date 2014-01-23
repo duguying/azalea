@@ -50,4 +50,11 @@ Node* create_node_double(double value);
  */
 Node* create_node_string(const char* value);
 
+/**
+ * create a struct varible node
+ * @param  struct_content the pointer of the struct
+ * @return                [description]
+ */
+Node* create_node_struct(void* struct_content);
+
 #endif
