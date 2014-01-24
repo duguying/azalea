@@ -11,7 +11,7 @@
 #include "ichat.h"
 
 ///long message
-char full_message[BUF_LEN];
+char full_message[10000];
 ///short message
 char short_message[ID_LEN];
 

@@ -7,8 +7,12 @@
  * you can redistribute it and/or modify
  * it under the terms of the GNU General Public License
  */
+#ifndef _NET_H_
+#define _NET_H_ 
 
-#include <stdio.h>
+#include <ichat.h>
 #include "apis/sock.h"
 #include "apis/thread.h"
 
+
+#endif

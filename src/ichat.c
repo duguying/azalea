@@ -12,10 +12,11 @@
 #include "apis/thread.h"
 #include "apis/sock.h"
 #include <getopt.h>
-
 #include "pool/pool.h"
 #include "ds/hashtable.h"
+#include "ds/stack.h"
 #include "log/log.h"
+#include "net/message.h"
 
 //thread id
 TID ntid;//connect listening thread id
@@ -45,7 +46,7 @@ int po[2];
 int socket_listen(){
 	int bind_result;
 
-	sock_fill_address(&servaddr,NULL,PORT);
+	sock_set_address(&servaddr,NULL,PORT);
 	skt=socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if(skt<0){
 		log_printf("Create socket ERROR!");
@@ -64,42 +65,37 @@ int socket_listen(){
  * @param arg argument
  */
 void* msg_listen(void *arg){
-	Msg packed_msg;
-
+	/// frames pointer
+	// Frame* frame_pointer;
 	int tskt;//the socket id of this thread
-
 	int rc,strleng;
-	// char tmpchar[ID_LEN];//temprary chars
-	// char username[ID_LEN];//username
 
-	char pipe_buffer[PPB_LEN];
-	memset(&packed_msg, 0, sizeof(Msg));
+	char pipe_buffer[FRAME_LEN];
 
+	// msg_rcv_stk=stack_init(structs);
 	tskt=*(int*)arg;
 	log_printf("tskt is %d\n", tskt);
 
-	packed_msg.to_id=0;	//default is 0	
-
 	//The function recv could block thread
 	for(;1;){
-		
 		//connect ended or error, exit
-		if(recv(tskt, packed_msg.message, BUF_LEN, 0)<=0){//recved and put it into packed msg
+		if(recv(tskt, &FRAME_BUFFER, BUF_LEN, 0)<=0){//recved and put it into packed msg
 			break;
 		};
 		
 		/// shake hands here
 		
-		memcpy(pipe_buffer, (char*)(&packed_msg), sizeof(Msg));
-		log_printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), packed_msg.message);
-		rc = write(pi[1], pipe_buffer, PPB_LEN);
+		memcpy(pipe_buffer, &FRAME_BUFFER, sizeof(Frame));
+		// log_printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), (char*)&FRAME_BUFFER);
+		rc = write(pi[1], pipe_buffer, FRAME_LEN);
 		if( rc == -1 ){
-	      perror ("Parent: write");
-	      close(pi[1]);
-	      exit(1);
+			perror ("Parent: write");
+			close(pi[1]);
+			exit(1);
 	    }
+		memset(&FRAME_BUFFER, 0, sizeof(FRAME_BUFFER));
 		
-		memset(packed_msg.message, ECF, sizeof(char)*BUF_LEN);
+		
 	}
 	
 	// pool_disconnect((const char*)&username); //TODO
@@ -117,18 +113,17 @@ void* msg_listen(void *arg){
  */
 void* pipe_listen(void* arg){	
 	int rc;
+	char fa_pipe_buffer[FRAME_LEN];
 
-	char fa_pipe_buffer[BUF_LEN];//get 1000 char, but just one time
-	char tmpchar[ID_LEN];//temprary chars
+	memset(fa_pipe_buffer, 0, sizeof(char)*FRAME_LEN);
 
-	memset(fa_pipe_buffer, ECF, sizeof(char)*BUF_LEN);
-
-	while((rc = read(po[0], fa_pipe_buffer, PPB_LEN)) > 0){
-		log_printf("to id %d\n", ((Msg*)fa_pipe_buffer)->to_id);
+	while((rc = read(po[0], fa_pipe_buffer, FRAME_LEN)) > 0){
+		printf("%s\n", "here!!!");
+		// log_printf("to id %d\n", ((Msg*)fa_pipe_buffer)->to_id);
 		if(((Msg*)fa_pipe_buffer)->to_id){
-			send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, BUF_LEN, 0);//socket send message
+			// send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, FRAME_LEN, 0);//socket send message
 		}
-		memset(fa_pipe_buffer, ECF, sizeof(Msg));
+		memset(fa_pipe_buffer, 0, sizeof(Msg));
 	}
 	return ((void *) 0);
 }
@@ -200,12 +195,12 @@ int main(int argc,char **argv){
 		if(0==pid){//in son process
 			close(pi[1]);//close send, use recv
 			close(po[0]);//close recv, use send
-			char pipe_buffer[PPB_LEN];
+			char pipe_buffer[FRAME_LEN];
 			int rc;
-			while((rc = read(pi[0], pipe_buffer, PPB_LEN)) > 0){
+			while((rc = read(pi[0], pipe_buffer, FRAME_LEN)) > 0){
 				log_printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->from);
-				rc = write(po[1], pipe_buffer, PPB_LEN);	//write the recvd msg into po for sendding to sock sender
-				memset(pipe_buffer, ECF, PPB_LEN);
+				rc = write(po[1], pipe_buffer, FRAME_LEN);	//write the recvd msg into po for sendding to sock sender
+				memset(pipe_buffer, 0, FRAME_LEN);
 			}
 		}else{// in fahter
 			log_printf("son(%d) start\n",pid);

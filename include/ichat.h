@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <string.h>
-#include "net/message.h"
 
 #if defined linux
 	#ifdef _DMALLOC_
@@ -28,8 +27,8 @@
 
 ///username and etc name
 #define ID_LEN 20
-///pipe buffer
-#define PPB_LEN sizeof(Msg)/sizeof(char) 
+///frame length
+#define FRAME_LEN (64-8)
 ///port
 #define PORT 6666 
 ///Empty Char Fill

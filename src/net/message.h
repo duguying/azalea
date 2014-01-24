@@ -8,13 +8,14 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
+#ifndef _MESSAGE_H_
+#define _MESSAGE_H_ 
+
+#include "ichat.h"
+#include "ds/stack.h"
 
 ///buffer length
 #define BUF_LEN 1000 
-#define FRAME_LEN (64-8)
 
 ///the struct of message 
 typedef struct Msg
@@ -45,7 +46,6 @@ typedef struct Frame
 /// frame buffer
 Frame FRAME_BUFFER;
 
-
 /**
  * 调制
  * @param  string [description]
@@ -59,3 +59,14 @@ Frame* msg_modulate(char* string);
  * @return       [description]
  */
 char* msg_demodulate(Frame* frames);
+
+/**
+ * push message into message buffer
+ * @param  frame_pointer frame buffer
+ * @param  frame         single message frame
+ * @return               message string
+ */
+char* msg_frame_buffer_push(Frame* frame_pointer, Frame* frame);
+
+
+#endif

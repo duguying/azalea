@@ -71,3 +71,30 @@ char* msg_demodulate(Frame* frames){
 	return string;
 }
 
+/**
+ * push message into message buffer
+ * @param  frame_pointer frame buffer
+ * @param  frame         single message frame
+ * @return               message string
+ */
+char* msg_frame_buffer_push(Frame* frame_pointer, Frame* frame){
+	char* message;
+
+	if (1==frame->cf)
+	{
+		frame_pointer=(Frame*)malloc(sizeof(Frame)*frame->tf);
+	}
+	if (NULL==frame_pointer)
+	{
+		printf("error, `frame_pointer` is empty!");
+		return (void*)-1;
+	}
+	strncpy((char*)frame_pointer,(char*)frame,sizeof(Frame));
+	if (frame->tf==frame->cf)
+	{
+		message = msg_demodulate(frame_pointer);
+		free(frame_pointer);
+		return message;
+	}
+	return NULL;
+}

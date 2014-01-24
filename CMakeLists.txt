@@ -53,7 +53,7 @@ endif(UNIX)
 # main excutable
 set(SRC_LIST ${SRC_DIR}/ichat.c)
 add_executable(ichat ${SRC_LIST})
-target_link_libraries(ichat dl apis log pool ds)
+target_link_libraries(ichat dl apis net log pool ds)
 
 # tcper
 if(UNIX)
@@ -161,14 +161,14 @@ if(UNIX)
 		${SRC_DIR}/net/message.c
 	)
 	add_library(net STATIC ${NET_LIST})
-	target_link_libraries(net apis)
+	target_link_libraries(net dmalloc ds)
 elseif(WIN32)
 	set(NET_LIST 
 		${SRC_DIR}/net/net.c
 		${SRC_DIR}/net/message.c
 	)
 	add_library(net STATIC ${NET_LIST})
-	target_link_libraries(net apis)
+	target_link_libraries(net dmalloc ds)
 endif(UNIX)
 
 #log library
