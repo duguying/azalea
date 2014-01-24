@@ -59,11 +59,11 @@ target_link_libraries(ichat dl apis net log pool ds)
 if(UNIX)
 	set(TCPER_LIST ${SRC_DIR}/tcper/tcper.c)
 	add_executable(tcper ${TCPER_LIST})
-	target_link_libraries(tcper apis)
+	target_link_libraries(tcper apis net)
 elseif(WIN32)
 	set(TCPER_LIST ${SRC_DIR}/tcper/tcper.c)
 	add_executable(tcper ${TCPER_LIST})
-	target_link_libraries(tcper apis)
+	target_link_libraries(tcper apis net)
 endif(UNIX)
 #############################################################
 # APIS

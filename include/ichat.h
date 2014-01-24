@@ -27,8 +27,10 @@
 
 ///username and etc name
 #define ID_LEN 20
+///frame size
+#define FRAME_SIZE 64
 ///frame length
-#define FRAME_LEN (64-8)
+#define FRAME_LEN (FRAME_SIZE-8)
 ///port
 #define PORT 6666 
 ///Empty Char Fill

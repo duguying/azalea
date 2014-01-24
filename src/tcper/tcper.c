@@ -11,6 +11,7 @@
 #include "ichat.h"
 #include "apis/thread.h"
 #include "apis/sock.h"
+#include "net/message.h"
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -63,6 +64,8 @@ int main(int argc, char** argv)
 	char ch;
 	char ip[IP];
 	char port[PORT_LEN];
+	Frame* frames;
+	int i;
 
 	strncpy(ip,"127.0.0.1",IP);
 	strncpy(port,"6666",PORT_LEN);
@@ -107,7 +110,13 @@ int main(int argc, char** argv)
 			if(0==strcmp(buf, ".exit")){
 				return 0;
 			}
-			send(skt, buf, 1000*sizeof(char), 0);
+			frames=msg_modulate(buf);
+			for (i = 0; i < frames[0].tf; ++i)
+			{
+				send(skt, (void*)&frames[i], sizeof(Frame), 0);
+				printf("[%d/%d]\n", frames[i].cf, frames[i].tf);
+			}
+			
 		}
 		
 	}

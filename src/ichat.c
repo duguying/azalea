@@ -70,7 +70,7 @@ void* msg_listen(void *arg){
 	int tskt;//the socket id of this thread
 	int rc,strleng;
 
-	char pipe_buffer[FRAME_LEN];
+	char pipe_buffer[FRAME_SIZE];
 
 	// msg_rcv_stk=stack_init(structs);
 	tskt=*(int*)arg;
@@ -79,17 +79,17 @@ void* msg_listen(void *arg){
 	//The function recv could block thread
 	for(;1;){
 		//connect ended or error, exit
-		if(recv(tskt, &FRAME_BUFFER, BUF_LEN, 0)<=0){//recved and put it into packed msg
+		if(recv(tskt, &FRAME_BUFFER, FRAME_SIZE, 0)<=0){//recved and put it into packed msg
 			break;
 		};
 		
 		/// shake hands here
 		
 		memcpy(pipe_buffer, &FRAME_BUFFER, sizeof(Frame));
-		// log_printf("sock recv: %s,%u: %s\n",inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port), (char*)&FRAME_BUFFER);
-		rc = write(pi[1], pipe_buffer, FRAME_LEN);
+		// log_printf("sock recv: %s\n",(&FRAME_BUFFER)->content);
+		rc = write(pi[1], pipe_buffer, FRAME_SIZE);
 		if( rc == -1 ){
-			perror ("Parent: write");
+			perror ("pipe_in write error");
 			close(pi[1]);
 			exit(1);
 	    }
@@ -113,17 +113,26 @@ void* msg_listen(void *arg){
  */
 void* pipe_listen(void* arg){	
 	int rc;
-	char fa_pipe_buffer[FRAME_LEN];
+	char fa_pipe_buffer[FRAME_SIZE];
+	Frame* frames_buffer;
+	char* message;
 
-	memset(fa_pipe_buffer, 0, sizeof(char)*FRAME_LEN);
-
-	while((rc = read(po[0], fa_pipe_buffer, FRAME_LEN)) > 0){
-		printf("%s\n", "here!!!");
+	memset(fa_pipe_buffer, 0, sizeof(char)*FRAME_SIZE);
+	frames_buffer=(Frame*)malloc(sizeof(char)*FRAME_SIZE);
+	frames_buffer->cf=1;
+	while((rc = read(po[0], fa_pipe_buffer, FRAME_SIZE)) > 0){
+		printf("%s %d/%d\n", "!!!", ((Frame*)fa_pipe_buffer)->cf, ((Frame*)fa_pipe_buffer)->tf);
 		// log_printf("to id %d\n", ((Msg*)fa_pipe_buffer)->to_id);
-		if(((Msg*)fa_pipe_buffer)->to_id){
+		// if(((Msg*)fa_pipe_buffer)->to_id){
 			// send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, FRAME_LEN, 0);//socket send message
-		}
-		memset(fa_pipe_buffer, 0, sizeof(Msg));
+		// }
+		message=msg_frame_buffer_push(frames_buffer,(Frame*)fa_pipe_buffer);
+		
+		// if (NULL!=message)
+		// {
+		// 	printf("the message:\n%s\n", message);
+		// }
+		// memset(fa_pipe_buffer, 0, sizeof(char)*FRAME_SIZE);
 	}
 	return ((void *) 0);
 }
@@ -195,12 +204,12 @@ int main(int argc,char **argv){
 		if(0==pid){//in son process
 			close(pi[1]);//close send, use recv
 			close(po[0]);//close recv, use send
-			char pipe_buffer[FRAME_LEN];
+			char pipe_buffer[FRAME_SIZE];
 			int rc;
-			while((rc = read(pi[0], pipe_buffer, FRAME_LEN)) > 0){
-				log_printf("son pipe recv: %s, from %d\n",((Msg*)pipe_buffer)->message,((Msg*)pipe_buffer)->from);
-				rc = write(po[1], pipe_buffer, FRAME_LEN);	//write the recvd msg into po for sendding to sock sender
-				memset(pipe_buffer, 0, FRAME_LEN);
+			while((rc = read(pi[0], pipe_buffer, FRAME_SIZE)) > 0){
+				// log_printf("son pipe recv: %s [%d/%d]\n",((Frame*)pipe_buffer)->content, ((Frame*)pipe_buffer)->cf, ((Frame*)pipe_buffer)->tf);
+				rc = write(po[1], pipe_buffer, FRAME_SIZE);	//write the recvd msg into po for sendding to sock sender
+				memset(pipe_buffer, 0, FRAME_SIZE);
 			}
 		}else{// in fahter
 			log_printf("son(%d) start\n",pid);
