@@ -117,22 +117,20 @@ void* pipe_listen(void* arg){
 	Frame* frames_buffer;
 	char* message;
 
-	memset(fa_pipe_buffer, 0, sizeof(char)*FRAME_SIZE);
-	frames_buffer=(Frame*)malloc(sizeof(char)*FRAME_SIZE);
 	frames_buffer->cf=1;
 	while((rc = read(po[0], fa_pipe_buffer, FRAME_SIZE)) > 0){
-		printf("%s %d/%d\n", "!!!", ((Frame*)fa_pipe_buffer)->cf, ((Frame*)fa_pipe_buffer)->tf);
-		// log_printf("to id %d\n", ((Msg*)fa_pipe_buffer)->to_id);
 		// if(((Msg*)fa_pipe_buffer)->to_id){
 			// send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, FRAME_LEN, 0);//socket send message
 		// }
-		message=msg_frame_buffer_push(frames_buffer,(Frame*)fa_pipe_buffer);
+		message=msg_frame_buffer_push(&frames_buffer,(Frame*)fa_pipe_buffer);
 		
-		// if (NULL!=message)
-		// {
-		// 	printf("the message:\n%s\n", message);
-		// }
-		// memset(fa_pipe_buffer, 0, sizeof(char)*FRAME_SIZE);
+		if (NULL!=message)
+		{
+			printf("the message:\n%s\n", message);
+			free(message);
+			message=NULL;
+		}
+		memset(fa_pipe_buffer, 0, sizeof(char)*FRAME_SIZE);
 	}
 	return ((void *) 0);
 }

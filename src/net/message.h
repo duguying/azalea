@@ -66,7 +66,7 @@ char* msg_demodulate(Frame* frames);
  * @param  frame         single message frame
  * @return               message string
  */
-char* msg_frame_buffer_push(Frame* frame_pointer, Frame* frame);
+char* msg_frame_buffer_push(Frame** frame_pointer, Frame* frame);
 
 
 #endif

@@ -223,7 +223,7 @@ ENABLE_TESTING()
 	target_link_libraries(test_sock apis)
 	ADD_TEST(T_SOCK "./bin/test_sock")
 
-	set(TEST_NET_LIST ${TEST_DIR}test_message.c)
+	set(TEST_NET_LIST ${TEST_DIR}test_net.c)
 	add_executable(test_net ${TEST_NET_LIST})
 	target_link_libraries(test_net net)
 	ADD_TEST(T_NET "./bin/test_net")

@@ -78,26 +78,23 @@ char* msg_demodulate(Frame* frames){
  * @param  frame         single message frame
  * @return               message string
  */
-char* msg_frame_buffer_push(Frame* frame_pointer, Frame* frame){	//TODO
+char* msg_frame_buffer_push(Frame** frame_pointer, Frame* frame){
 	char* message;
 
-	printf("%s[%d/%d]\n", frame->content, frame->tf, frame->cf);
 	if (1==frame->cf)
 	{
-		frame_pointer=(Frame*)realloc(frame_pointer, sizeof(Frame)*frame->tf);
+		*frame_pointer=(Frame*)malloc(sizeof(Frame)*frame->tf);
 	}
-	if (NULL==frame_pointer)
+	if (NULL==*frame_pointer)
 	{
 		printf("error, `frame_pointer` is empty!");
 		return (void*)-1;
 	}
-	strncpy((char*)frame_pointer,(char*)frame,sizeof(Frame));
+	memcpy(*frame_pointer+frame->cf-1, frame,sizeof(Frame));
 	if (frame->tf==frame->cf)
 	{
-		printf("???\n%s",frame->content);
-		message = msg_demodulate(frame_pointer);
-		printf("!message!%s\n", message);
-		free(frame_pointer);
+		message = msg_demodulate(*frame_pointer);
+		free(*frame_pointer);
 		return message;
 	}
 	return NULL;
