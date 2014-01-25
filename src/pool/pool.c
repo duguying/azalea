@@ -20,34 +20,37 @@ HashTable* pool=NULL;
  * 
  * @return pointer of pool
  */
-HashTable* pool_init(void){
-	pool=ht_init(10000);
-	return pool;
+void pool_init(void){
+	pool=ht_init(POOL_MAX);
+}
+
+char* pool_create_index(int tid, int skt){
+	return (void*)0;
 }
 
 /**
- * @brief save the user into pool
- * @details [long description]
- * 
- * @param username [description]
- * @param skt [description]
- * @return [description]
+ * save the user into pool
+ * @param  index [description]
+ * @param  tid   [description]
+ * @param  skt   [description]
+ * @return       [description]
  */
-int pool_connect(const char* username, int skt){
-	ht_insert(pool, username, create_node_int(skt));
-	printf("\033[0;33m%s has saved in pool, sock id is %d\033[0m\n", username, skt);
-	// ht_print(pool);
+int pool_connect(const char* index, UserNode* user){
+	ht_insert(pool, index, create_node_struct(user));
+	printf("\033[0;33m\"%s\" has saved in pool,thread id is %d, sock id is %d\033[0m\n", 
+		index, user->tid, user->skt);
+	ht_print(pool);
 }
 
 /**
  * @brief get user information from pool
  * @details [long description]
  * 
- * @param username [description]
+ * @param index [description]
  * @return get failed -1,others sktid
  */
-int pool_get(const char* username){
-	Node* tmp=ht_lookup(pool, username);
+int pool_get(const char* index){
+	Node* tmp=ht_lookup(pool, index);
 	if (tmp)
 	{
 		return tmp->int_value;
@@ -60,18 +63,20 @@ int pool_get(const char* username){
  * @brief disconnect from pool
  * @details [long description]
  * 
- * @param username [description]
+ * @param index [description]
  * @return 0 when success, 1 when failed
  */
-int pool_disconnect(const char* username){
-	Node* tmp=ht_lookup(pool, username);
+int pool_disconnect(const char* index){
+	Node* tmp=ht_lookup(pool, index);
 	if (tmp)
 	{
-		ht_remove(pool, username);
+		ht_remove(pool, index);
 		return 0;
 	}
 	
 	return 1;
 }
 
-int pool_release(void){}
+int pool_release(void){
+	ht_destroy(pool);
+}

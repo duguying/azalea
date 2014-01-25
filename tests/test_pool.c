@@ -9,8 +9,23 @@
  */
 
 #include "ichat.h"
+#include "ds/hashtable.h"
+#include "net/message.h"
+#include "pool/pool.h"
 
 int main(void){
-	//;
+	pool_init();
+	
+	UserNode user={
+		123,
+		456,
+		1,
+		"test",
+		NULL
+	};
+	// create_node_struct(&user);
+
+	pool_connect("123456",&user);
+	pool_release();
 	return 0;
 }

@@ -14,37 +14,15 @@
 #include "ichat.h"
 #include "ds/stack.h"
 
-///buffer length
-#define BUF_LEN 1000 
+/// frame buffer
+Frame FRAME_BUFFER;
 
 ///the struct of message 
 typedef struct Msg
 {
-	///the user socket you send to
-	int to;
-	///the user id you send to
-	int to_id;
-	///from user socket
-	int from;
-	///from user id
-	int from_id;
-	///message
-	char message[BUF_LEN];
+	UserNode user;
+	Frame frame;
 } Msg;
-
-/// the frame
-typedef struct Frame
-{
-	/// current frame
-	unsigned int cf;//4 char
-	/// total frame
-	unsigned int tf;//4 char
-	/// frame content
-	char content[FRAME_LEN];
-} Frame;
-
-/// frame buffer
-Frame FRAME_BUFFER;
 
 /**
  * 调制

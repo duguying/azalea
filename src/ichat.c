@@ -111,7 +111,7 @@ void* msg_listen(void *arg){
  * listen the pipe, when recv msg, send it
  * @param arg argument
  */
-void* pipe_listen(void* arg){	
+void* pipe_listen(void* arg){
 	int rc;
 	char fa_pipe_buffer[FRAME_SIZE];
 	Frame* frames_buffer;
@@ -178,7 +178,7 @@ int main(int argc,char **argv){
 //////////////////////
 
 		//pool initial
-		Pool* pool=pool_init();
+		pool_init();
 
 		//create pipe
 		create_pipe1_result=pipe(pi);

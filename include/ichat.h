@@ -61,7 +61,31 @@ struct Node
 	Node* prev;
 };
 
+/// the frame
+typedef struct Frame
+{
+	/// current frame
+	unsigned int cf;//4 char
+	/// total frame
+	unsigned int tf;//4 char
+	/// frame content
+	char content[FRAME_LEN];
+} Frame;
 
+///user node in the connection pool
+typedef struct UserNode
+{
+	///user thread
+	int tid;
+	///user socket
+	int skt;
+	///user id
+	int id;
+	///username
+	char* username;
+	///message frame buffer
+	Frame* frames_buffer;
+} UserNode;
 
 /// ichat user id
 typedef unsigned int uid;

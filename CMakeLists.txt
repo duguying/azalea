@@ -133,12 +133,14 @@ if(UNIX)
 		${SRC_DIR}/pool/shakehands.c
 	)
 	add_library(pool STATIC ${POOL_LIST})
+	target_link_libraries(pool net)
 elseif(WIN32)
 	set(POOL_LIST 
 		${SRC_DIR}/pool/pool.c
 		${SRC_DIR}/pool/shakehands.c
 	)
 	add_library(pool STATIC ${POOL_LIST})
+	target_link_libraries(pool net)
 endif(UNIX)
 
 #parser library
@@ -161,14 +163,18 @@ if(UNIX)
 		${SRC_DIR}/net/message.c
 	)
 	add_library(net STATIC ${NET_LIST})
-	target_link_libraries(net dmalloc ds)
+	if(CI)
+		target_link_libraries(net ds)
+	else(CI)
+		target_link_libraries(net dmalloc ds)
+	endif(CI)
 elseif(WIN32)
 	set(NET_LIST 
 		${SRC_DIR}/net/net.c
 		${SRC_DIR}/net/message.c
 	)
 	add_library(net STATIC ${NET_LIST})
-	target_link_libraries(net dmalloc ds)
+	target_link_libraries(net ds)
 endif(UNIX)
 
 #log library
@@ -210,7 +216,7 @@ ENABLE_TESTING()
 
 	set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
 	add_executable(test_pool ${TEST_POOL_LIST})
-	target_link_libraries(test_pool pool)
+	target_link_libraries(test_pool pool ds)
 	ADD_TEST(T_POOL "./bin/test_pool")
 
 	set(TEST_PTH_LIST ${TEST_DIR}test_pth.c)

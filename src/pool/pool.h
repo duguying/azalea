@@ -11,17 +11,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ds/hashtable.h"
+#include "net/message.h"
 
-///user node in the connection pool
-typedef struct UserNode
-{
-	///user socket
-	int skt;
-	///username
-	char* username;
-	///user id
-	int id;
-} UserNode;
+
 
 ///connection pool
 typedef HashTable Pool;
@@ -36,34 +28,33 @@ typedef HashTable Pool;
  * 
  * @return pointer of pool
  */
-HashTable* pool_init(void);
+void pool_init(void);
 
 /**
- * @brief save the user into pool
- * @details [long description]
- * 
- * @param username [description]
- * @param skt [description]
- * @return [description]
+ * save the user into pool
+ * @param  index [description]
+ * @param  tid   [description]
+ * @param  skt   [description]
+ * @return       [description]
  */
-int pool_connect(const char* username, int skt);
-
-/**
- * @brief disconnect from pool
- * @details [long description]
- * 
- * @param username [description]
- * @return 0 when success, 1 when failed
- */
-int pool_disconnect(const char* username);
+int pool_connect(const char* index, UserNode* user);
 
 /**
  * @brief get user information from pool
  * @details [long description]
  * 
- * @param username [description]
+ * @param index [description]
  * @return get failed -1,others sktid
  */
-int pool_get(const char* username);
+int pool_get(const char* index);
+
+/**
+ * @brief disconnect from pool
+ * @details [long description]
+ * 
+ * @param index [description]
+ * @return 0 when success, 1 when failed
+ */
+int pool_disconnect(const char* index);
 
 int pool_release(void);
