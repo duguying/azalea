@@ -31,6 +31,7 @@
 #define FRAME_SIZE 64
 ///frame length
 #define FRAME_LEN (FRAME_SIZE-8)
+#define MSG_LEN sizeof(Msg)
 ///port
 #define PORT 6666 
 ///Empty Char Fill
@@ -86,6 +87,13 @@ typedef struct UserNode
 	///message frame buffer
 	Frame* frames_buffer;
 } UserNode;
+
+///the struct of message 
+typedef struct Msg
+{
+	UserNode user;
+	Frame frame;
+} Msg;
 
 /// ichat user id
 typedef unsigned int uid;

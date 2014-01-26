@@ -17,13 +17,6 @@
 /// frame buffer
 Frame FRAME_BUFFER;
 
-///the struct of message 
-typedef struct Msg
-{
-	UserNode user;
-	Frame frame;
-} Msg;
-
 /**
  * 调制
  * @param  string [description]

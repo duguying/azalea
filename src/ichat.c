@@ -70,7 +70,7 @@ void* msg_listen(void *arg){
 	int tskt;//the socket id of this thread
 	int rc,strleng;
 
-	char pipe_buffer[FRAME_SIZE];
+	char pipe_buffer[MSG_LEN];
 
 	// msg_rcv_stk=stack_init(structs);
 	tskt=*(int*)arg;
@@ -87,7 +87,7 @@ void* msg_listen(void *arg){
 		
 		memcpy(pipe_buffer, &FRAME_BUFFER, sizeof(Frame));
 		// log_printf("sock recv: %s\n",(&FRAME_BUFFER)->content);
-		rc = write(pi[1], pipe_buffer, FRAME_SIZE);
+		rc = write(pi[1], pipe_buffer, MSG_LEN);
 		if( rc == -1 ){
 			perror ("pipe_in write error");
 			close(pi[1]);
@@ -113,12 +113,11 @@ void* msg_listen(void *arg){
  */
 void* pipe_listen(void* arg){
 	int rc;
-	char fa_pipe_buffer[FRAME_SIZE];
+	char fa_pipe_buffer[MSG_LEN];
 	Frame* frames_buffer;
 	char* message;
 
-	frames_buffer->cf=1;
-	while((rc = read(po[0], fa_pipe_buffer, FRAME_SIZE)) > 0){
+	while((rc = read(po[0], fa_pipe_buffer, MSG_LEN)) > 0){
 		// if(((Msg*)fa_pipe_buffer)->to_id){
 			// send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, FRAME_LEN, 0);//socket send message
 		// }
@@ -130,7 +129,7 @@ void* pipe_listen(void* arg){
 			free(message);
 			message=NULL;
 		}
-		memset(fa_pipe_buffer, 0, sizeof(char)*FRAME_SIZE);
+		memset(fa_pipe_buffer, 0, MSG_LEN);
 	}
 	return ((void *) 0);
 }
@@ -202,12 +201,12 @@ int main(int argc,char **argv){
 		if(0==pid){//in son process
 			close(pi[1]);//close send, use recv
 			close(po[0]);//close recv, use send
-			char pipe_buffer[FRAME_SIZE];
+			char pipe_buffer[MSG_LEN];
 			int rc;
-			while((rc = read(pi[0], pipe_buffer, FRAME_SIZE)) > 0){
+			while((rc = read(pi[0], pipe_buffer, MSG_LEN)) > 0){
 				// log_printf("son pipe recv: %s [%d/%d]\n",((Frame*)pipe_buffer)->content, ((Frame*)pipe_buffer)->cf, ((Frame*)pipe_buffer)->tf);
-				rc = write(po[1], pipe_buffer, FRAME_SIZE);	//write the recvd msg into po for sendding to sock sender
-				memset(pipe_buffer, 0, FRAME_SIZE);
+				rc = write(po[1], pipe_buffer, MSG_LEN);	//write the recvd msg into po for sendding to sock sender
+				memset(pipe_buffer, 0, MSG_LEN);
 			}
 		}else{// in fahter
 			log_printf("son(%d) start\n",pid);
