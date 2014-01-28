@@ -30,13 +30,13 @@ int main(void){
 
 	// printf("string:\n%s\n", str);
 
-	tf=msg[0].tf;
-	for (i = 0; i < tf; ++i)
-	{
-		str=msg_frame_buffer_push(&frames_buffer,&msg[i]);
-	}
-	free(msg);
-	printf("%s\n", str);
-	free(str);
+	// tf=msg[0].tf;
+	// for (i = 0; i < tf; ++i)
+	// {
+		// str=msg_frame_buffer_push(&frames_buffer,&msg[i]);
+	// }
+	// free(msg);
+	// printf("%s\n", str);
+	// free(str);
 	return 0;
 }

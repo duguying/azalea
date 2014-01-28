@@ -85,7 +85,7 @@ typedef struct UserNode
 	///username
 	char* username;
 	///message frame buffer
-	Frame* frames_buffer;
+	void* frames_buffer;
 } UserNode;
 
 ///the struct of message 

@@ -69,12 +69,19 @@ void* msg_listen(void *arg){
 	// Frame* frame_pointer;
 	int tskt;//the socket id of this thread
 	int rc,strleng;
+	UserNode user;
 
 	char pipe_buffer[MSG_LEN];
 
 	// msg_rcv_stk=stack_init(structs);
 	tskt=*(int*)arg;
 	log_printf("tskt is %d\n", tskt);
+
+	Frame* user_tmp_frame;
+	user.tid=0;
+	user.skt=tskt;
+	user.username=NULL;
+	user.frames_buffer=stack_init(structs);
 
 	//The function recv could block thread
 	for(;1;){
@@ -84,8 +91,8 @@ void* msg_listen(void *arg){
 		};
 		
 		/// shake hands here
-		
-		memcpy(pipe_buffer, &FRAME_BUFFER, sizeof(Frame));
+		memcpy(pipe_buffer, &user, sizeof(UserNode));
+		memcpy(pipe_buffer+sizeof(UserNode), &FRAME_BUFFER, sizeof(Frame));
 		// log_printf("sock recv: %s\n",(&FRAME_BUFFER)->content);
 		rc = write(pi[1], pipe_buffer, MSG_LEN);
 		if( rc == -1 ){
@@ -121,13 +128,21 @@ void* pipe_listen(void* arg){
 		// if(((Msg*)fa_pipe_buffer)->to_id){
 			// send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, FRAME_LEN, 0);//socket send message
 		// }
-		message=msg_frame_buffer_push(&frames_buffer,(Frame*)fa_pipe_buffer);
 		
+		// (((Msg*)fa_pipe_buffer)->user.frames_buffer)
+		
+		message=msg_frame_buffer_push((((Msg*)fa_pipe_buffer)->user.frames_buffer),(Frame*)&(((Msg*)fa_pipe_buffer)->frame));
+		
+		if ((char*)-1==message)
+		{
+			perror("msg_frame_buffer_push return -1:");
+		}
 		if (NULL!=message)
 		{
 			printf("the message:\n%s\n", message);
-			free(message);
-			message=NULL;
+			// free(message);
+			// message=NULL;
+			printf("from skt %d\n", ((Msg*)fa_pipe_buffer)->user.skt);
 		}
 		memset(fa_pipe_buffer, 0, MSG_LEN);
 	}

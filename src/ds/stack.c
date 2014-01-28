@@ -30,7 +30,7 @@ Stack* stack_init(ntype type){
 	stk->index=(Node**)malloc(sizeof(void*));
 	memset(stk->index,0,sizeof(void*));
 
-    if(type<0||type>4){
+    if(type<0||type>5){
     	printf("%s\n", "stack type error!\n");
     	return (void*)IERROR;
     }

@@ -78,24 +78,58 @@ char* msg_demodulate(Frame* frames){
  * @param  frame         single message frame
  * @return               message string
  */
-char* msg_frame_buffer_push(Frame** frame_pointer, Frame* frame){
+char* msg_frame_buffer_push(Stack* frame_stack, Frame* frame){
 	char* message;
+	int tf=0,cf=0;
 
-	if (1==frame->cf)
+	tf=frame->tf;
+	cf=frame->cf;
+
+	if (tf<=0||cf<=0)
 	{
-		*frame_pointer=(Frame*)malloc(sizeof(Frame)*frame->tf);
+		perror("cf or tf is 0:");
+		return (char*)-1;
 	}
-	if (NULL==*frame_pointer)
+	
+	stack_push(frame_stack, create_node_struct(frame));
+	stack_print(frame_stack);
+	if (cf!=tf)
 	{
-		printf("error, `frame_pointer` is empty!");
-		return (void*)-1;
+		return NULL;
 	}
-	memcpy(*frame_pointer+frame->cf-1, frame,sizeof(Frame));
-	if (frame->tf==frame->cf)
+	
+	message=(char*)malloc(sizeof(char)*FRAME_LEN*tf);
+	memset(message,0,sizeof(char)*FRAME_LEN*tf);
+	for (;;)
 	{
-		message = msg_demodulate(*frame_pointer);
-		free(*frame_pointer);
-		return message;
+		// printf("%d/%d\n", cf,tf);
+		printf("seg %d:%s\n", cf, ((Frame*)(frame_stack->top->struct_value))->content);
+		// memcpy(message+FRAME_LEN*(cf-1),((Frame*)(frame_stack->top->struct_value))->content, FRAME_LEN);
+		stack_pop(frame_stack);
+		if (NULL==frame_stack->top)
+		{
+			break;
+		}
+		cf=((Frame*)(frame_stack->top->struct_value))->cf;
 	}
-	return NULL;
+	printf("!%s!\n", message);
+	return message;
+
+	// if (1==frame->cf)
+	// {
+	// 	frame_pointer=(Frame*)malloc(sizeof(Frame)*frame->tf);
+	// }
+	// if (NULL==frame_pointer)
+	// {
+	// 	printf("error, `frame_pointer` is empty!");
+	// 	return (void*)-1;
+	// }
+	// memcpy(frame_pointer+frame->cf-1, frame,sizeof(Frame));
+	// if (frame->tf==frame->cf)
+	// {
+	// 	message = msg_demodulate(frame_pointer);
+	// 	free(frame_pointer);
+	// 	return message;
+	// }
+	// return NULL;
 }
