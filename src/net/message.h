@@ -32,10 +32,13 @@ Frame* msg_modulate(char* string);
 char* msg_demodulate(Frame* frames);
 
 /**
- * push message into message buffer
- * @param  frame_pointer frame buffer
- * @param  frame         single message frame
- * @return               message string
+ * @brief push message into message buffer
+ * @details [long description]
+ * 
+ * @param frame_stack frame buffer stack
+ * @param frame frame you received
+ * 
+ * @return the message demodulate
  */
 char* msg_frame_buffer_push(Stack* frame_stack, Frame* frame);
 

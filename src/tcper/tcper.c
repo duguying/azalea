@@ -51,6 +51,19 @@ void* listen_message(void *arg){
 	return ((void *) 0);
 }
 
+void login(void){
+	char user[20];
+	char pass[20];
+
+	printf("\033[1;34m\
+================LOGIN================\033[1;0m\n");
+	printf("USERNAME:");
+	scanf("%s",user);
+	printf("PASSWORD:");
+	scanf("%s",pass);
+	printf("\n");
+}
+
 /**
  * main function
  * @param  argc [description]
@@ -66,6 +79,8 @@ int main(int argc, char** argv)
 	char port[PORT_LEN];
 	Frame* frames;
 	int i;
+
+	login();
 
 	strncpy(ip,"127.0.0.1",IP);
 	strncpy(port,"6666",PORT_LEN);
