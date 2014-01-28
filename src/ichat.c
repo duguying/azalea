@@ -143,6 +143,7 @@ void* pipe_listen(void* arg){
 			// free(message);
 			// message=NULL;
 			printf("from skt %d\n", ((Msg*)fa_pipe_buffer)->user.skt);
+			free(message);
 		}
 		memset(fa_pipe_buffer, 0, MSG_LEN);
 	}
