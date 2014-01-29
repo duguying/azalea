@@ -8,6 +8,8 @@
  * it under the terms of the GNU General Public License
  */
 
+#include <termios.h>
+#include <unistd.h>
 #include "ichat.h"
 #include "apis/thread.h"
 #include "apis/sock.h"
@@ -51,17 +53,55 @@ void* listen_message(void *arg){
 	return ((void *) 0);
 }
 
+/**
+ * @brief getch funtion
+ * @details  like getch() in win32 console
+ * @return the char
+ */
+int getch(void){
+	struct termios tm,tm_old;
+	int fd=STDIN_FILENO,c;
+	if (tcgetattr(fd,&tm)<0)
+	{
+		return -1;
+	}
+	tm_old=tm;
+	cfmakeraw(&tm);
+	if (tcsetattr(fd,TCSANOW,&tm)<0)
+	{
+		return -1;
+	}
+	c=fgetc(stdin);
+	if (tcsetattr(fd,TCSANOW, &tm_old)<0)
+	{
+		return -1;
+	}
+	return c;
+}
+
 void login(void){
 	char user[20];
 	char pass[20];
+	int i=0,ch;
 
 	printf("\033[1;34m\
 ================LOGIN================\033[1;0m\n");
 	printf("USERNAME:");
-	scanf("%s",user);
+	fgets(user,20,stdin);
 	printf("PASSWORD:");
-	scanf("%s",pass);
+	// fgets(pass,20,stdin);
+	
+
+	while('\r'!=(ch=getch())){
+		pass[i]=ch;
+		printf("*");
+		i++;
+	}
+
+
+
 	printf("\n");
+	printf("%s:%s\n", user, pass);
 }
 
 /**
