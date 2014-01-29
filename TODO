@@ -1,12 +1,18 @@
-refactor hashtable
---let the hashtable support muilt type
---and then refactor the pool
+then refactor the pool
 
 pool
 
 config: equation
 
+# Tcp Client Tester
+shutdown when server closed the socket
+
 #----------------------
+
+# About client library
+将client单独所需的函数打包到libclient
+
+
 # Communication
 socket package
 websocket model
@@ -18,12 +24,6 @@ message parser
 # Database Driver
 mysql driver
 sqlite driver
-
-# Log
-
-# Tcp Client Tester
-shutdown when server closed the socket
-
 
 # attention
 we should design connection pool before the message exchange in the core
@@ -38,3 +38,6 @@ node in hashtable(not hashnode) and node in stack
 sock_connect()
 暂时移除load_model
 暂时修复pool，后续需要完全重构
+2014-01-27
+ds支持复合类型及struct类型节点
+将数据传输打包到基本数据帧，数据由最小数据传输单位(帧)来传输

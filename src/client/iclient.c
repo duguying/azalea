@@ -22,6 +22,8 @@
 
 struct sockaddr_in saddr;
 char buf[1000];
+char user[20];
+char pass[20];
 
 char * replaceAll(char * src,char oldChar,char newChar){
 	char * head=src;
@@ -80,8 +82,6 @@ int getch(void){
 }
 
 void login(void){
-	char user[20];
-	char pass[20];
 	int i=0,ch;
 
 	printf("\033[1;34m\
@@ -89,18 +89,17 @@ void login(void){
 	printf("USERNAME:");
 	fgets(user,20,stdin);
 	printf("PASSWORD:");
-	// fgets(pass,20,stdin);
-	
 
 	while('\r'!=(ch=getch())){
-		pass[i]=ch;
-		printf("*");
-		i++;
+		if (!iscntrl(ch))
+		{
+			pass[i]=ch;
+			printf("*");
+			i++;
+		}
 	}
 
-
-
-	printf("\n");
+	printf("\n=====================================");
 	printf("%s:%s\n", user, pass);
 }
 
@@ -146,8 +145,8 @@ int main(int argc, char** argv)
     skt=sock_client(AF_INET, SOCK_STREAM, PROTO_TCP);
 	
 	saddr.sin_family=AF_INET;
-    saddr.sin_addr.s_addr=inet_addr(ip);
-    saddr.sin_port=htons(atoi(port));
+	saddr.sin_addr.s_addr=inet_addr(ip);
+	saddr.sin_port=htons(atoi(port));
     
 	len=sizeof(struct sockaddr);
 	if(sock_connect(skt, (struct sockaddr*)&saddr, len)<0){

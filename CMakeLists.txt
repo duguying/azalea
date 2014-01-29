@@ -55,15 +55,15 @@ set(SRC_LIST ${SRC_DIR}/ichat.c)
 add_executable(ichat ${SRC_LIST})
 target_link_libraries(ichat dl apis net log pool ds)
 
-# tcper
+# client
 if(UNIX)
-	set(TCPER_LIST ${SRC_DIR}/tcper/tcper.c)
-	add_executable(tcper ${TCPER_LIST})
-	target_link_libraries(tcper apis net)
+	set(CLIENT_LIST ${SRC_DIR}/client/iclient.c)
+	add_executable(iclient ${CLIENT_LIST})
+	target_link_libraries(iclient apis net)
 elseif(WIN32)
-	set(TCPER_LIST ${SRC_DIR}/tcper/tcper.c)
-	add_executable(tcper ${TCPER_LIST})
-	target_link_libraries(tcper apis net)
+	set(CLIENT_LIST ${SRC_DIR}/client/iclient.c)
+	add_executable(iclient ${CLIENT_LIST})
+	target_link_libraries(iclient apis net)
 endif(UNIX)
 #############################################################
 # APIS
@@ -189,6 +189,22 @@ elseif(WIN32)
 	add_library(log STATIC ${LOG_LIST})
 endif(UNIX)
 
+#client library
+if(UNIX)
+	set(CLILIB_LIST 
+		${SRC_DIR}/client/client.c
+	)
+	add_library(client STATIC ${CLILIB_LIST})
+	if(NOT CI)
+		target_link_libraries(client dmalloc)
+	endif()
+elseif(WIN32)
+	set(CLILIB_LIST 
+		${SRC_DIR}/client/client.c
+	)
+	add_library(client STATIC ${CLILIB_LIST})
+endif(UNIX)
+
 ############################################################################
 #build the tests
 if(TEST)
@@ -243,7 +259,7 @@ endif(TEST)
 ##############################################################################
 # installation
 INSTALL(PROGRAMS build/bin/ichat DESTINATION /usr/local/azalea/bin)
-INSTALL(PROGRAMS build/bin/tcper DESTINATION /usr/local/azalea/bin)
+INSTALL(PROGRAMS build/bin/client DESTINATION /usr/local/azalea/bin)
 ##############################################################################
 # cmake configuration
 cmake_minimum_required(VERSION 2.8)
