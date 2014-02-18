@@ -28,7 +28,7 @@ set(LIBRARY_OUTPUT_PATH lib)
 add_definitions(-D_SCR_LOG_)
 link_directories("build/lib")
 
-include_directories("include")
+include_directories("src/include")
 include_directories("src")
 #############################################################
 if(CI)

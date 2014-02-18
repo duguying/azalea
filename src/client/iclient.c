@@ -84,8 +84,7 @@ int getch(void){
 void login(void){
 	int i=0,ch;
 
-	printf("\033[1;34m\
-================LOGIN================\033[1;0m\n");
+	printf("\033[1;34m================LOGIN================\033[1;0m\n");
 	printf("USERNAME:");
 	fgets(user,20,stdin);
 	printf("PASSWORD:");
@@ -99,8 +98,8 @@ void login(void){
 		}
 	}
 
-	printf("\n=====================================");
-	printf("%s:%s\n", user, pass);
+	printf("\n\033[1;34m=====================================\033[1;0m\n");
+	// printf("%s:%s\n", user, pass);
 }
 
 /**
