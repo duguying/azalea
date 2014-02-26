@@ -1,3 +1,4 @@
 [submodule "libazc"]
 	path = libazc
-	url = git@github.com:duguying/libazc.git
+	url = git://github.com/duguying/libazc.git
+
