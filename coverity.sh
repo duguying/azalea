@@ -1,7 +1,6 @@
 #!/bin/bash
-wget -O coverity_tool.tgz $SCAN_TOOL \
-		--post-data "project=azalea&token=FgaZPLkFHxZOZXrOFUJm6Q"
-wget https://scan.coverity.com/download/Linux -O cov-build-tools.gz
+		
+wget https://scan.coverity.com/download/Linux -O cov-build-tools.gz --post-data "project=azalea&token=FgaZPLkFHxZOZXrOFUJm6Q"
 tar -zxvf cov-build-tools.gz
 export PATH=$PATH:$PWD/cov-build-tools/bin
 cov-build --dir cov-int make
