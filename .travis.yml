@@ -15,7 +15,7 @@ addons:
     - "cd build"
     - "cmake -D CI=true .."
     build_command: "make"
-    branch_pattern: coverity_scan
+    branch_pattern: master
 
 language: c
 compiler: 
