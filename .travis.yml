@@ -2,7 +2,7 @@ env:
   global:
    # The next declration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
-   - secure: "WFq8tiYn6TmvawY85+NcjamYZ65wv5jxdADk3fxRTipDKYZ0rBxUn4Coec520g5TZVb/GfUb4NjOs2ILHL+RqEf9noHGcDGGR7/dmZdcV8mIEGuPgPNIK4FYbgntY983nGJ1/WZMRA4E224YK7dVVTST8DbmaMF7IsLIXnQEsIU="
+   - secure: "q5Wb1ChR5r/52zmkssky4IIM2C3b/ItLjfGRuqPgAsU6pgnrJ7GvHC44A/jvba4rTElxWKXhTyWvskdwSzgCvBs0GIRXHxSYjtcD9IzIMLX7zHfczP2ekH2xGONXhZR1AWN6/YHh1QZ2SwdrlbQv9jybZ9NxWvk9v2IPhdWr5MM="
 
 language: c
 compiler: 
