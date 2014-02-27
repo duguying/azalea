@@ -1,6 +1,7 @@
 # Azalea #
 
 [![travis](https://api.travis-ci.org/duguying/Azalea.png)](https://travis-ci.org/duguying/Azalea)
+[![coverity](https://scan.coverity.com/projects/1501/badge.svg)](https://scan.coverity.com/projects/1501)
 [![Stories in Ready](https://badge.waffle.io/duguying/azalea.png?label=ready)](https://waffle.io/duguying/azalea)
 [![cmake](http://www.cmake.org/cmake/img/CMake-logo-triangle-download.jpg)](http://www.cmake.org/)
 

@@ -14,7 +14,7 @@ addons:
     - "mkdir build"
     - "cd build"
     - "cmake -D CI=true .."
-    build_command: "make"
+    build_command: "../coverity.sh"
     branch_pattern: master
 
 language: c
@@ -25,5 +25,5 @@ script:
     - "mkdir build"
     - "cd build"
     - "cmake -D CI=true .."
-    - "make"
+    - "../coverity.sh"
     - "make test"
