@@ -11,7 +11,10 @@ addons:
       description: "Azalea Chatting Server"
     notification_email: duguying2008@gmail.com
     build_command_prepend:
-    build_command:
+	    - "mkdir build"
+	    - "cd build"
+	    - "cmake -D CI=true .."
+    build_command: "make"
     branch_pattern: coverity_scan
 
 language: c
@@ -19,8 +22,5 @@ compiler:
     - "gcc"
     - "clang"
 script: 
-    - "mkdir build"
-    - "cd build"
-    - "cmake -D CI=true .."
     - "make"
     - "make test"
