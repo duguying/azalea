@@ -1,3 +1,6 @@
+wget https://scan.coverity.com/download/Linux -O cov-build-tools.gz
+tar -zxvf cov-build-tools.gz
+export PATH=$PATH:$PWD/cov-build-tools/bin
 cov-build --dir cov-int make
 tar czvf azalea.tgz cov-int
 curl --form project=duguying/Azalea \
