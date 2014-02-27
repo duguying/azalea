@@ -1,6 +1,10 @@
 #!/bin/bash
-		
-wget https://scan.coverity.com/download/Linux -O cov-build-tools.gz --post-data "project=azalea&token=FgaZPLkFHxZOZXrOFUJm6Q"
+
+case `uname -m` in
+	i?86)				BITS=32 ;;
+	amd64|x86_64)	BITS=64 ;;
+esac
+wget https://scan.coverity.com/download/Linux-${BITS} -O cov-build-tools.gz --post-data "project=duguying/Azalea&token=FgaZPLkFHxZOZXrOFUJm6Q"
 tar -zxvf cov-build-tools.gz
 export PATH=$PATH:$PWD/cov-build-tools/bin
 cov-build --dir cov-int make
