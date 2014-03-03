@@ -21,8 +21,13 @@
   * @return the pointer of stack
   */
 Stack* stack_init(ntype type){
-	Stack* stk;
+	Stack* stk=NULL;
 	stk=(Stack*)malloc(sizeof(Stack));
+	if (NULL==stk)
+	{
+		printf("alloc memory failed.\n");
+		return NULL;
+	}
 	memset(stk,0,sizeof(Stack));
 
 	stk->size=0;
@@ -32,6 +37,7 @@ Stack* stack_init(ntype type){
 
     if(type<0||type>5){
     	printf("%s\n", "stack type error!\n");
+    	free(stk);
     	return (void*)IERROR;
     }
 
