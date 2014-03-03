@@ -8,9 +8,6 @@ language: c
 compiler: 
     - "gcc"
     - "clang"
-script: 
-    - "mkdir build"
-    - "cd build"
-    - "cmake -D CI=true .."
-    - "../coverity.sh"
-    - "make test"
+script:
+    - "chmod 777 ./coverity.sh"
+    - "./coverity.sh"
