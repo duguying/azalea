@@ -12,6 +12,7 @@
 #define _SOCK_H_
 
 #include "ichat.h"
+// #include <ws2tcpip.h>
 #if defined linux
  	#include <sys/socket.h>
 	#include <netinet/in.h>

@@ -64,8 +64,3 @@ and then, the 2nd terminal will received the message `hello, this is a message s
 :smile:
 
 
-
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/duguying/azalea/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

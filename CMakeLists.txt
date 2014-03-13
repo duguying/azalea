@@ -4,6 +4,8 @@ project(iChat)
 # set compilers
 # SET(CMAKE_C_COMPILER gcc)
 # SET(CMAKE_C_COMPILER clang)
+# SET(CMAKE_C_COMPILER i586-mingw32msvc-gcc)
+
 if(NDK)
 	SET(CMAKE_C_COMPILER /usr/local/arm-linux-androideabi-4.6/arm-linux-androideabi/bin/gcc)
 	set(CI true)

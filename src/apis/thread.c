@@ -48,6 +48,3 @@ thread_create(
 	}
 }
 #endif
-
-
-
