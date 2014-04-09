@@ -16,8 +16,10 @@ endif(NDK)
 set(TEST true)
 set(CMAKE_BUILD_TYPE "Debug")
 # set(CMAKE_C_FLAGS "-std=c99")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g -ggdb")
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -s -DNDEBUG")
+if(UNIX)
+	set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g -ggdb")
+	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -s -DNDEBUG")
+endif(UNIX)
 
 # root directory
 set(SRC_DIR "src/")
@@ -28,54 +30,39 @@ set(LIBRARY_OUTPUT_PATH lib)
 
 # show log on screen
 add_definitions(-D_SCR_LOG_)
-link_directories("build/lib")
+link_directories("${PROJECT_BINARY_DIR}/lib")
 
-include_directories("src/include")
 include_directories("src")
 #############################################################
-if(CI)
-	message("In Travis CI System!")
-endif(CI)
+
 if(UNIX)
-	message("In Unix System!")
-	message("dmalloc tools will be used...")
-	if(NOT CI)
-		add_definitions(-D_DMALLOC_)
-		set(CFLAGS "-DDMALLOC -DDMALLOC_FUNC_CHECK")
-	endif()
 	link_directories("/usr/lib/mysql")
 	include_directories("/usr/include/mysql")
 elseif(WIN32)
-	message("In Windows System!")
-	set(CI true)
 	link_directories("C:/Program Files/MySQL/MySQL Connector C 6.1 6.1.2/lib/vs11")
 	include_directories("C:/Program Files/MySQL/MySQL Connector C 6.1 6.1.2/include")
 endif(UNIX)
 #############################################################
+message("===    Build Core    ===")
 # main excutable
+if(COMMAND cmake_policy)
+	cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
 set(SRC_LIST ${SRC_DIR}/ichat.c)
 add_executable(ichat ${SRC_LIST})
 target_link_libraries(ichat dl apis net log pool ds)
 
-# client
-if(UNIX)
-	set(CLIENT_LIST ${SRC_DIR}/client/client.c)
-	add_executable(client ${CLIENT_LIST})
-	target_link_libraries(client apis net)
-elseif(WIN32)
-	set(CLIENT_LIST ${SRC_DIR}/client/client.c)
-	add_executable(client ${CLIENT_LIST})
-	target_link_libraries(client apis net)
-endif(UNIX)
 #############################################################
 # APIS
-
+message("===    Build APIS Linrary    ===")
 if(UNIX)
 	set(
 		APIS_LIST
 		${SRC_DIR}/apis/thread.c
 		${SRC_DIR}/apis/sock.c
 		${SRC_DIR}/apis/process.c
+		${SRC_DIR}/apis/file.c
 	)
 	add_library(apis STATIC ${APIS_LIST})
 	if(NDK)# if ndk, pthread is in core, needn't -lpthread
@@ -88,10 +75,25 @@ elseif(WIN32)
 		${SRC_DIR}/apis/thread.c
 		${SRC_DIR}/apis/sock.c
 		${SRC_DIR}/apis/process.c
+		${SRC_DIR}/apis/file.c
 	)
 	add_library(apis STATIC ${APIS_LIST})
 	target_link_libraries(apis ws2_32)
 endif(UNIX)
+#############################################################
+
+# client
+if(UNIX)
+	set(CLIENT_LIST ${SRC_DIR}/client/client.c)
+	add_executable(client ${CLIENT_LIST})
+	target_link_libraries(client apis net)
+elseif(WIN32)
+	# set(CLIENT_LIST ${SRC_DIR}/client/client.c)
+	# add_executable(client ${CLIENT_LIST})
+	# target_link_libraries(client apis net)
+endif(UNIX)
+#############################################################
+
 
 # Data Struct library
 if(UNIX)
@@ -201,62 +203,13 @@ if(UNIX)
 		target_link_libraries(client dmalloc)
 	endif()
 elseif(WIN32)
-	set(CLILIB_LIST 
-		${SRC_DIR}/client/client.c
-	)
-	add_library(client STATIC ${CLILIB_LIST})
+	# set(CLILIB_LIST 
+	# 	${SRC_DIR}/client/client.c
+	# )
+	# add_library(client STATIC ${CLILIB_LIST})
 endif(UNIX)
 
-############################################################################
-#build the tests
-if(TEST)
-ENABLE_TESTING()
-
-	set(CONFIG_TEST ${TEST_DIR}test_conf.c)
-	add_executable(test_conf ${CONFIG_TEST})
-	target_link_libraries(test_conf config)
-	ADD_TEST(T_CONF "./bin/test_conf")
-
-	set(LOG_TEST ${TEST_DIR}test_log.c)
-	add_executable(test_log ${LOG_TEST})
-	target_link_libraries(test_log log)
-	ADD_TEST(T_LOG "./bin/test_log")
-
-	set(HASH_LIST ${TEST_DIR}test_hashtable.c)
-	add_executable(test_hashtable ${HASH_LIST})
-	target_link_libraries(test_hashtable ds)
-	ADD_TEST(T_HT "./bin/test_hashtable")
-
-	set(TEST_STACK_LIST ${TEST_DIR}test_stack.c)
-	add_executable(test_stack ${TEST_STACK_LIST})
-	target_link_libraries(test_stack ds)
-	ADD_TEST(T_STACK "./bin/test_stack")
-
-	set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
-	add_executable(test_pool ${TEST_POOL_LIST})
-	target_link_libraries(test_pool pool ds)
-	ADD_TEST(T_POOL "./bin/test_pool")
-
-	set(TEST_PTH_LIST ${TEST_DIR}test_pth.c)
-	add_executable(test_pth ${TEST_PTH_LIST})
-	target_link_libraries(test_pth apis)
-	ADD_TEST(T_PTH "./bin/test_pth")
-
-	set(TEST_SOCK_LIST ${TEST_DIR}test_sock.c)
-	add_executable(test_sock ${TEST_SOCK_LIST})
-	target_link_libraries(test_sock apis)
-	ADD_TEST(T_SOCK "./bin/test_sock")
-
-	set(TEST_NET_LIST ${TEST_DIR}test_net.c)
-	add_executable(test_net ${TEST_NET_LIST})
-	target_link_libraries(test_net net)
-	ADD_TEST(T_NET "./bin/test_net")
-
-	set(TEST_OTHERS_LIST ${TEST_DIR}test_others.c)
-	add_executable(test_others ${TEST_OTHERS_LIST})
-	ADD_TEST(T_OTHERS "./bin/test_others")
-
-endif(TEST)
+include(tests/CMakeLists.txt)
 
 ##############################################################################
 # installation
