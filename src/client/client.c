@@ -8,14 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <termios.h>
-#include <unistd.h>
-#include "ichat.h"
-#include "apis/thread.h"
-#include "apis/sock.h"
-#include "net/message.h"
-#include <sys/types.h>
-#include <unistd.h>
+#include "client.h"
 
 #define IP 16
 #define PORT_LEN 6
@@ -55,6 +48,8 @@ void* listen_message(void *arg){
 	return ((void *) 0);
 }
 
+#if defined linux
+
 /**
  * @brief getch funtion
  * @details  like getch() in win32 console
@@ -81,10 +76,12 @@ int getch(void){
 	return c;
 }
 
+#endif
+
 void login(void){
 	int i=0,ch;
 
-	printf("\033[1;34m================LOGIN================\033[1;0m\n");
+	printf("================LOGIN================\n");
 	printf("USERNAME:");
 	fgets(user,20,stdin);
 	printf("PASSWORD:");
@@ -98,7 +95,7 @@ void login(void){
 		}
 	}
 
-	printf("\n\033[1;34m=====================================\033[1;0m\n");
+	printf("\n=====================================\n");
 	// printf("%s:%s\n", user, pass);
 }
 
@@ -112,33 +109,33 @@ int main(int argc, char** argv)
 {
 	SOCKET_ID skt;
 	size_t len;
-	char ch;
+	// char ch;
 	char ip[IP];
 	char port[PORT_LEN];
 	Frame* frames;
-	int i;
+	unsigned int i;
 
 	login();
 
 	strncpy(ip,"127.0.0.1",IP);
 	strncpy(port,"6666",PORT_LEN);
 
-    while ((ch = getopt(argc,argv,"i:p:"))!=-1){  
-		switch(ch){
-		case 'i':
-			memset(ip,0,sizeof(char)*IP);
-			strncpy(ip,optarg,IP);
-			printf("option ip:'%s'\n",ip);
-			break;
-		case 'p':
-			memset(port,0,sizeof(char)*PORT_LEN);
-			strncpy(port,optarg,PORT_LEN);
-			printf("option port :%s\n", port);
-			break;  
-		default:  
-			;
-		}  
-	}  
+ //    while ((ch = getopt(argc,argv,"i:p:"))!=-1){  
+	// 	switch(ch){
+	// 	case 'i':
+	// 		memset(ip,0,sizeof(char)*IP);
+	// 		strncpy(ip,optarg,IP);
+	// 		printf("option ip:'%s'\n",ip);
+	// 		break;
+	// 	case 'p':
+	// 		memset(port,0,sizeof(char)*PORT_LEN);
+	// 		strncpy(port,optarg,PORT_LEN);
+	// 		printf("option port :%s\n", port);
+	// 		break;  
+	// 	default:  
+	// 		;
+	// 	}  
+	// }  
 
     memset(&saddr, 0, sizeof(struct sockaddr));
     skt=sock_client(AF_INET, SOCK_STREAM, PROTO_TCP);

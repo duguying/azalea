@@ -83,9 +83,9 @@ if(UNIX)
 	add_executable(client ${CLIENT_LIST})
 	target_link_libraries(client apis net)
 elseif(WIN32)
-	# set(CLIENT_LIST ${SRC_DIR}/client/client.c)
-	# add_executable(client ${CLIENT_LIST})
-	# target_link_libraries(client apis net)
+	set(CLIENT_LIST ${SRC_DIR}/client/client.c)
+	add_executable(client ${CLIENT_LIST})
+	target_link_libraries(client apis net)
 endif(UNIX)
 #############################################################
 

@@ -1,3 +1,13 @@
+/**
+ * Azalea Chatting Server
+ *
+ * Copyright (C) 2013-2015 Rex Lee <duguying2008@gmail.com>
+ *
+ * This program is free and opensource software; 
+ * you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License
+ */
+
 #ifndef _AZALEA_APIS_FILE_
 #define _AZALEA_APIS_FILE_
 
@@ -29,7 +39,7 @@ File* file_open(const char* filename);
  * @param  length length prepare for reading
  * @return        length have read
  */
-size_t file_read(File* file, void* buffer, unsigned int length);
+size_t file_read(File* file, void* buffer, size_t length);
 
 /**
  * write binaray file
