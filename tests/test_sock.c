@@ -13,7 +13,7 @@
 
 
 int main(void){
-	int skt;
+	// int skt;
 	sock_client(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
 	return 0;

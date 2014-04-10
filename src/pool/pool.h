@@ -12,8 +12,6 @@
 #include "ds/hashtable.h"
 #include "net/message.h"
 
-
-
 ///connection pool
 typedef HashTable Pool;
 

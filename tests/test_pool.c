@@ -14,8 +14,6 @@
 #include "pool/pool.h"
 
 int main(void){
-	pool_init();
-	
 	UserNode user={
 		123,
 		456,
@@ -25,6 +23,7 @@ int main(void){
 	};
 	// create_node_struct(&user);
 
+	pool_init();
 	pool_connect("123456",&user);
 	pool_release();
 	return 0;

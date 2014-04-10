@@ -32,8 +32,8 @@ config_init(const char* config_file){
 	memset(&buf,0,sizeof(struct stat));
 	stat(config_file,&buf);
 	config->size=buf.st_size;
-	config->config_handle=open(config_file, O_RDONLY);
-	if (config->config_handle<0)
+	config->config_handle=file_open(config_file);
+	if (config->config_handle==NULL)
 	{
 		printf("open config file failed: %d\n", config->config_handle);
 		free(config);
@@ -41,7 +41,7 @@ config_init(const char* config_file){
 	}
 	config->content=(char*)malloc(buf.st_size*sizeof(char));
 	config->origin_content=(char*)malloc(buf.st_size*sizeof(char));
-	read(config->config_handle,config->origin_content,buf.st_size);
+	file_read(config->config_handle,config->origin_content,buf.st_size);
 	strncpy(config->content,config->origin_content,buf.st_size*sizeof(char));
 	config->vernier=0;
 	return config;
@@ -64,8 +64,12 @@ void*
 config_remove_comment(conf* config){
 	int i=0,j=0,tag=0,length=0;
 	char* final=NULL;
-	if(config==NULL){return (void*)IERROR;}
-	char* tmp=(char*)malloc(sizeof(char)*config->size);
+	char* tmp;
+	
+	if(config==NULL){
+		return (void*)(IERROR);
+	}
+	tmp=(char*)malloc(sizeof(char)*config->size);
 	memset(tmp,0,sizeof(char)*config->size);
 	for (i = 0; i < config->size; ++i)
 	{

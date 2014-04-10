@@ -9,9 +9,8 @@
  */
 
 #include "ichat.h"
-#include <fcntl.h>
 #include "ds/hashtable.h"
-#include <sys/stat.h>
+#include "apis/file.h"
 
 /**
  * @brief config struct
@@ -22,7 +21,7 @@ typedef struct conf
 	///size of config file, and this is chars number too
 	int size;
 	///configure file handle
-	int config_handle;
+	File* config_handle;
 	///file content
 	char* content;
 	///original file content

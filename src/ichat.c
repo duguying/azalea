@@ -8,15 +8,15 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include "apis/thread.h"
 #include "apis/sock.h"
-#include <getopt.h>
+#include "apis/thread.h"
+// #include <getopt.h>
 #include "pool/pool.h"
 #include "ds/hashtable.h"
 #include "ds/stack.h"
 #include "log/log.h"
 #include "net/message.h"
+#include "ichat.h"
 
 //thread id
 TID ntid;//connect listening thread id
@@ -70,14 +70,13 @@ void* msg_listen(void *arg){
 	int tskt;//the socket id of this thread
 	int rc,strleng;
 	UserNode user;
-
 	char pipe_buffer[MSG_LEN];
+	Frame* user_tmp_frame;
 
 	// msg_rcv_stk=stack_init(structs);
 	tskt=*(int*)arg;
 	log_printf("tskt is %d\n", tskt);
 
-	Frame* user_tmp_frame;
 	user.tid=0;
 	user.skt=tskt;
 	user.username=NULL;
@@ -86,7 +85,7 @@ void* msg_listen(void *arg){
 	//The function recv could block thread
 	for(;1;){
 		//connect ended or error, exit
-		if(recv(tskt, &FRAME_BUFFER, FRAME_SIZE, 0)<=0){//recved and put it into packed msg
+		if(recv(tskt, (char*)&FRAME_BUFFER, FRAME_SIZE, 0)<=0){//recved and put it into packed msg
 			break;
 		};
 		

@@ -25,7 +25,7 @@ int main(void){
 		stack_push(test_stack,create_node_int(5));
 		stack_push(test_stack,create_node_int(9));
 		stack_push(test_stack,create_node_string("hello world!"));
-		stack_push(test_stack,create_node_float(12.23));
+		stack_push(test_stack,create_node_float(12.23f));
 		stack_push(test_stack,create_node_double(12.2345));
 		stack_pop(test_stack);
 		stack_pop(test_stack);

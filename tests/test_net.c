@@ -10,21 +10,20 @@
 
 #include "net/message.h"
 #include "ds/stack.h"
-#include <fcntl.h>
-#include <sys/stat.h>
+#include "apis/file.h"
 
 int main(void){
 	char* file = "./Makefile";
 	Frame* msg;
-	int fh;
+	File* fh;
 	char content[102400];
 	char* str;
 	int tf,i;
-	Frame* frames_buffer;
+	// Frame* frames_buffer;
 	Stack* stack_buffer;
 	
-	fh=open(file, O_RDONLY);
-	read(fh,content,102400);
+	fh=file_open(file);
+	file_read(fh,content,102400);
 	// char* content="hello world!";
 
 	msg=msg_modulate(content);

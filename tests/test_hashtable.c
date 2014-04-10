@@ -13,7 +13,7 @@
 
 int main(void){
 	HashTable* hash_table;
-	HashNode* lookup_result;
+	// HashNode* lookup_result;
 
 	hash_table=ht_init(10000);
 	

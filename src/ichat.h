@@ -16,14 +16,6 @@
 #include <sys/types.h>
 #include <string.h>
 
-#if defined linux
-	#ifdef _DMALLOC_
-	#include "dmalloc.h"
-	#endif
-#endif
-#if defined _WIN32
-#endif
-
 
 ///username and etc name
 #define ID_LEN 20
@@ -47,10 +39,10 @@ typedef enum etype etype;
 ///element type
 enum etype{inte,floate,stringe,doublee,structe};
 //			0		1		2		3		4
+
 ///basic data struct node
-typedef struct Node Node;
-///stack node
-struct Node
+typedef struct _Node Node;
+struct _Node
 {
 	etype type;
 	int int_value;
@@ -63,7 +55,7 @@ struct Node
 };
 
 /// the frame
-typedef struct Frame
+typedef struct _Frame
 {
 	/// current frame
 	unsigned int cf;//4 char
@@ -74,7 +66,7 @@ typedef struct Frame
 } Frame;
 
 ///user node in the connection pool
-typedef struct UserNode
+typedef struct _UserNode
 {
 	///user thread
 	int tid;
@@ -89,7 +81,7 @@ typedef struct UserNode
 } UserNode;
 
 ///the struct of message 
-typedef struct Msg
+typedef struct _Msg
 {
 	UserNode user;
 	Frame frame;

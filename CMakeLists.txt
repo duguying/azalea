@@ -3,22 +3,17 @@ project(iChat)
 # set(NDK true)
 # set compilers
 # SET(CMAKE_C_COMPILER gcc)
-# SET(CMAKE_C_COMPILER clang)
-# SET(CMAKE_C_COMPILER i586-mingw32msvc-gcc)
 
-if(NDK)
-	SET(CMAKE_C_COMPILER /usr/local/arm-linux-androideabi-4.6/arm-linux-androideabi/bin/gcc)
-	set(CI true)
-	message("Build in NDK environment for arm-linux-androideabi...")
-endif(NDK)
 ############################################################
 # gdb Debug support
 set(TEST true)
 set(CMAKE_BUILD_TYPE "Debug")
-# set(CMAKE_C_FLAGS "-std=c99")
+
 if(UNIX)
 	set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g -ggdb")
 	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -s -DNDEBUG")
+elseif(WIN32)
+	add_definitions("-D_CRT_SECURE_NO_DEPRECATE")
 endif(UNIX)
 
 # root directory
@@ -50,8 +45,8 @@ if(COMMAND cmake_policy)
 endif(COMMAND cmake_policy)
 
 set(SRC_LIST ${SRC_DIR}/ichat.c)
-add_executable(ichat ${SRC_LIST})
-target_link_libraries(ichat dl apis net log pool ds)
+# add_executable(ichat ${SRC_LIST})
+# target_link_libraries(ichat dl apis net log pool ds)
 
 #############################################################
 # APIS
@@ -122,12 +117,11 @@ endif(UNIX)
 if(UNIX)
 	set(CONF_LIST ${SRC_DIR}/config/config.c)
 	add_library(config STATIC ${CONF_LIST})
-	if(NOT CI)
-		target_link_libraries(config dmalloc)
-	endif()
+	target_link_libraries(config apis)
 elseif(WIN32)
 	set(CONF_LIST ${SRC_DIR}/config/config.c)
 	add_library(config STATIC ${CONF_LIST})
+	target_link_libraries(config apis)
 endif(UNIX)
 
 #pool library
@@ -193,23 +187,12 @@ elseif(WIN32)
 	add_library(log STATIC ${LOG_LIST})
 endif(UNIX)
 
-#client library
-if(UNIX)
-	set(CLILIB_LIST 
-		${SRC_DIR}/client/client.c
-	)
-	add_library(client STATIC ${CLILIB_LIST})
-	if(NOT CI)
-		target_link_libraries(client dmalloc)
-	endif()
-elseif(WIN32)
-	# set(CLILIB_LIST 
-	# 	${SRC_DIR}/client/client.c
-	# )
-	# add_library(client STATIC ${CLILIB_LIST})
-endif(UNIX)
+##############################################################################
 
-include(tests/CMakeLists.txt)
+if(TEST)
+	ENABLE_TESTING()
+	include(tests/CMakeLists.txt)
+endif(TEST)
 
 ##############################################################################
 # installation
