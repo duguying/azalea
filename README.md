@@ -1,14 +1,22 @@
 # Azalea #
 
 
----
-linux: "[![travis](https://api.travis-ci.org/duguying/Azalea.png)](https://travis-ci.org/duguying/Azalea)"
-windows: "[![Build status](https://ci.appveyor.com/api/projects/status/c443id309jwrmb5t)](https://ci.appveyor.com/project/duguying/azalea)"
-coverity: "[![coverity](https://scan.coverity.com/projects/1501/badge.svg)](https://scan.coverity.com/projects/1501)"
-cmake: "[![cmake](http://www.cmake.org/cmake/img/CMake-logo-triangle-download.jpg)](http://www.cmake.org/)2.8"
----
-
-
+||linux||[![travis](https://api.travis-ci.org/duguying/Azalea.png)](https://travis-ci.org/duguying/Azalea)||
+||windows||[![Build status](https://ci.appveyor.com/api/projects/status/c443id309jwrmb5t)](https://ci.appveyor.com/project/duguying/azalea)||
+||coverity||[![coverity](https://scan.coverity.com/projects/1501/badge.svg)](https://scan.coverity.com/projects/1501)||
+||cmake||[![cmake](http://www.cmake.org/cmake/img/CMake-logo-triangle-download.jpg)](http://www.cmake.org/)2.8||
+<table>
+<td>
+	<tr>111</tr>
+	<tr>222</tr>
+	<tr>333</tr>
+</td>
+<td>
+	<tr>111</tr>
+	<tr>222</tr>
+	<tr>333</tr>
+</td>
+</table>
 a chatting server
 
 # design #
