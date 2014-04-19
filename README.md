@@ -1,12 +1,36 @@
 # Azalea #
 
 
----
-linux: "[![travis](https://api.travis-ci.org/duguying/Azalea.png)](https://travis-ci.org/duguying/Azalea)"
-windows: "[![Build status](https://ci.appveyor.com/api/projects/status/c443id309jwrmb5t)](https://ci.appveyor.com/project/duguying/azalea)"
-coverity: "[![coverity](https://scan.coverity.com/projects/1501/badge.svg)](https://scan.coverity.com/projects/1501)"
-cmake: "[![cmake](http://www.cmake.org/cmake/img/CMake-logo-triangle-download.jpg)](http://www.cmake.org/)2.8"
----
+<table>
+	<tr>
+		<td>linux</td>
+		<td>windows</td>
+		<td>coverity</td>
+		<td>cmake</td>
+	</tr>
+	<tr>
+		<td>
+			<a title="travis" href="https://travis-ci.org/duguying/Azalea">
+				<img src="https://api.travis-ci.org/duguying/Azalea.png" />
+			</a>
+		</td>
+		<td>
+			<a title="Build status" href="https://ci.appveyor.com/project/duguying/azalea">
+				<img src="https://ci.appveyor.com/api/projects/status/c443id309jwrmb5t" />
+			</a>
+		</td>
+		<td>
+			<a title="coverity" href="https://scan.coverity.com/projects/1501">
+				<img src="https://scan.coverity.com/projects/1501/badge.svg" />
+			</a>
+		</td>
+		<td>
+			<a title="cmake" href="http://www.cmake.org/">
+				<img src="http://www.cmake.org/cmake/img/CMake-logo-triangle-download.jpg" />
+			</a>2.8
+		</td>
+	</tr>
+</table>
 
 
 a chatting server
