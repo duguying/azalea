@@ -12,10 +12,19 @@
 
 #if defined _WIN32
  	#include <windows.h>
+ 	#define PIPE_NAME ("\\\\.\\pipe\\Azalea")
 #endif
 #if defined linux
  	// 
 #endif
 
-int
-process_fork();
+int process_create();
+
+void pipe_create();
+
+void pipe_write();
+
+void pipe_read();
+
+void pipe_close();
+

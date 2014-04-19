@@ -35,7 +35,7 @@ ADD_TEST(T_PTH "./bin/test_pth")
 set(TEST_PTH_LIST ${TEST_DIR}test_file.c)
 add_executable(test_file ${TEST_PTH_LIST})
 target_link_libraries(test_file apis)
-ADD_TEST(T_PTH "./bin/test_file")
+ADD_TEST(T_FILE "./bin/test_file")
 
 set(TEST_SOCK_LIST ${TEST_DIR}test_sock.c)
 add_executable(test_sock ${TEST_SOCK_LIST})

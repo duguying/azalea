@@ -10,9 +10,23 @@
 
 #include "process.h"
 
-#if defined _WIN32
-int
-process_fork(){}
-#elif defined linux
-process_fork(){}
-#endif
+int process_create(){
+	return 0;
+}
+
+void pipe_create(){
+	return;
+}
+
+void pipe_write(){
+	return;
+}
+
+void pipe_read(){
+	return;
+}
+
+void pipe_close(){
+	return;
+}
+

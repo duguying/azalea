@@ -75,7 +75,11 @@ int ht_insert(HashTable* hash_table, const char* skey, Node* pvalue){
         ///check whether the key is exist
         if(strcmp(pHead->sKey, skey) == 0)
         {
-            printf("%s already exists!\n", skey);
+            // printf("%s already exists!\n", skey);
+            if (pvalue!=NULL)  // free the node
+            {
+                free(pvalue);
+            }
             return IERROR;
         }
         pHead = pHead->pNext;

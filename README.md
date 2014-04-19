@@ -26,13 +26,13 @@ cmake ..
 make
 ```
 
-**windows (MinGW build)**
+**windows (MSVC 9+ build)**
 
 ```shell
 mkdir build
 cd build
-cmake -G"MinGW Makefiles" ..
-make
+cmake -G"NMake Makefiles" ..
+nmake
 ```
 
 # let's have a try #

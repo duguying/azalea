@@ -1,4 +1,4 @@
-project(iChat)
+project(Azalea)
 
 # set(NDK true)
 # set compilers
@@ -26,7 +26,6 @@ set(LIBRARY_OUTPUT_PATH lib)
 # show log on screen
 add_definitions(-D_SCR_LOG_)
 link_directories("${PROJECT_BINARY_DIR}/lib")
-
 include_directories("src")
 #############################################################
 
