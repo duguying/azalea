@@ -154,17 +154,6 @@ void stack_set(Stack* stk,int i,Node* node){
 }
 
 /**
- * @brief reverse the stack
- * @details [long description]
- * 
- * @param stk [description]
- * @return [description]
- */
-Stack* stack_reverse(Stack* stk){
-	;
-}
-
-/**
  * @brief destroy the stack
  * @details [long description]
  * 

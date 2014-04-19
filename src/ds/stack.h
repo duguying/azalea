@@ -78,9 +78,6 @@ Node* stack_get(Stack* stk,int i);
  */
 void stack_set(Stack* stk,int i,Node* node);
 
-
-Stack* stack_reverse(Stack* stk);
-
 void stack_print(Stack* stack);
 void stack_reverse_print(Stack* stack);
 

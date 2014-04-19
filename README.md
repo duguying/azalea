@@ -1,9 +1,12 @@
 # Azalea #
 
-[![travis](https://api.travis-ci.org/duguying/Azalea.png)](https://travis-ci.org/duguying/Azalea)
-[![coverity](https://scan.coverity.com/projects/1501/badge.svg)](https://scan.coverity.com/projects/1501)<br/>
-[![Stories in Ready](https://badge.waffle.io/duguying/azalea.png?label=ready)](https://waffle.io/duguying/azalea)
-[![cmake](http://www.cmake.org/cmake/img/CMake-logo-triangle-download.jpg)](http://www.cmake.org/)
+
+---
+linux: "[![travis](https://api.travis-ci.org/duguying/Azalea.png)](https://travis-ci.org/duguying/Azalea)"
+windows: "[![Build status](https://ci.appveyor.com/api/projects/status/c443id309jwrmb5t)](https://ci.appveyor.com/project/duguying/azalea)"
+coverity: "[![coverity](https://scan.coverity.com/projects/1501/badge.svg)](https://scan.coverity.com/projects/1501)"
+cmake: "[![cmake](http://www.cmake.org/cmake/img/CMake-logo-triangle-download.jpg)](http://www.cmake.org/)2.8"
+---
 
 
 a chatting server

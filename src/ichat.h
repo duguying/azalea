@@ -23,7 +23,7 @@
 #define FRAME_SIZE 64
 ///frame length
 #define FRAME_LEN (FRAME_SIZE-8)
-#define MSG_LEN sizeof(Msg)
+#define MSG_LEN (sizeof(Msg))
 ///port
 #define PORT 6666 
 ///Empty Char Fill

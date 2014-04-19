@@ -37,6 +37,7 @@ void* listen_message(void *arg){
 	char buf_rcv[1000];
 
 	skt=*(int*)arg;
+	memset(buf_rcv,0,1000);
 	for(;1;){
 		if(recv(skt, buf_rcv, 1000*sizeof(char), 0)<=0){//recved and put it into packed msg
 			break;
@@ -145,7 +146,7 @@ int main(int argc, char** argv)
 	saddr.sin_port=htons(atoi(port));
     
 	len=sizeof(struct sockaddr);
-	if(sock_connect(skt, (struct sockaddr*)&saddr, len)<0){
+	if(sock_connect(skt, (struct sockaddr*)&saddr, len)==-1){
 		printf("Connected Failed!\n");
 		return 0;
 	}else{
@@ -163,7 +164,10 @@ int main(int argc, char** argv)
 			frames=msg_modulate(buf);
 			for (i = 0; i < frames[0].tf; ++i)
 			{
-				send(skt, (void*)&frames[i], sizeof(Frame), 0);
+				if(send(skt, (void*)&frames[i], sizeof(Frame), 0)==-1){
+					printf("%s\n", "send error!\n");
+					continue;
+				};
 				printf("[%d/%d]\n", frames[i].cf, frames[i].tf);
 			}
 			

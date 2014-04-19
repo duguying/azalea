@@ -13,7 +13,7 @@
 ///long message
 char full_message[10000];
 ///short message
-char short_message[ID_LEN];
+char short_message[ID_LEN+1];
 
 int parse_init(void)
 {
@@ -22,7 +22,7 @@ int parse_init(void)
 
 char* varify_user(char* msg)
 {
-	memset(short_message, 0, sizeof(char)*ID_LEN);
+	memset(short_message, 0, ID_LEN+1);
 	strncpy(short_message, msg+1, ID_LEN);
 	return short_message;
 }

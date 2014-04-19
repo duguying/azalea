@@ -30,12 +30,15 @@ config_init(const char* config_file){
 	}
 	memset(config,0,sizeof(conf));
 	memset(&buf,0,sizeof(struct stat));
-	stat(config_file,&buf);
+	if (stat(config_file,&buf)==-1)
+	{
+		return NULL;
+	}
 	config->size=buf.st_size;
 	config->config_handle=file_open(config_file);
 	if (config->config_handle==NULL)
 	{
-		printf("open config file failed: %d\n", config->config_handle);
+		printf("open config file failed: %p\n", config->config_handle);
 		free(config);
 		return (void*)0;
 	}
@@ -179,7 +182,7 @@ config_current_line(conf* config){
  */
 void* 
 config_equation(conf* config){
-	;
+	return NULL;
 }
 
 /**

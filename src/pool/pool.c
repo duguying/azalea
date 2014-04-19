@@ -40,6 +40,7 @@ int pool_connect(const char* index, UserNode* user){
 	printf("\033[0;33m\"%s\" has saved in pool,thread id is %d, sock id is %d\033[0m\n", 
 		index, user->tid, user->skt);
 	ht_print(pool);
+	return 0; // TODO
 }
 
 /**
@@ -79,4 +80,5 @@ int pool_disconnect(const char* index){
 
 int pool_release(void){
 	ht_destroy(pool);
+	return 0; // TODO
 }

@@ -6,6 +6,8 @@ int main(int argc, char const *argv[])
 	File* file;
 	size_t len1,len2;
 	char buffer[13];
+
+	system("echo hello > test_rex.txt");
 	
 	file=file_open("test_rex.txt");
 	len1=file_write(file,"hello world!");
