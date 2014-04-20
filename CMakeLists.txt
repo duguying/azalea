@@ -98,10 +98,6 @@ if(UNIX)
 		${SRC_DIR}/ds/stack.c
 	)
 	add_library(ds STATIC ${DS_LIST})
-	if(CI)
-	else()
-		target_link_libraries(ds dmalloc)
-	endif(CI)
 elseif(WIN32)
 	set(
 		DS_LIST 
@@ -160,11 +156,7 @@ if(UNIX)
 		${SRC_DIR}/net/message.c
 	)
 	add_library(net STATIC ${NET_LIST})
-	if(CI)
-		target_link_libraries(net ds)
-	else(CI)
-		target_link_libraries(net dmalloc ds)
-	endif(CI)
+	target_link_libraries(net ds)
 elseif(WIN32)
 	set(NET_LIST 
 		${SRC_DIR}/net/net.c
@@ -178,9 +170,6 @@ endif(UNIX)
 if(UNIX)
 	set(LOG_LIST ${SRC_DIR}/log/log.c)
 	add_library(log STATIC ${LOG_LIST})
-	if(NOT CI)
-		target_link_libraries(log dmalloc)
-	endif()
 elseif(WIN32)
 	set(LOG_LIST ${SRC_DIR}/log/log.c)
 	add_library(log STATIC ${LOG_LIST})

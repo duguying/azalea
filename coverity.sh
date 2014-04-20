@@ -2,7 +2,7 @@
 
 mkdir build
 cd build
-cmake -D CI=true ..
+cmake ..
 
 case `uname -m` in
 	i?86)				BITS=32 ;;

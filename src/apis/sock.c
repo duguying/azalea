@@ -39,7 +39,9 @@ sock_set_address(
 }
 
 SOCKET_ID
-sock_server(){}
+sock_server(){
+	return 0;
+}
 
 #if defined _WIN32
 /**
