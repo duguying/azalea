@@ -85,7 +85,7 @@ sock_client(
 	}
 	return skt_id;
 }
-#elif defined linux
+#else
 SOCKET_ID
 sock_client(
 	///address family
@@ -128,7 +128,7 @@ sock_connect(
 		return 0;
 	}
 }
-#elif defined linux
+#else
 int
 sock_connect(
 	SOCKET_ID skt_id,

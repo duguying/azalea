@@ -49,7 +49,7 @@ void* listen_message(void *arg){
 	return ((void *) 0);
 }
 
-#if defined linux
+#ifndef _WIN32
 
 /**
  * @brief getch funtion

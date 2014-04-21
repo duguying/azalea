@@ -12,13 +12,13 @@
 #define _PTH_H_
 
 #include "ichat.h"
-#if defined linux
- 	#include <pthread.h>
- 	typedef pthread_t TID;
-#endif
+
 #if defined _WIN32
  	#include "windows.h"
  	typedef unsigned long int TID;
+#else
+ 	#include <pthread.h>
+ 	typedef pthread_t TID;
 #endif
 
 int

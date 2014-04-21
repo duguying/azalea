@@ -27,15 +27,7 @@ set(LIBRARY_OUTPUT_PATH lib)
 add_definitions(-D_SCR_LOG_)
 link_directories("${PROJECT_BINARY_DIR}/lib")
 include_directories("src")
-#############################################################
 
-if(UNIX)
-	link_directories("/usr/lib/mysql")
-	include_directories("/usr/include/mysql")
-elseif(WIN32)
-	link_directories("C:/Program Files/MySQL/MySQL Connector C 6.1 6.1.2/lib/vs11")
-	include_directories("C:/Program Files/MySQL/MySQL Connector C 6.1 6.1.2/include")
-endif(UNIX)
 #############################################################
 message("===    Build Core    ===")
 # main excutable

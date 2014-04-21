@@ -13,8 +13,7 @@
 #if defined _WIN32
  	#include <windows.h>
  	#define PIPE_NAME ("\\\\.\\pipe\\Azalea")
-#endif
-#if defined linux
+#else
  	// 
 #endif
 

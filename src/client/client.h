@@ -19,7 +19,7 @@
 	#include <sys/types.h>
 	#include <conio.h>
 	#define getch()	_getch()
-#elif defined linux
+#else
 	#include <termios.h>
 	#include <unistd.h>
 	#include "ichat.h"

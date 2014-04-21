@@ -12,15 +12,7 @@
 #define _SOCK_H_
 
 #include "ichat.h"
-// #include <ws2tcpip.h>
-#if defined linux
- 	#include <sys/socket.h>
-	#include <netinet/in.h>
-	#include <arpa/inet.h>
-	typedef int SOCKET_ID;
-	#define PROTO_TCP 0
-	#define PROTO_UDP 0
-#endif
+
 #if defined _WIN32
 	#include "winsock2.h"
 	#include "windows.h"
@@ -28,6 +20,13 @@
  	typedef unsigned int SOCKET_ID;
  	#define PROTO_TCP 6
  	#define PROTO_UDP 17
+#else
+ 	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
+	typedef int SOCKET_ID;
+	#define PROTO_TCP 0
+	#define PROTO_UDP 0
 #endif
 
 /**
