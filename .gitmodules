@@ -1,4 +1,3 @@
 [submodule "src/libazc"]
 	path = src/libazc
 	url = git://github.com/duguying/libazc.git
-
