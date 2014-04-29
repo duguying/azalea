@@ -25,6 +25,8 @@ config_init(const char* config_file){
 	config=(conf*)malloc(sizeof(conf));
 	if (NULL==config)
 	{
+		free(config);
+		config=NULL;
 		printf("alloc memory failed!.\n");
 		return NULL;
 	}
@@ -32,6 +34,8 @@ config_init(const char* config_file){
 	memset(&buf,0,sizeof(struct stat));
 	if (stat(config_file,&buf)==-1)
 	{
+		free(config);
+		config=NULL;
 		return NULL;
 	}
 	config->size=buf.st_size;
@@ -40,6 +44,7 @@ config_init(const char* config_file){
 	{
 		printf("open config file failed: %p\n", config->config_handle);
 		free(config);
+		config=NULL;
 		return (void*)0;
 	}
 	config->content=(char*)malloc(buf.st_size*sizeof(char));

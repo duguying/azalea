@@ -38,7 +38,7 @@ Frame* msg_modulate(char* string){
 	for(i=0;i<frame_number;i++){
 		frames[i].cf=i+1;
 		frames[i].tf=frame_number;
-		strncpy(frames[i].content,string+i*FRAME_LEN,FRAME_LEN);
+		memcpy(frames[i].content,string+i*FRAME_LEN,FRAME_LEN);
 		// printf("\033[1;34mtotal_length:%d, frame_number:%d, current_frame:%d\033[1;0m\n%s\n\n", total_length, frame_number, i+1, frames[i].content);
 	}
 
