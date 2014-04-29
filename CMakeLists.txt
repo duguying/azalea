@@ -111,6 +111,11 @@ elseif(WIN32)
 	target_link_libraries(config apis)
 endif(UNIX)
 
+#create-master-and-worker-process library
+set(PROCWM_LIST ${SRC_DIR}/process/procinit.c)
+add_library(procinit STATIC ${PROCWM_LIST})
+target_link_libraries(procinit apis)
+
 #pool library
 if(UNIX)
 	set(POOL_LIST 
