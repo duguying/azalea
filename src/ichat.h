@@ -16,7 +16,6 @@
 #include <sys/types.h>
 #include <string.h>
 
-
 ///username and etc name
 #define ID_LEN 20
 ///frame size
@@ -34,25 +33,6 @@
 #define IERROR -1
 ///ok status
 #define IOK 0
-
-typedef enum etype etype;
-///element type
-enum etype{inte,floate,stringe,doublee,structe};
-//			0		1		2		3		4
-
-///basic data struct node
-typedef struct _Node Node;
-struct _Node
-{
-	etype type;
-	int int_value;
-	float float_value;
-	char* string_value;
-	double double_value;
-	void* struct_value;
-	Node* next;
-	Node* prev;
-};
 
 /// the frame
 typedef struct _Frame

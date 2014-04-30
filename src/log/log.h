@@ -7,7 +7,16 @@
  * you can redistribute it and/or modify
  * it under the terms of the GNU General Public License
  */
-#include "ichat.h"
+ 
+#ifndef _LOG_H
+#define _LOG_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <string.h>
+#include "ds/ds.h"
+#include <stdarg.h>
 #include <time.h>
 
 /**
@@ -17,7 +26,7 @@
  * 
  * @return [description]
  */
-void log_now(void);
+char* log_now(void);
 
 /**
  * create a log
@@ -47,4 +56,5 @@ int log_close(void);
  */
 void log_node_dump(Node* node);
 
+#endif
 

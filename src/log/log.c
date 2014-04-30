@@ -8,9 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include <stdarg.h>
-#include <time.h>
+#include "log.h"
 
 ///the global logfile handle
 static FILE *LOG_FILE;
