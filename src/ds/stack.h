@@ -11,13 +11,12 @@
 #ifndef _STACK_H_
 #define _STACK_H_
 
-#include "ichat.h"
 #include "ds.h"
 
 typedef enum ntype ntype;
 ///node type
-enum ntype {autos,ints,floats,strings,doubles,structs};
-//			0		1		2		3		4
+enum ntype {autos , ints , floats , strings , doubles , structs};
+//         0      , 1    , 2      , 3       , 4       , 5
 
 ///stack
 typedef struct Stack Stack;

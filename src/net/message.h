@@ -11,11 +11,27 @@
 #ifndef _MESSAGE_H_
 #define _MESSAGE_H_ 
 
-#include "ichat.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <string.h>
 #include "ds/stack.h"
 
-/// frame buffer
-Frame FRAME_BUFFER;
+///frame size
+#define FRAME_SIZE 64
+///frame length
+#define FRAME_LEN (FRAME_SIZE-8)
+
+/// the frame
+typedef struct _Frame
+{
+	/// current frame
+	unsigned int cf;//4 char
+	/// total frame
+	unsigned int tf;//4 char
+	/// frame content
+	char content[FRAME_LEN];
+} Frame;
 
 /**
  * 调制

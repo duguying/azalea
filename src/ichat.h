@@ -15,14 +15,10 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <string.h>
+#include "net/message.h"
 
 ///username and etc name
 #define ID_LEN 20
-///frame size
-#define FRAME_SIZE 64
-///frame length
-#define FRAME_LEN (FRAME_SIZE-8)
-#define MSG_LEN (sizeof(Msg))
 ///port
 #define PORT 6666 
 ///Empty Char Fill
@@ -33,17 +29,6 @@
 #define IERROR -1
 ///ok status
 #define IOK 0
-
-/// the frame
-typedef struct _Frame
-{
-	/// current frame
-	unsigned int cf;//4 char
-	/// total frame
-	unsigned int tf;//4 char
-	/// frame content
-	char content[FRAME_LEN];
-} Frame;
 
 ///user node in the connection pool
 typedef struct _UserNode
@@ -66,6 +51,8 @@ typedef struct _Msg
 	UserNode user;
 	Frame frame;
 } Msg;
+
+#define MSG_LEN (sizeof(Msg))
 
 /// ichat user id
 typedef unsigned int uid;

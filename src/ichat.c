@@ -71,7 +71,8 @@ void* msg_listen(void *arg){
 	int rc,strleng;
 	UserNode user;
 	char pipe_buffer[MSG_LEN];
-	Frame* user_tmp_frame;
+	// Frame* user_tmp_frame;
+	Frame FRAME_BUFFER;
 
 	// msg_rcv_stk=stack_init(structs);
 	tskt=*(int*)arg;

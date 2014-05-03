@@ -149,14 +149,12 @@ endif(UNIX)
 #net library
 if(UNIX)
 	set(NET_LIST 
-		${SRC_DIR}/net/net.c
 		${SRC_DIR}/net/message.c
 	)
 	add_library(net STATIC ${NET_LIST})
 	target_link_libraries(net ds)
 elseif(WIN32)
 	set(NET_LIST 
-		${SRC_DIR}/net/net.c
 		${SRC_DIR}/net/message.c
 	)
 	add_library(net STATIC ${NET_LIST})

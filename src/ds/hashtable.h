@@ -11,7 +11,6 @@
 #ifndef _HASHTABLE_H_
 #define _HASHTABLE_H_
 
-#include "ichat.h"
 #include "ds.h"
 
 typedef struct HashNode HashNode;
