@@ -10,12 +10,6 @@
 
 #include "sock.h"
 
-/**
- * set socket address with ip and port
- * @param address the pointer of socket address
- * @param ip      string of ip, NULL for server
- * @param port    port
- */
 void 
 sock_set_address(
 	/// pointer of socket address
@@ -44,20 +38,7 @@ sock_server(){
 }
 
 #if defined _WIN32
-/**
- * @brief create a socket
- * @details [long description]
- * 
- * @param af address family
- * @param type socket type: 
- *             SOCK_STREAM(if linux, it means tcp),
- *             SOCK_DGRAM(if linux, it means udp),
- *             SOCK_RAW,etc
- * @param protocol trasfer protocol: PROTO_TCP,PROTO_UDP. 
- *                 if in linux is 0
- *  
- * @return socket id
- */
+
 SOCKET_ID
 sock_client(
 	///address family
@@ -85,7 +66,9 @@ sock_client(
 	}
 	return skt_id;
 }
+
 #else
+
 SOCKET_ID
 sock_client(
 	///address family
@@ -102,17 +85,11 @@ sock_client(
 	}
 	return skt_id;
 }
+
 #endif
 
 #if defined _WIN32
-/**
- * @brief socket connect
- * @details [long description]
- * 
- * @param skt_id socket id
- * @param addr socket address
- * @param len length
- */
+
 int
 sock_connect(
 	SOCKET_ID skt_id,
@@ -128,7 +105,9 @@ sock_connect(
 		return 0;
 	}
 }
+
 #else
+
 int
 sock_connect(
 	SOCKET_ID skt_id,
@@ -143,6 +122,7 @@ sock_connect(
 		return 0;
 	}
 }
+
 #endif
 
 SOCKET_ID 

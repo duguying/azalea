@@ -8,8 +8,10 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include "ds/hashtable.h"
+#ifndef _AZALEA_CORE_CONFIG_H_
+#define _AZALEA_CORE_CONFIG_H_
+
+#include "apis/hashtable.h"
 #include "apis/file.h"
 
 /**
@@ -91,3 +93,5 @@ config_equation(conf* config);
  */
 void 
 config_destroy(conf* config);
+
+#endif

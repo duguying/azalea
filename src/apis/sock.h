@@ -11,7 +11,7 @@
 #ifndef _SOCK_H_
 #define _SOCK_H_
 
-#include "ichat.h"
+#include "apis.h"
 
 #if defined _WIN32
 	#include "winsock2.h"

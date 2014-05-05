@@ -10,15 +10,7 @@
 
 #include "config.h"
 
-/**
- * @brief config initial
- * @details this function not alloc memory for conf* config
- * 
- * @param config_file [description]
- * @return config file handle
- */
-conf* 
-config_init(const char* config_file){
+conf* config_init(const char* config_file){
 	struct stat buf;
 	conf* config=NULL;
 	
@@ -55,21 +47,12 @@ config_init(const char* config_file){
 	return config;
 }
 
-char* 
-config_get(int config_handle, const char* key){
+char* config_get(int config_handle, const char* key){
 	char* rst=0;
 	return rst;
 }
 
-/**
- * @brief remove the comment of config file
- * @details remove the comment of config file, the comment is begin with char #
- * 
- * @param config the struct pointer of config
- * @return the struct pointer of config, but carefully if you want to assignment
- */
-void* 
-config_remove_comment(conf* config){
+void* config_remove_comment(conf* config){
 	int i=0,j=0,tag=0,length=0;
 	char* final=NULL;
 	char* tmp;
@@ -110,15 +93,7 @@ config_remove_comment(conf* config){
 	return config;
 }
 
-/**
- * @brief remove the empty chars
- * @details [long description]
- * 
- * @param config config the struct pointer of config
- * @return [description]
- */
-void* 
-config_strip(conf* config){
+void* config_strip(conf* config){
 	int i=0,j=0;
 	char* final=NULL;
 	char* tmp=(char*)malloc(sizeof(char)*config->size);
@@ -158,15 +133,7 @@ config_strip(conf* config){
 	return config;
 }
 
-/**
- * @brief get current line of config, and move the vernier
- * @details get current line of config, and move the vernier
- * 
- * @param config config struct
- * @return the string of current line
- */
-int 
-config_current_line(conf* config){
+int config_current_line(conf* config){
 	int line_length=0;
 	int vernier_point=config->vernier;
 	while('\n'!=*(config->content+vernier_point)){
@@ -178,26 +145,11 @@ config_current_line(conf* config){
 	return vernier_point;
 }
 
-/**
- * @brief equation expression parse
- * @details [long description]
- * 
- * @param config [description]
- * @return [description]
- */
-void* 
-config_equation(conf* config){
+void* config_equation(conf* config){
 	return NULL;
 }
 
-/**
- * @brief destroy the config
- * @details destroy the config struct and free the memory
- * 
- * @param config config struct
- */
-void 
-config_destroy(conf* config){
+void config_destroy(conf* config){
 	free(config->content);
 	free(config->origin_content);
 	free(config);

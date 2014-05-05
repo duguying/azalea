@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
+// #include "ichat.h"
 #include "apis/sock.h"
 
 

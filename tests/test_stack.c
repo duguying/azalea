@@ -8,9 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "ds/stack.h"
+#include "apis/stack.h"
 
 int main(void){
 	Stack* test_stack;

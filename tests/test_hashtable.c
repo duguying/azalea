@@ -8,8 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include "ds/hashtable.h"
+#include "apis/hashtable.h"
 
 int main(void){
 	HashTable* hash_table;

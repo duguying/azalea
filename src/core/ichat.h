@@ -25,10 +25,6 @@
 #define ECF 0 
 ///pid file
 #define PIDF "pid"
-///error status
-#define IERROR -1
-///ok status
-#define IOK 0
 
 ///user node in the connection pool
 typedef struct _UserNode

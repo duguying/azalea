@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
+#include "apis.h"
 
 #if defined _WIN32
  	#include <windows.h>

@@ -12,7 +12,7 @@
 #define _AZALEA_CLIENT_CLIENT_
 
 #if defined _WIN32
-	#include "ichat.h"
+	#include "core/ichat.h"
 	#include "apis/sock.h"
 	#include "apis/thread.h"
 	#include "net/message.h"
@@ -22,7 +22,7 @@
 #else
 	#include <termios.h>
 	#include <unistd.h>
-	#include "ichat.h"
+	#include "core/ichat.h"
 	#include "apis/sock.h"
 	#include "apis/thread.h"
 	#include "net/message.h"

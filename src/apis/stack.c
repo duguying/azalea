@@ -8,18 +8,8 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include "ds.h"
-#include <stdarg.h>
 #include "stack.h"
 
- /**
-  * @brief initial the stack
-  * @details [long description]
-  * 
-  * @param type stack type
-  * @return the pointer of stack
-  */
 Stack* stack_init(ntype type){
 	Stack* stk=NULL;
 	stk=(Stack*)malloc(sizeof(Stack));
@@ -63,11 +53,6 @@ Stack* stack_init(ntype type){
 	return stk;
 }
 
-/**
- * basic push element into stack
- * @param stk  the stack
- * @param elem the element:stack node
- */
 void extern stack_push(Stack* stk,Node* elem){
 	///temp node
 	Node* ct;
@@ -92,12 +77,6 @@ void extern stack_push(Stack* stk,Node* elem){
 	stk->size++;
 }
 
-/**
- * @brief pop the top element of stack
- * @details [long description]
- * 
- * @param stk [description]
- */
 void stack_pop(Stack* stk){
 	Node* next;
 	if(stk->size<=0){
@@ -114,14 +93,6 @@ void stack_pop(Stack* stk){
 	stk->index=(Node**)realloc(stk->index,sizeof(void*)*stk->size);
 }
 
-/**
- * @brief get the stack node by the index is reverse order(索引倒序)
- * @details [long description]
- * 
- * @param stk [description]
- * @param i [description]
- * @return [description]
- */
 Node* stack_get(Stack* stk,int i){
 	if(stk->size>=i){
 		return stk->index[i];
@@ -130,15 +101,6 @@ Node* stack_get(Stack* stk,int i){
 	}
 }
 
-/**
- * @brief set the node by index
- * @details [long description]
- * 
- * @param stk sokect
- * @param i index
- * @param node the node
- * @return [description]
- */
 void stack_set(Stack* stk,int i,Node* node){
 	Node* old_node;
 	if(stk->size>=i){
@@ -153,11 +115,6 @@ void stack_set(Stack* stk,int i,Node* node){
 	}
 }
 
-/**
- * @brief destroy the stack
- * @details [long description]
- * 
- */
 void stack_destroy(Stack* stk){
 	int i;
 	int node_num=stk->size;
@@ -172,12 +129,6 @@ void stack_destroy(Stack* stk){
 
 //////////////////////////////////////////////////////////////////
 
-/**
- * @brief print the whole stack
- * @details show the elements of the stack
- * 
- * @param stack the pointer of stack
- */
 void stack_print(Stack* stack){
 	Node* psn=stack->top;
 	printf("the stack(size:%d) content is:\n", stack->size);

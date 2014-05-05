@@ -8,8 +8,8 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include "ds/hashtable.h"
+#include "core/ichat.h"
+#include "apis/hashtable.h"
 #include "net/message.h"
 
 ///connection pool

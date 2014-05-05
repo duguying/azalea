@@ -8,10 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "config/config.h"
+#include "core/config.h"
 
 int main(void)
 {

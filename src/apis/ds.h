@@ -11,15 +11,7 @@
 #ifndef _DS_H_
 #define _DS_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <string.h>
-
-typedef enum etype etype;
-///element type
-enum etype{inte , floate , stringe , doublee , structe};
-//        0     , 1      , 2       , 3       , 4
+#include "apis.h"
 
 ///basic data struct node
 typedef struct _Node Node;

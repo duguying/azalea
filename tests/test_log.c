@@ -8,8 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include "log/log.h"
+#include "core/log.h"
 
 int main(void)
 {

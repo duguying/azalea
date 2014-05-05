@@ -8,16 +8,8 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "ichat.h"
-#include "ds.h"
 #include "hashtable.h"
 
-/**
- * @brief initial the hashtable
- * @details this function not alloc memory for HashTable pointer
- * 
- * @param HashTable the pointer of hashtable
- */
 HashTable* ht_init(int size){
     HashTable* ht_pointer;
     ht_pointer=(HashTable*)malloc(sizeof(HashTable));
@@ -29,11 +21,6 @@ HashTable* ht_init(int size){
     return ht_pointer;
 }
 
-/**
- * string hash function
- * @param  skey hash node key
- * @return      [description]
- */
 unsigned int ht_hash_function(const char* skey)
 {
     const signed char *p = (const signed char*)skey;
@@ -47,14 +34,6 @@ unsigned int ht_hash_function(const char* skey)
     return h;
 }
 
-/**
- * @brief insert key-value into hash table
- * @details [long description]
- * 
- * @param HashTable the hashtable
- * @param skey key
- * @param nvalue value
- */
 int ht_insert(HashTable* hash_table, const char* skey, Node* pvalue){
 	unsigned int pos;
 	HashNode* pHead;
@@ -95,13 +74,6 @@ int ht_insert(HashTable* hash_table, const char* skey, Node* pvalue){
     return 0;
 }
 
-/**
- * @brief remove the hash node from hashtable
- * @details [long description]
- * 
- * @param HashTable the hashtable
- * @param skey the key of hashtable you'll remove
- */
 void ht_remove(HashTable* hash_table, const char* skey){
     unsigned int pos = ht_hash_function(skey) % hash_table->ht_max_size;
 
@@ -135,14 +107,6 @@ void ht_remove(HashTable* hash_table, const char* skey){
     }
 }
 
-/**
- * @brief [brief description]
- * @details [long description]
- * 
- * @param HashTable [description]
- * @param skey [description]
- * @return [description]
- */
 Node* ht_lookup(HashTable* hash_table, const char* skey){
     HashNode* pHead;
     unsigned int pos = ht_hash_function(skey) % hash_table->ht_max_size;
@@ -163,12 +127,6 @@ Node* ht_lookup(HashTable* hash_table, const char* skey){
     return NULL;
 }
 
-/**
- * @brief release the hashtable
- * @details [long description]
- * 
- * @param hash_table the hashtable
- */
 void ht_destroy(HashTable* hash_table){
     int i;
     HashNode* pTemp;
@@ -199,12 +157,6 @@ void ht_destroy(HashTable* hash_table){
 
 //========================================================
 
-/**
- * @brief print hashtable
- * @details [long description]
- * 
- * @param hash_table [description]
- */
 void ht_print(HashTable* hash_table){
     int i;
 

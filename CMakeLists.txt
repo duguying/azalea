@@ -35,13 +35,14 @@ if(COMMAND cmake_policy)
 	cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
 
-set(SRC_LIST ${SRC_DIR}/ichat.c)
+set(SRC_LIST ${SRC_DIR}/core/ichat.c)
 # add_executable(ichat ${SRC_LIST})
-# target_link_libraries(ichat dl apis net log pool ds)
+# target_link_libraries(ichat dl apis net pool)
 
 #############################################################
 # APIS
 message("===    Build APIS Linrary    ===")
+
 if(UNIX)
 	set(
 		APIS_LIST
@@ -49,6 +50,9 @@ if(UNIX)
 		${SRC_DIR}/apis/sock.c
 		${SRC_DIR}/apis/process.c
 		${SRC_DIR}/apis/file.c
+		${SRC_DIR}/apis/ds.c
+		${SRC_DIR}/apis/hashtable.c 
+		${SRC_DIR}/apis/stack.c
 	)
 	add_library(apis STATIC ${APIS_LIST})
 	if(NDK)# if ndk, pthread is in core, needn't -lpthread
@@ -62,6 +66,9 @@ elseif(WIN32)
 		${SRC_DIR}/apis/sock.c
 		${SRC_DIR}/apis/process.c
 		${SRC_DIR}/apis/file.c
+		${SRC_DIR}/apis/ds.c
+		${SRC_DIR}/apis/hashtable.c 
+		${SRC_DIR}/apis/stack.c
 	)
 	add_library(apis STATIC ${APIS_LIST})
 	target_link_libraries(apis ws2_32)
@@ -80,36 +87,10 @@ elseif(WIN32)
 endif(UNIX)
 #############################################################
 
-
-# Data Struct library
-if(UNIX)
-	set(
-		DS_LIST 
-		${SRC_DIR}/ds/ds.c
-		${SRC_DIR}/ds/hashtable.c 
-		${SRC_DIR}/ds/stack.c
-	)
-	add_library(ds STATIC ${DS_LIST})
-elseif(WIN32)
-	set(
-		DS_LIST 
-		${SRC_DIR}/ds/ds.c
-		${SRC_DIR}/ds/hashtable.c 
-		${SRC_DIR}/ds/stack.c
-	)
-	add_library(ds STATIC ${DS_LIST})
-endif(UNIX)
-
 #config library
-if(UNIX)
-	set(CONF_LIST ${SRC_DIR}/config/config.c)
-	add_library(config STATIC ${CONF_LIST})
-	target_link_libraries(config apis)
-elseif(WIN32)
-	set(CONF_LIST ${SRC_DIR}/config/config.c)
-	add_library(config STATIC ${CONF_LIST})
-	target_link_libraries(config apis)
-endif(UNIX)
+set(CONF_LIST ${SRC_DIR}/core/config.c)
+#log library
+set(LOG_LIST ${SRC_DIR}/core/log.c)
 
 #create-master-and-worker-process library
 set(PROCWM_LIST ${SRC_DIR}/process/procinit.c)
@@ -120,14 +101,12 @@ target_link_libraries(procinit apis)
 if(UNIX)
 	set(POOL_LIST 
 		${SRC_DIR}/pool/pool.c
-		${SRC_DIR}/pool/shakehands.c
 	)
 	add_library(pool STATIC ${POOL_LIST})
 	target_link_libraries(pool net)
 elseif(WIN32)
 	set(POOL_LIST 
 		${SRC_DIR}/pool/pool.c
-		${SRC_DIR}/pool/shakehands.c
 	)
 	add_library(pool STATIC ${POOL_LIST})
 	target_link_libraries(pool net)
@@ -152,22 +131,13 @@ if(UNIX)
 		${SRC_DIR}/net/message.c
 	)
 	add_library(net STATIC ${NET_LIST})
-	target_link_libraries(net ds)
+	target_link_libraries(net apis)
 elseif(WIN32)
 	set(NET_LIST 
 		${SRC_DIR}/net/message.c
 	)
 	add_library(net STATIC ${NET_LIST})
-	target_link_libraries(net ds)
-endif(UNIX)
-
-#log library
-if(UNIX)
-	set(LOG_LIST ${SRC_DIR}/log/log.c)
-	add_library(log STATIC ${LOG_LIST})
-elseif(WIN32)
-	set(LOG_LIST ${SRC_DIR}/log/log.c)
-	add_library(log STATIC ${LOG_LIST})
+	target_link_libraries(net apis)
 endif(UNIX)
 
 ##############################################################################

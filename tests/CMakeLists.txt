@@ -2,29 +2,34 @@ message("===    Build Tests    ===")
 
 #build the tests
 
-set(CONFIG_TEST ${TEST_DIR}test_conf.c)
+set(CONFIG_TEST 
+	${TEST_DIR}test_conf.c
+	${CONF_LIST}
+)
 add_executable(test_conf ${CONFIG_TEST})
-target_link_libraries(test_conf config)
+target_link_libraries(test_conf apis)
 ADD_TEST(T_CONF "./bin/test_conf")
 
-set(LOG_TEST ${TEST_DIR}test_log.c)
+set(LOG_TEST 
+	${TEST_DIR}test_log.c
+	${LOG_LIST}
+)
 add_executable(test_log ${LOG_TEST})
-target_link_libraries(test_log log)
 ADD_TEST(T_LOG "./bin/test_log")
 
 set(HASH_LIST ${TEST_DIR}test_hashtable.c)
 add_executable(test_hashtable ${HASH_LIST})
-target_link_libraries(test_hashtable ds)
+target_link_libraries(test_hashtable apis)
 ADD_TEST(T_HT "./bin/test_hashtable")
 
 set(TEST_STACK_LIST ${TEST_DIR}test_stack.c)
 add_executable(test_stack ${TEST_STACK_LIST})
-target_link_libraries(test_stack ds)
+target_link_libraries(test_stack apis)
 ADD_TEST(T_STACK "./bin/test_stack")
 
 set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
 add_executable(test_pool ${TEST_POOL_LIST})
-target_link_libraries(test_pool pool ds)
+target_link_libraries(test_pool pool apis)
 ADD_TEST(T_POOL "./bin/test_pool")
 
 set(TEST_PTH_LIST ${TEST_DIR}test_pth.c)
