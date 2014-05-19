@@ -125,11 +125,7 @@ void* pipe_listen(void* arg){
 	char* message;
 
 	while((rc = read(po[0], fa_pipe_buffer, MSG_LEN)) > 0){
-		// if(((Msg*)fa_pipe_buffer)->to_id){
-			// send(((Msg*)fa_pipe_buffer)->to_id, ((Msg*)fa_pipe_buffer)->message, FRAME_LEN, 0);//socket send message
-		// }
 		
-		// (((Msg*)fa_pipe_buffer)->user.frames_buffer)
 		
 		message=msg_frame_buffer_push((((Msg*)fa_pipe_buffer)->user.frames_buffer),(Frame*)&(((Msg*)fa_pipe_buffer)->frame));
 		
