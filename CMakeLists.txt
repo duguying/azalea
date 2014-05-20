@@ -93,9 +93,9 @@ set(CONF_LIST ${SRC_DIR}/core/config.c)
 set(LOG_LIST ${SRC_DIR}/core/log.c)
 
 #create-master-and-worker-process library
-set(PROCWM_LIST ${SRC_DIR}/process/procinit.c)
-add_library(procinit STATIC ${PROCWM_LIST})
-target_link_libraries(procinit apis)
+set(PROCWM_LIST ${SRC_DIR}/process/procmanage.c)
+add_library(procmanage STATIC ${PROCWM_LIST})
+target_link_libraries(procmanage apis)
 
 #pool library
 if(UNIX)
