@@ -32,22 +32,40 @@ sock_set_address(
 	address->sin_port = htons(port);
 }
 
+#if defined _WIN32
+
+/* */
+
+#else
+
 SOCKET_ID
-sock_server(){
-	return 0;
+sock_server(struct sockaddr_in* servaddr){
+	int sid=0;
+	int bind_result=0;
+	
+	sid = socket(AF_INET, SOCK_STREAM, PROTO_TCP);
+	if (sid==-1)
+	{
+		printf("Error at socket create in sock_server().\n");
+		return -1;
+	}
+
+	bind_result = bind(sid, (struct sockaddr*)&servaddr, sizeof(servaddr));
+	if (-1==bind_result)
+	{
+		printf("Error at socket bind in sock_server().\n");
+		return -1;
+	}
+
+	return sid;
 }
+
+#endif
 
 #if defined _WIN32
 
 SOCKET_ID
-sock_client(
-	///address family
-	int af,
-	///socket type: SOCK_STREAM,SOCK_DGRAM,SOCK_RAW,etc
-	int type,
-	///trasfer protocol: PROTO_TCP,PROTO_UDP
-	int protocol
-	){
+sock_client(){
 	WSADATA wsaData;
 	int iResult;
 	SOCKET_ID skt_id;
@@ -57,7 +75,7 @@ sock_client(
 		printf("Error at WSAStartup().\n");
 		return ERROR;
 	}
-	skt_id=socket(af, type, protocol);
+	skt_id=socket(AF_INET, SOCK_STREAM, PROTO_TCP);
 	if (INVALID_SOCKET==skt_id)
 	{
 		printf("Error at socket().\n");
@@ -70,16 +88,9 @@ sock_client(
 #else
 
 SOCKET_ID
-sock_client(
-	///address family
-	int af,
-	///socket type: SOCK_STREAM,SOCK_DGRAM,SOCK_RAW,etc
-	int type,
-	///trasfer protocol: PROTO_TCP,PROTO_UDP
-	int protocol
-	){
+sock_client(){
 	SOCKET_ID skt_id;
-	skt_id=socket(af,type,protocol);
+	skt_id=socket(AF_INET, SOCK_STREAM, PROTO_TCP);
 	if(-1==skt_id){
 		return IERROR;
 	}

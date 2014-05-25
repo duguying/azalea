@@ -14,7 +14,7 @@
 
 int main(void){
 	// int skt;
-	sock_client(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	sock_client();
 
 	return 0;
 }
