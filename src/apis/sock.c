@@ -159,7 +159,7 @@ sock_connect(
 int
 sock_connect(
 	SOCKET_ID skt_id,
-	struct sockaddr* addr,
+	struct sockaddr* addr
 	){
 	if (-1==connect(skt_id, addr, sizeof(struct sockaddr_in)))
 	{
