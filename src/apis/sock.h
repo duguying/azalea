@@ -70,9 +70,10 @@ sock_listen(SOCKET_ID sid);
  */
 SOCKET_ID 
 sock_accept(
+	// socket id after connect
 	SOCKET_ID skt_id,
-	struct sockaddr* client_addr,
-	size_t* len
+	// for store client address
+	struct sockaddr* client_addr
 	);
 
 /**
@@ -82,8 +83,7 @@ SOCKET_ID
 sock_client();
 
 /**
- * @brief socket connect
- * @details [long description]
+ * @brief socket connect request
  * 
  * @param skt_id socket id
  * @param addr socket address
@@ -92,8 +92,8 @@ sock_client();
 int
 sock_connect(
 	SOCKET_ID skt_id,
-	struct sockaddr* addr,
-	size_t len
+	// should convert into (struct sockaddr*) by force
+	struct sockaddr* addr
 	);
 
 #endif

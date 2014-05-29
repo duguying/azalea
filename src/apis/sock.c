@@ -32,9 +32,14 @@ sock_set_address(
 	address->sin_port = htons(port);
 }
 
+/////////////////////////////
+
 #if defined _WIN32
 
-/* */
+SOCKET_ID
+sock_server(struct sockaddr_in* servaddr){
+	return 0;
+}
 
 #else
 
@@ -61,6 +66,37 @@ sock_server(struct sockaddr_in* servaddr){
 }
 
 #endif
+
+/////////////////////////////
+
+#if defined _WIN32
+
+int sock_listen(SOCKET_ID sid){
+	int backlog = 10;
+	return listen(sid, backlog);
+}
+
+#else
+
+int sock_listen(SOCKET_ID sid){
+	int backlog = 10;
+	return listen(sid, backlog);
+}
+
+#endif
+
+/////////////////////////////
+
+SOCKET_ID 
+sock_accept(
+	SOCKET_ID skt_id,
+	struct sockaddr* client_addr
+	){
+	size_t len = sizeof(struct sockaddr_in);
+	return accept(skt_id,client_addr,(socklen_t*)(&len));
+}
+
+/////////////////////////////
 
 #if defined _WIN32
 
@@ -99,15 +135,16 @@ sock_client(){
 
 #endif
 
+/////////////////////////////
+
 #if defined _WIN32
 
 int
 sock_connect(
 	SOCKET_ID skt_id,
-	struct sockaddr* addr,
-	size_t len
+	struct sockaddr* addr
 	){
-	if (SOCKET_ERROR==connect(skt_id,addr,len))
+	if (SOCKET_ERROR==connect(skt_id, addr, sizeof(struct sockaddr_in)))
 	{
 		printf("Failed to connect.\n");
 		WSACleanup();
@@ -123,9 +160,8 @@ int
 sock_connect(
 	SOCKET_ID skt_id,
 	struct sockaddr* addr,
-	size_t len
 	){
-	if (-1==connect(skt_id,addr,len))
+	if (-1==connect(skt_id, addr, sizeof(struct sockaddr_in)))
 	{
 		printf("Failed to connect.\n");
 		return -1;
@@ -136,13 +172,3 @@ sock_connect(
 
 #endif
 
-SOCKET_ID 
-sock_accept(
-	SOCKET_ID skt_id,
-	struct sockaddr* client_addr,
-	size_t* len
-	){
-	int return_son_skt=-1;
-	return_son_skt=accept(skt_id,client_addr,(socklen_t*)len);
-	return return_son_skt;
-}

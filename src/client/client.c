@@ -109,7 +109,7 @@ void login(void){
 int main(int argc, char** argv)
 {
 	SOCKET_ID skt;
-	size_t len;
+	//size_t len;
 	// char ch;
 	char ip[IP];
 	char port[PORT_LEN];
@@ -145,8 +145,8 @@ int main(int argc, char** argv)
 	saddr.sin_addr.s_addr=inet_addr(ip);
 	saddr.sin_port=htons(atoi(port));
     
-	len=sizeof(struct sockaddr);
-	if(sock_connect(skt, (struct sockaddr*)&saddr, len)==-1){
+	//len=sizeof(struct sockaddr);
+	if(sock_connect(skt, (struct sockaddr*)&saddr)==-1){
 		printf("Connected Failed!\n");
 		return 0;
 	}else{
