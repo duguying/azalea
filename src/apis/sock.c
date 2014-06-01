@@ -106,7 +106,7 @@ sock_server(int port){
 	int bind_result=0;
 	struct sockaddr_in servaddr;
 
-	sock_set_address(&servaddr, ip, port);
+	sock_set_address(&servaddr, NULL, port);
 	
 	sid = socket(AF_INET, SOCK_STREAM, PROTO_TCP);
 	if (sid==-1)

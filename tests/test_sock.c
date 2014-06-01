@@ -17,10 +17,10 @@ int main(void){
 	SOCKET_ID server_after_connect_socket_id = 0;
 	SOCKET_ID client_socket_id = 0;
 
-	// create server address
+	// create server address for client
 	sock_set_address(&server_address, "127.0.0.1", 7777);
 	// create server socket
-	server_socket_id = sock_server(&server_address);
+	server_socket_id = sock_server(7777);
 	// start server listen
 	sock_listen(server_socket_id);
 	
