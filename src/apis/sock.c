@@ -37,16 +37,76 @@ sock_set_address(
 #if defined _WIN32
 
 SOCKET_ID
-sock_server(struct sockaddr_in* servaddr){
-	return 0;
+sock_server(int port){
+	WSADATA wsaData;
+	SOCKET_ID socket_server;
+	int iResult;
+	struct addrinfo* result = NULL, hints;
+	char c_port[8];
+
+	iResult = WSAStartup(MAKEWORD(2,2),&wsaData);
+	if (iResult != 0)
+	{
+		printf("WSAStartup Failed: %d\n", iResult);
+		return 1;
+	}
+	// address
+	ZeroMemory(&hints, sizeof(hints));
+	hints.ai_family = AF_INET;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_protocol = IPPROTO_TCP;
+	hints.ai_flags = AI_PASSIVE;
+
+	sprintf(c_port, "%d", port);
+
+	// get host address
+	iResult = getaddrinfo(
+				NULL,	// local host
+				c_port,	// port
+				&hints,
+				&result);
+
+	if (iResult != 0)
+	{
+		printf("getaddrinfo Failed: %d\n", iResult);
+		WSACleanup();
+		return 1;
+	}
+
+	// create socket
+	socket_server = socket(result->ai_family,	result->ai_socktype, result->ai_protocol);
+
+	if (socket_server == INVALID_SOCKET)
+	{
+		printf("socket Failed: %d\n", WSAGetLastError());
+		freeaddrinfo(result);
+		WSACleanup();
+		return 1;
+	}
+
+	// binding 
+	iResult = bind(socket_server, result->ai_addr, (int)result->ai_addrlen);
+	if (iResult == SOCKET_ERROR)
+	{
+		printf("binding Failed: %d\n", WSAGetLastError());
+		freeaddrinfo(result);
+		closesocket(socket_server);
+		WSACleanup();
+		return 1;
+	}
+
+	return socket_server;
 }
 
 #else
 
 SOCKET_ID
-sock_server(struct sockaddr_in* servaddr){
+sock_server(int port){
 	int sid=0;
 	int bind_result=0;
+	struct sockaddr_in servaddr;
+
+	sock_set_address(&servaddr, ip, port);
 	
 	sid = socket(AF_INET, SOCK_STREAM, PROTO_TCP);
 	if (sid==-1)
@@ -69,21 +129,10 @@ sock_server(struct sockaddr_in* servaddr){
 
 /////////////////////////////
 
-#if defined _WIN32
-
 int sock_listen(SOCKET_ID sid){
 	int backlog = 10;
 	return listen(sid, backlog);
 }
-
-#else
-
-int sock_listen(SOCKET_ID sid){
-	int backlog = 10;
-	return listen(sid, backlog);
-}
-
-#endif
 
 /////////////////////////////
 

@@ -48,12 +48,12 @@ sock_set_address(
 /**
  * @brief create a socket for server and binding address for it
  * 
- * @param servaddr server binding address
+ * @param port server port
  *  
  * @return socket id
  */
 SOCKET_ID
-sock_server(struct sockaddr_in* servaddr);
+sock_server(int port);
 
 /**
  * @brief server start listenning
