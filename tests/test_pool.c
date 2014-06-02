@@ -10,8 +10,8 @@
 
 // #include "ichat.h"
 #include "apis/hashtable.h"
-#include "net/message.h"
-#include "pool/pool.h"
+#include "core/message.h"
+#include "core/pool.h"
 
 int main(void){
 	UserNode user={
