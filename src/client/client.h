@@ -15,7 +15,7 @@
 	#include "core/ichat.h"
 	#include "apis/sock.h"
 	#include "apis/thread.h"
-	#include "net/message.h"
+	#include "core/message.h"
 	#include <sys/types.h>
 	#include <conio.h>
 	#define getch()	_getch()
@@ -25,7 +25,7 @@
 	#include "core/ichat.h"
 	#include "apis/sock.h"
 	#include "apis/thread.h"
-	#include "net/message.h"
+	#include "core/message.h"
 	#include <sys/types.h>
 #endif
  

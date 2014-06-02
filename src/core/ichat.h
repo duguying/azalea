@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <string.h>
-#include "net/message.h"
+#include "message.h"
 
 ///username and etc name
 #define ID_LEN 20

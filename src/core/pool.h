@@ -10,7 +10,7 @@
 
 #include "core/ichat.h"
 #include "apis/hashtable.h"
-#include "net/message.h"
+#include "core/message.h"
 
 ///connection pool
 typedef HashTable Pool;

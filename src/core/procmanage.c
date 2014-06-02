@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "procinit.h"
+#include "procmanage.h"
 
 int proc_init(){
 	return 0;

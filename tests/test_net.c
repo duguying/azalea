@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
-#include "net/message.h"
+#include "core/message.h"
 #include "apis/stack.h"
 #include "apis/file.h"
 

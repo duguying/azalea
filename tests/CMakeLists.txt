@@ -7,7 +7,7 @@ set(CONFIG_TEST
 	${CONF_LIST}
 )
 add_executable(test_conf ${CONFIG_TEST})
-target_link_libraries(test_conf apis)
+target_link_libraries(test_conf core)
 ADD_TEST(T_CONF "./bin/test_conf")
 
 set(LOG_TEST 
@@ -15,6 +15,7 @@ set(LOG_TEST
 	${LOG_LIST}
 )
 add_executable(test_log ${LOG_TEST})
+target_link_libraries(test_log core)
 ADD_TEST(T_LOG "./bin/test_log")
 
 set(HASH_LIST ${TEST_DIR}test_hashtable.c)
@@ -29,7 +30,7 @@ ADD_TEST(T_STACK "./bin/test_stack")
 
 set(TEST_POOL_LIST ${TEST_DIR}test_pool.c)
 add_executable(test_pool ${TEST_POOL_LIST})
-target_link_libraries(test_pool pool apis)
+target_link_libraries(test_pool core apis)
 ADD_TEST(T_POOL "./bin/test_pool")
 
 set(TEST_PTH_LIST ${TEST_DIR}test_pth.c)
@@ -49,7 +50,7 @@ ADD_TEST(T_SOCK "./bin/test_sock")
 
 set(TEST_NET_LIST ${TEST_DIR}test_net.c)
 add_executable(test_net ${TEST_NET_LIST})
-target_link_libraries(test_net net apis)
+target_link_libraries(test_net core apis)
 ADD_TEST(T_NET "./bin/test_net")
 
 set(TEST_OTHERS_LIST ${TEST_DIR}test_others.c)

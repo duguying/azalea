@@ -46,31 +46,44 @@ sock_set_address(
 	);
 
 /**
- * @brief create a socket
- * @details [long description]
+ * @brief create a socket for server and binding address for it
  * 
- * @param af address family
- * @param type socket type: 
- *             SOCK_STREAM(if linux, it means tcp),
- *             SOCK_DGRAM(if linux, it means udp),
- *             SOCK_RAW,etc
- * @param protocol trasfer protocol: PROTO_TCP,PROTO_UDP. 
- *                 if in linux is 0
+ * @param port server port
  *  
  * @return socket id
  */
 SOCKET_ID
-sock_client(
-	///address family
-	int af,
-	///socket type: SOCK_STREAM,SOCK_DGRAM,SOCK_RAW,etc
-	int type,
-	///trasfer protocol: PROTO_TCP,PROTO_UDP
-	int protocol
-	);
+sock_server(int port);
+
 /**
- * @brief socket connect
- * @details [long description]
+ * @brief server start listenning
+ *
+ * @param sid the address binded server socket
+ */
+int 
+sock_listen(SOCKET_ID sid);
+
+/**
+ * @brief server accept connection from client
+ *
+ * @return the client socket id
+ */
+SOCKET_ID 
+sock_accept(
+	// socket id after connect
+	SOCKET_ID skt_id,
+	// for store client address
+	struct sockaddr* client_addr
+	);
+
+/**
+ * @brief create socket for client
+ */
+SOCKET_ID
+sock_client();
+
+/**
+ * @brief socket connect request
  * 
  * @param skt_id socket id
  * @param addr socket address
@@ -79,15 +92,8 @@ sock_client(
 int
 sock_connect(
 	SOCKET_ID skt_id,
-	struct sockaddr* addr,
-	size_t len
-	);
-
-SOCKET_ID 
-sock_accept(
-	SOCKET_ID skt_id,
-	struct sockaddr* client_addr,
-	size_t* len
+	// should convert into (struct sockaddr*) by force
+	struct sockaddr* addr
 	);
 
 #endif
