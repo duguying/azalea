@@ -9,7 +9,7 @@ case `uname -m` in
 	amd64|x86_64)	BITS=64 ;;
 esac
 
-if [ "$CC"x = "gcc"x && "$TRAVIS_BRANCH"x = "master"x ]; then
+if [ "$CC"x = "gcc"x ] && [ "$TRAVIS_BRANCH"x = "master"x ]; then
 	wget https://scan.coverity.com/download/linux-${BITS} -O cov-build-tools.tar.gz --post-data "project=duguying/Azalea&token=$COVERITY_SCAN_TOKEN"
 	tar -zxf cov-build-tools.tar.gz
 

@@ -15,4 +15,14 @@
 #include "stdlib.h"
 #include "string.h"
 
+extern char CMD[4][10];
+
+/**
+ * parse arguments
+ * @param  argc argument number
+ * @param  argv argumrnts
+ * @return      command id
+ */
+int arg_parser(int argc, char** argv);
+
 #endif

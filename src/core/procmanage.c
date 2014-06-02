@@ -11,6 +11,7 @@
 #include "procmanage.h"
 
 int proc_init(){
+	// check socket server of master process
 	return 0;
 }
 

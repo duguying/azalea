@@ -11,9 +11,8 @@ set(CMAKE_BUILD_TYPE "Debug")
 
 if(UNIX)
 	set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g -ggdb")
-	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -s -DNDEBUG")
 elseif(WIN32)
-	add_definitions("-D_CRT_SECURE_NO_DEPRECATE")
+	add_definitions("-D_CRT_SECURE_NO_DEPRECATE" "-D_DEBUG")
 endif(UNIX)
 
 # root directory
@@ -36,8 +35,8 @@ if(COMMAND cmake_policy)
 endif(COMMAND cmake_policy)
 
 set(SRC_LIST ${SRC_DIR}/core/ichat.c)
-# add_executable(ichat ${SRC_LIST})
-# target_link_libraries(ichat dl apis net pool)
+add_executable(ichat ${SRC_LIST})
+target_link_libraries(ichat apis core)
 
 #############################################################
 # APIS
@@ -85,6 +84,7 @@ set(
 	${SRC_DIR}/core/pool.c
 	${SRC_DIR}/core/parser.c
 	${SRC_DIR}/core/message.c
+	${SRC_DIR}/core/args.c
 )
 add_library(core STATIC ${CORE_LIST})
 target_link_libraries(core apis)
@@ -102,61 +102,6 @@ elseif(WIN32)
 	target_link_libraries(client apis core)
 endif(UNIX)
 #############################################################
-
-#config library
-# set(CONF_LIST ${SRC_DIR}/core/config.c)
-#log library
-# set(LOG_LIST ${SRC_DIR}/core/log.c)
-
-#create-master-and-worker-process library
-# set(PROCWM_LIST ${SRC_DIR}/process/procmanage.c)
-# add_library(procmanage STATIC ${PROCWM_LIST})
-# target_link_libraries(procmanage apis)
-
-#pool library
-# if(UNIX)
-# 	set(POOL_LIST 
-# 		${SRC_DIR}/pool/pool.c
-# 	)
-# 	add_library(pool STATIC ${POOL_LIST})
-# 	target_link_libraries(pool net)
-# elseif(WIN32)
-# 	set(POOL_LIST 
-# 		${SRC_DIR}/pool/pool.c
-# 	)
-# 	add_library(pool STATIC ${POOL_LIST})
-# 	target_link_libraries(pool net)
-# endif(UNIX)
-
-#parser library
-# if(UNIX)
-# 	set(PARSER_LIST 
-# 		${SRC_DIR}/parser/parser.c
-# 	)
-# 	add_library(parser STATIC ${PARSER_LIST})
-# elseif(WIN32)
-# 	set(PARSER_LIST 
-# 		${SRC_DIR}/parser/parser.c
-# 	)
-# 	add_library(parser STATIC ${PARSER_LIST})
-# endif(UNIX)
-
-#net library
-# if(UNIX)
-# 	set(NET_LIST 
-# 		${SRC_DIR}/net/message.c
-# 	)
-# 	add_library(net STATIC ${NET_LIST})
-# 	target_link_libraries(net apis)
-# elseif(WIN32)
-# 	set(NET_LIST 
-# 		${SRC_DIR}/net/message.c
-# 	)
-# 	add_library(net STATIC ${NET_LIST})
-# 	target_link_libraries(net apis)
-# endif(UNIX)
-
-##############################################################################
 
 if(TEST)
 	ENABLE_TESTING()
