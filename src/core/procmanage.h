@@ -9,6 +9,7 @@
  */
 
 #include "core/ichat.h"
+#include "apis/sock.h"
 
 int proc_init();
 

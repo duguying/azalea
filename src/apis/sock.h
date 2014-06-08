@@ -96,4 +96,10 @@ sock_connect(
 	struct sockaddr* addr
 	);
 
+/**
+ * close the socket and release resource
+ */
+int 
+sock_close(SOCKET_ID skt_id);
+
 #endif

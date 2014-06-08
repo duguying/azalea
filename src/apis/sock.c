@@ -221,3 +221,21 @@ sock_connect(
 
 #endif
 
+#if defined _WIN32
+
+int 
+sock_close(SOCKET_ID skt_id){
+	closesocket(skt_id);
+	WSACleanup();
+	return 0;
+}
+
+#else
+
+int 
+sock_close(SOCKET_ID skt_id){
+	close(skt_id);
+	return 0;
+}
+
+#endif

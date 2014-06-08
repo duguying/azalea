@@ -12,6 +12,39 @@
 
 int proc_init(){
 	// check socket server of master process
+	// 
+	// try connect master process
+	// if cannot connect
+	// 		this process initial as master
+	// else can connect
+	// 		this process initial as worker and the connection between master/worker create
+	// endif
+	
+	SOCKET_ID client_socket_id;
+	int conn_result = -1;
+
+	struct sockaddr_in server_address;
+	sock_set_address(&server_address, "127.0.0.1", 7777);
+	client_socket_id = sock_client();
+	conn_result = sock_connect(client_socket_id, (struct sockaddr*)&server_address);
+	if (conn_result == -1)
+	{
+		SOCKET_ID server_sock;
+		char c;
+
+		printf("connect failed.\nmaster\n");
+		sock_close(client_socket_id);
+
+		// creater master sock listener
+		server_sock = sock_server(7777);
+		sock_listen(server_sock);
+		scanf(&c);
+
+	}else if (conn_result == 0)
+	{
+		printf("connected.\nworker\n");
+	}
+
 	return 0;
 }
 
