@@ -17,13 +17,13 @@
  	// 
 #endif
 
-int process_create();
+az_exp int process_create();
 
-void pipe_create();
+az_exp void pipe_create();
 
-void pipe_write();
+az_exp void pipe_write();
 
-void pipe_read();
+az_exp void pipe_read();
 
-void pipe_close();
+az_exp void pipe_close();
 

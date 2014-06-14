@@ -34,7 +34,7 @@ struct _Node
  * @param value [description]
  * @return [description]
  */
-Node* create_node_int(int value);
+az_exp Node* create_node_int(int value);
 
 /**
  * @brief create a string stack node
@@ -43,7 +43,7 @@ Node* create_node_int(int value);
  * @param value [description]
  * @return [description]
  */
-Node* create_node_float(float value);
+az_exp Node* create_node_float(float value);
 
 /**
  * @brief create a double stack node
@@ -52,7 +52,7 @@ Node* create_node_float(float value);
  * @param value [description]
  * @return [description]
  */
-Node* create_node_double(double value);
+az_exp Node* create_node_double(double value);
 
 /**
  * @brief create a string stack node
@@ -61,13 +61,13 @@ Node* create_node_double(double value);
  * @param value [description]
  * @return [description]
  */
-Node* create_node_string(const char* value);
+az_exp Node* create_node_string(const char* value);
 
 /**
  * create a struct varible node
  * @param  struct_content the pointer of the struct
  * @return                [description]
  */
-Node* create_node_struct(void* struct_content);
+az_exp Node* create_node_struct(void* struct_content);
 
 #endif

@@ -16,6 +16,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include "message.h"
+#include "common.h"
 
 ///username and etc name
 #define ID_LEN 20

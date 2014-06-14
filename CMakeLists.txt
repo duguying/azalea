@@ -53,7 +53,7 @@ if(UNIX)
 		${SRC_DIR}/apis/hashtable.c 
 		${SRC_DIR}/apis/stack.c
 	)
-	add_library(apis STATIC ${APIS_LIST})
+	add_library(apis SHARED ${APIS_LIST})
 	if(NDK)# if ndk, pthread is in core, needn't -lpthread
 	else(NDK)
 		target_link_libraries(apis pthread)
@@ -69,7 +69,7 @@ elseif(WIN32)
 		${SRC_DIR}/apis/hashtable.c 
 		${SRC_DIR}/apis/stack.c
 	)
-	add_library(apis STATIC ${APIS_LIST})
+	add_library(apis SHARED ${APIS_LIST})
 	target_link_libraries(apis ws2_32)
 endif(UNIX)
 
@@ -86,7 +86,7 @@ set(
 	${SRC_DIR}/core/message.c
 	${SRC_DIR}/core/args.c
 )
-add_library(core STATIC ${CORE_LIST})
+add_library(core SHARED ${CORE_LIST})
 target_link_libraries(core apis)
 
 #############################################################

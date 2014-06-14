@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <string.h>
+#include "common.h"
 
 ///error status
 #define IERROR -1

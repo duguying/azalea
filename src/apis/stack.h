@@ -39,14 +39,14 @@ struct Stack
  * @details [long description]
  * 
  */
-Stack* stack_init(ntype type);
+az_exp Stack* stack_init(ntype type);
 
 /**
  * basic push element into stack
  * @param stk  the stack
  * @param elem the element:stack node
  */
-void stack_push(Stack* stk,Node* elem);
+az_exp void stack_push(Stack* stk,Node* elem);
 
 /**
  * @brief pop the top element of stack
@@ -54,7 +54,7 @@ void stack_push(Stack* stk,Node* elem);
  * 
  * @param stk [description]
  */
-void stack_pop(Stack* stk);
+az_exp void stack_pop(Stack* stk);
 
 /**
  * @brief get the stack node by the index is reverse order(索引倒序)
@@ -64,7 +64,7 @@ void stack_pop(Stack* stk);
  * @param i [description]
  * @return [description]
  */
-Node* stack_get(Stack* stk,int i);
+az_exp Node* stack_get(Stack* stk,int i);
 
 /**
  * @brief set the node by index
@@ -75,17 +75,17 @@ Node* stack_get(Stack* stk,int i);
  * @param node the node
  * @return [description]
  */
-void stack_set(Stack* stk,int i,Node* node);
+az_exp void stack_set(Stack* stk,int i,Node* node);
 
-void stack_print(Stack* stack);
-void stack_reverse_print(Stack* stack);
+az_exp void stack_print(Stack* stack);
+az_exp void stack_reverse_print(Stack* stack);
 
 /**
  * @brief destroy the stack
  * @details [long description]
  * 
  */
-void stack_destroy(Stack* stk);
+az_exp void stack_destroy(Stack* stk);
 
 
 

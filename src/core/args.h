@@ -14,8 +14,9 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
+#include "common.h"
 
-extern char CMD[4][10];
+// extern char CMD[4][10];
 
 /**
  * parse arguments
@@ -23,6 +24,6 @@ extern char CMD[4][10];
  * @param  argv argumrnts
  * @return      command id
  */
-int arg_parser(int argc, char** argv);
+az_exp int arg_parser(int argc, char** argv);
 
 #endif

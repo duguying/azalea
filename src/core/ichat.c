@@ -16,7 +16,7 @@ int main(int argc,char **argv){
 	int cmds;
 
 	cmds = arg_parser(argc, argv);
-	printf("[%d]:%s\n", cmds, CMD[cmds]);
+	// printf("[%d]:%s\n", cmds, CMD[cmds]);
 
 	proc_init();
 

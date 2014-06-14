@@ -8,13 +8,17 @@
  * it under the terms of the GNU General Public License
  */
 
+#include "common.h"
 #include "core/ichat.h"
 #include "apis/sock.h"
+#include "apis/thread.h"
 
-int proc_init();
+#define WORKER_NUM 3
 
-int proc_create_sock_serv();
+az_exp int proc_init();
 
-int proc_create_sock_client();
+az_exp int proc_create_sock_serv();
 
-int proc_try_connect_serv();
+az_exp int proc_create_sock_client();
+
+az_exp int proc_try_connect_serv();

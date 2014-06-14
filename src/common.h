@@ -8,9 +8,13 @@
  * it under the terms of the GNU General Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "common.h"
+#ifndef _COMMON_H_
+#define _COMMON_H_
 
-az_exp char* varify_user(char* msg);
+#if defined _WIN32
+	#define az_exp __declspec(dllexport) 
+#else
+# 	define az_exp
+#endif
+
+#endif

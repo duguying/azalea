@@ -30,15 +30,16 @@ int proc_init(){
 	if (conn_result == -1)
 	{
 		SOCKET_ID server_sock;
-		char c;
+		TID listen_tid;
 
 		printf("connect failed.\nmaster\n");
 		sock_close(client_socket_id);
 
 		// creater master sock listener
 		server_sock = sock_server(7777);
-		sock_listen(server_sock);
-		scanf(&c);
+
+		// thread_create(&listen_tid, proc_create_sock_serv, server_sock);
+
 
 	}else if (conn_result == 0)
 	{
@@ -49,6 +50,7 @@ int proc_init(){
 }
 
 int proc_create_sock_serv(){
+	// sock_listen(server_sock);
 	return 0;
 }
 

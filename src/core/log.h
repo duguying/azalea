@@ -18,6 +18,7 @@
 #include "apis/ds.h"
 #include <stdarg.h>
 #include <time.h>
+#include "common.h"
 
 /**
  * @brief get current time as string
@@ -26,27 +27,27 @@
  * 
  * @return [description]
  */
-char* log_now(void);
+az_exp char* log_now(void);
 
 /**
  * create a log
  * @param  file file filename
  * @return      log handle
  */
-FILE* log_create(const char* file);
+az_exp FILE* log_create(const char* file);
 
 /**
  * write log
  * @param  string log message
  * @return        the byte size have written
  */
-void log_printf(const char *format,...);
+az_exp void log_printf(const char *format,...);
 
 /**
  * close log
  * @return  if success, return 0
  */
-int log_close(void);
+az_exp int log_close(void);
 
 /**
  * @brief dump the basic node var
@@ -54,7 +55,7 @@ int log_close(void);
  * 
  * @param node the node
  */
-void log_node_dump(Node* node);
+az_exp void log_node_dump(Node* node);
 
 #endif
 

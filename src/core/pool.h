@@ -8,6 +8,7 @@
  * it under the terms of the GNU General Public License
  */
 
+#include "common.h"
 #include "core/ichat.h"
 #include "apis/hashtable.h"
 #include "core/message.h"
@@ -25,7 +26,7 @@ typedef HashTable Pool;
  * 
  * @return pointer of pool
  */
-void pool_init(void);
+az_exp void pool_init(void);
 
 /**
  * save the user into pool
@@ -34,7 +35,7 @@ void pool_init(void);
  * @param  skt   [description]
  * @return       [description]
  */
-int pool_connect(const char* index, UserNode* user);
+az_exp int pool_connect(const char* index, UserNode* user);
 
 /**
  * @brief get user information from pool
@@ -43,7 +44,7 @@ int pool_connect(const char* index, UserNode* user);
  * @param index [description]
  * @return get failed -1,others sktid
  */
-int pool_get(const char* index);
+az_exp int pool_get(const char* index);
 
 /**
  * @brief disconnect from pool
@@ -52,6 +53,6 @@ int pool_get(const char* index);
  * @param index [description]
  * @return 0 when success, 1 when failed
  */
-int pool_disconnect(const char* index);
+az_exp int pool_disconnect(const char* index);
 
-int pool_release(void);
+az_exp int pool_release(void);

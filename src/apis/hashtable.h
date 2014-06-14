@@ -51,7 +51,7 @@ struct HashTable
  * 
  * @param HashTable the pointer of hashtable
  */
-HashTable* ht_init(int size);
+az_exp HashTable* ht_init(int size);
 
 /**
  * @brief insert key-value into hash table
@@ -61,7 +61,7 @@ HashTable* ht_init(int size);
  * @param skey key
  * @param nvalue value
  */
-int ht_insert(HashTable* hash_table, const char* skey, Node* pvalue);
+az_exp int ht_insert(HashTable* hash_table, const char* skey, Node* pvalue);
 
 /**
  * @brief remove the hash node from hashtable
@@ -70,7 +70,7 @@ int ht_insert(HashTable* hash_table, const char* skey, Node* pvalue);
  * @param HashTable the hashtable
  * @param skey the key of hashtable you'll remove
  */
-void ht_remove(HashTable* hash_table, const char* skey);
+az_exp void ht_remove(HashTable* hash_table, const char* skey);
 
 /**
  * @brief [brief description]
@@ -80,7 +80,7 @@ void ht_remove(HashTable* hash_table, const char* skey);
  * @param skey [description]
  * @return [description]
  */
-Node* ht_lookup(HashTable* hash_table, const char* skey);
+az_exp Node* ht_lookup(HashTable* hash_table, const char* skey);
 
 /**
  * @brief destroy the hashtable
@@ -88,7 +88,7 @@ Node* ht_lookup(HashTable* hash_table, const char* skey);
  * 
  * @param hash_table the hashtable
  */
-void ht_destroy(HashTable* hash_table);
+az_exp void ht_destroy(HashTable* hash_table);
 
 //========================================================
 
@@ -98,7 +98,7 @@ void ht_destroy(HashTable* hash_table);
  * 
  * @param hash_table [description]
  */
-void ht_print(HashTable* hash_table);
+az_exp void ht_print(HashTable* hash_table);
 
 
 #endif

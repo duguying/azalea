@@ -16,6 +16,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include "apis/stack.h"
+#include "common.h"
 
 ///frame size
 #define FRAME_SIZE 64
@@ -38,14 +39,14 @@ typedef struct _Frame
  * @param  string [description]
  * @return        [description]
  */
-Frame* msg_modulate(char* string);
+az_exp Frame* msg_modulate(char* string);
 
 /**
  * 解调
  * @param  frame [description]
  * @return       [description]
  */
-char* msg_demodulate(Frame* frames);
+az_exp char* msg_demodulate(Frame* frames);
 
 /**
  * @brief push message into message buffer
@@ -56,7 +57,7 @@ char* msg_demodulate(Frame* frames);
  * 
  * @return the message demodulate
  */
-char* msg_frame_buffer_push(Stack* frame_stack, Frame* frame);
+az_exp char* msg_frame_buffer_push(Stack* frame_stack, Frame* frame);
 
 
 #endif

@@ -21,7 +21,7 @@
  	typedef pthread_t TID;
 #endif
 
-int
+az_exp int
 thread_create(
 	///thread id
 	TID* tid,

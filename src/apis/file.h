@@ -17,6 +17,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include "common.h"
 
 typedef struct _File
 {
@@ -30,7 +31,7 @@ typedef struct _File
  * @param  filename file name
  * @return          file
  */
-File* file_open(const char* filename);
+az_exp File* file_open(const char* filename);
 
 /**
  * read file
@@ -39,7 +40,7 @@ File* file_open(const char* filename);
  * @param  length length prepare for reading
  * @return        length have read
  */
-size_t file_read(File* file, void* buffer, size_t length);
+az_exp size_t file_read(File* file, void* buffer, size_t length);
 
 /**
  * write binaray file
@@ -48,7 +49,7 @@ size_t file_read(File* file, void* buffer, size_t length);
  * @param  size    length prepare for writting
  * @return         length have written
  */
-size_t file_write_bin(File* file, const void* content, size_t size);
+az_exp size_t file_write_bin(File* file, const void* content, size_t size);
 
 /**
  * write file
@@ -57,14 +58,14 @@ size_t file_write_bin(File* file, const void* content, size_t size);
  * @param  size    length prepare for writting
  * @return         length have written
  */
-size_t file_write(File* file, const char* content);
+az_exp size_t file_write(File* file, const char* content);
 
 /**
  * file close
  * @param  file file
  * @return      0 will be ok
  */
-int file_close(File* file);
+az_exp int file_close(File* file);
 
 #endif
 

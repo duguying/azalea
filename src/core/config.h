@@ -13,6 +13,7 @@
 
 #include "apis/hashtable.h"
 #include "apis/file.h"
+#include "common.h"
 
 /**
  * @brief config struct
@@ -41,9 +42,9 @@ typedef struct conf
  * @param config_file configuration file
  * @return the pointer of conf struct
  */
-conf* config_init(const char* config_file);
+az_exp conf* config_init(const char* config_file);
 
-char* config_get(int config_handle, const char* key);
+az_exp char* config_get(int config_handle, const char* key);
 
 /**
  * @brief remove the comment of config file
@@ -52,7 +53,7 @@ char* config_get(int config_handle, const char* key);
  * @param config the struct pointer of config
  * @return the struct pointer of config, but carefully if you want to assignment
  */
-void* 
+az_exp void* 
 config_remove_comment(conf* config);
 
 /**
@@ -62,7 +63,7 @@ config_remove_comment(conf* config);
  * @param config config the struct pointer of config
  * @return [description]
  */
-void* 
+az_exp void* 
 config_strip(conf* config);
 
 /**
@@ -72,7 +73,7 @@ config_strip(conf* config);
  * @param config config struct
  * @return the string of current line
  */
-int 
+az_exp int 
 config_current_line(conf* config);
 
 /**
@@ -82,7 +83,7 @@ config_current_line(conf* config);
  * @param config [description]
  * @return [description]
  */
-void* 
+az_exp void* 
 config_equation(conf* config);
 
 /**
@@ -91,7 +92,7 @@ config_equation(conf* config);
  * 
  * @param config config struct
  */
-void 
+az_exp void 
 config_destroy(conf* config);
 
 #endif

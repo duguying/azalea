@@ -35,7 +35,7 @@
  * @param ip      string of ip, NULL for server
  * @param port    port
  */
-void 
+az_exp void 
 sock_set_address(
 	/// pointer of socket address
 	struct sockaddr_in* address, 
@@ -52,7 +52,7 @@ sock_set_address(
  *  
  * @return socket id
  */
-SOCKET_ID
+az_exp SOCKET_ID
 sock_server(int port);
 
 /**
@@ -60,7 +60,7 @@ sock_server(int port);
  *
  * @param sid the address binded server socket
  */
-int 
+az_exp int 
 sock_listen(SOCKET_ID sid);
 
 /**
@@ -68,7 +68,7 @@ sock_listen(SOCKET_ID sid);
  *
  * @return the client socket id
  */
-SOCKET_ID 
+az_exp SOCKET_ID 
 sock_accept(
 	// socket id after connect
 	SOCKET_ID skt_id,
@@ -79,7 +79,7 @@ sock_accept(
 /**
  * @brief create socket for client
  */
-SOCKET_ID
+az_exp SOCKET_ID
 sock_client();
 
 /**
@@ -89,7 +89,7 @@ sock_client();
  * @param addr socket address
  * @param len length
  */
-int
+az_exp int
 sock_connect(
 	SOCKET_ID skt_id,
 	// should convert into (struct sockaddr*) by force
@@ -99,7 +99,7 @@ sock_connect(
 /**
  * close the socket and release resource
  */
-int 
+az_exp int 
 sock_close(SOCKET_ID skt_id);
 
 #endif
