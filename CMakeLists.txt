@@ -20,7 +20,7 @@ set(SRC_DIR "src/")
 set(TEST_DIR "tests/")
 # output directory
 set(EXECUTABLE_OUTPUT_PATH bin)
-set(LIBRARY_OUTPUT_PATH lib)
+set(LIBRARY_OUTPUT_PATH bin)
 
 # show log on screen
 add_definitions(-D_SCR_LOG_)
